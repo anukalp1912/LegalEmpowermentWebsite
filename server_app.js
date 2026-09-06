@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const fetch = require('node-fetch');
 const { createClient } = require('@supabase/supabase-js');
+const nodemailer = require('nodemailer');
 
 const app = express();
 app.use(cors());
@@ -19,6 +20,10 @@ const {
   TWILIO_AUTH_TOKEN,
   TWILIO_VERIFY_SID,
   OPENAI_API_KEY,
+  EMAIL_SMTP_HOST,
+  EMAIL_SMTP_PORT,
+  EMAIL_SMTP_USER,
+  EMAIL_SMTP_PASS,
   PORT = 3000
 } = process.env;
 
@@ -32,6 +37,19 @@ if (TWILIO_ACCOUNT_SID && TWILIO_AUTH_TOKEN) {
   const Twilio = require('twilio');
   twilio = Twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 }
+
+let emailTransport = null;
+if (EMAIL_SMTP_HOST && EMAIL_SMTP_USER && EMAIL_SMTP_PASS) {
+  emailTransport = nodemailer.createTransport({
+    host: EMAIL_SMTP_HOST,
+    port: Number(EMAIL_SMTP_PORT) || 587,
+    secure: Number(EMAIL_SMTP_PORT) === 465, // true for 465, false for other ports
+    auth: { user: EMAIL_SMTP_USER, pass: EMAIL_SMTP_PASS }
+  });
+}
+
+// In-memory store for email OTPs (demo). For production, persist to DB with TTL.
+const emailOtpStore = new Map();
 
 // 1) /api/send-otp
 app.post('/api/send-otp', async (req, res) => {
@@ -47,17 +65,54 @@ app.post('/api/send-otp', async (req, res) => {
   }
 });
 
+// Send OTP via email
+app.post('/api/send-email-otp', async (req, res) => {
+  const { email } = req.body || {};
+  if (!email) return res.status(400).json({ ok: false, error: 'email required' });
+  try {
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    if (emailTransport) {
+      await emailTransport.sendMail({
+        from: EMAIL_SMTP_USER,
+        to: email,
+        subject: 'Your RightsMitra verification code',
+        text: `Your OTP code is ${code}. It is valid for 10 minutes.`
+      });
+    } else {
+      console.warn('Email transport not configured; falling back to console output');
+      console.log('Simulated email OTP for', email, '=>', code);
+    }
+    // store in-memory with expiry
+    emailOtpStore.set(email, code);
+    setTimeout(()=> emailOtpStore.delete(email), 10 * 60 * 1000);
+    return res.json({ ok: true, demo: !emailTransport });
+  } catch (err) {
+    console.error('send-email-otp error', err);
+    return res.status(500).json({ ok: false, error: String(err) });
+  }
+});
+
 // 2) /api/verify-otp
 app.post('/api/verify-otp', async (req, res) => {
   const { phone, code, preferred_language, guest_session_id } = req.body || {};
   if (!phone || !code) return res.status(400).json({ ok: false, error: 'phone and code required' });
   try {
-    if (twilio) {
-      const check = await twilio.verify.services(TWILIO_VERIFY_SID).verificationChecks.create({ to: phone, code });
-      if (!check || check.status !== 'approved') return res.status(400).json({ ok: false, error: 'invalid code' });
+    if (email) {
+      // verify email code from in-memory store
+      const expected = emailOtpStore.get(email);
+      if (!expected || expected !== code) return res.status(400).json({ ok: false, error: 'invalid email code' });
+      // code OK, delete it
+      emailOtpStore.delete(email);
+    } else if (phone) {
+      if (twilio) {
+        const check = await twilio.verify.services(TWILIO_VERIFY_SID).verificationChecks.create({ to: phone, code });
+        if (!check || check.status !== 'approved') return res.status(400).json({ ok: false, error: 'invalid phone code' });
+      } else {
+        // demo acceptance (be careful in production)
+        console.warn('Twilio not configured; demo verify allows any code');
+      }
     } else {
-      // demo acceptance (be careful in production)
-      console.warn('Twilio not configured; demo verify allows any code');
+      return res.status(400).json({ ok: false, error: 'phone or email required' });
     }
 
     // Upsert user in Supabase

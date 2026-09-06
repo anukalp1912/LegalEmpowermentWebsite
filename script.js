@@ -653,8 +653,22 @@ if (voiceBtn) {
 // POST /api/verify-otp { phone, code, preferred_language }
 // Both return JSON: { ok: true, ... } or { ok: false, error: '...' }
 
-async function sendOTP(phone) {
+// sendOTP supports phone or email: pass { phone } or { email }
+async function sendOTP({ phone, email }) {
     try {
+        if (email && !phone) {
+            const res = await fetch('/api/send-email-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            const j = await res.json();
+            if (j && j.ok) return true;
+            console.warn('sendOTP(email) failed', j);
+            return false;
+        }
+
+        // default: phone
         const res = await fetch('/api/send-otp', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -662,24 +676,28 @@ async function sendOTP(phone) {
         });
         const j = await res.json();
         if (j && j.ok) return true;
-        console.warn('sendOTP failed', j);
+        console.warn('sendOTP(phone) failed', j);
         return false;
     } catch (err) {
         console.warn('sendOTP network error, falling back to local simulation', err);
         // local fallback for demo/testing
+        const contactKey = phone ? 'otp_for_' + phone : 'otp_for_' + email;
         const code = Math.floor(100000 + Math.random() * 900000).toString();
-        sessionStorage.setItem('otp_for_' + phone, code);
-        console.log('Simulated OTP for', phone, '=>', code);
+        sessionStorage.setItem(contactKey, code);
+        console.log('Simulated OTP for', (phone||email), '=>', code);
         return true;
     }
 }
 
-async function loginWithPhone(phone, code, preferred_language, guest_session_id) {
+async function loginWithPhone(phoneOrEmail, code, preferred_language, guest_session_id) {
+    // phoneOrEmail may be a phone number or an email (detect by presence of @)
+    const isEmail = typeof phoneOrEmail === 'string' && phoneOrEmail.includes('@');
     try {
+        const payload = isEmail ? { email: phoneOrEmail, code, preferred_language, guest_session_id } : { phone: phoneOrEmail, code, preferred_language, guest_session_id };
         const res = await fetch('/api/verify-otp', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ phone, code, preferred_language, guest_session_id })
+            body: JSON.stringify(payload)
         });
         const j = await res.json();
         if (j && j.ok && j.user) {
@@ -689,11 +707,12 @@ async function loginWithPhone(phone, code, preferred_language, guest_session_id)
             setCurrentUser(j.user);
             return j.user;
         }
-        // fallback local verify for demo mode
-        const expected = sessionStorage.getItem('otp_for_' + phone);
+        // fallback local verify for demo mode: check sessionStorage
+        const contactKey = isEmail ? ('otp_for_' + phoneOrEmail) : ('otp_for_' + phoneOrEmail);
+        const expected = sessionStorage.getItem(contactKey);
         if (expected && expected === code) {
             const userId = 'user_' + Date.now();
-            const user = { user_id: userId, phone_number: phone, preferred_language: preferred_language || 'en', created_at: new Date().toISOString(), guest_flag: false };
+            const user = { user_id: userId, phone_number: isEmail ? null : phoneOrEmail, email: isEmail ? phoneOrEmail : null, preferred_language: preferred_language || 'en', created_at: new Date().toISOString(), guest_flag: false };
             const guestId = localStorage.getItem('guestSessionId');
             if (guestId) migrateGuestCasesToUser(guestId, userId);
             setCurrentUser(user);
@@ -703,10 +722,11 @@ async function loginWithPhone(phone, code, preferred_language, guest_session_id)
     } catch (err) {
         console.error('loginWithPhone error', err);
         // try local fallback
-        const expected = sessionStorage.getItem('otp_for_' + phone);
+        const contactKey = isEmail ? ('otp_for_' + phoneOrEmail) : ('otp_for_' + phoneOrEmail);
+        const expected = sessionStorage.getItem(contactKey);
         if (expected && expected === code) {
             const userId = 'user_' + Date.now();
-            const user = { user_id: userId, phone_number: phone, preferred_language: preferred_language || 'en', created_at: new Date().toISOString(), guest_flag: false };
+            const user = { user_id: userId, phone_number: isEmail ? null : phoneOrEmail, email: isEmail ? phoneOrEmail : null, preferred_language: preferred_language || 'en', created_at: new Date().toISOString(), guest_flag: false };
             const guestId = localStorage.getItem('guestSessionId');
             if (guestId) migrateGuestCasesToUser(guestId, userId);
             setCurrentUser(user);
