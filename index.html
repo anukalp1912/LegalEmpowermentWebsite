@@ -8,25 +8,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Atkinson+Hyperlegible:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="main-container">
+        <div class="main-container">
         <!-- Background decorative elements -->
         <div class="blur-circle blur-orange"></div>
         <div class="blur-circle blur-green"></div>
 
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="navbar-content">
+                <div class="nav-brand">
+                    <span class="brand-icon">⚖️</span>
+                    <span class="brand-text">RightsMitra</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link active">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="resources.html" class="nav-link">Resources</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="cases.html" class="nav-link">My Cases</a></li>
+                    <li><a href="login.html" class="nav-link">Login</a></li>
+                </ul>
+            </div>
+        </nav>
+
         <!-- Content wrapper -->
         <div class="content-wrapper">
-            <!-- Header section -->
             <header class="header">
                 <div class="header-left">
                     <div class="badge badge-green">
-                        <span class="badge-icon"></span>
-                        <span class="badge-text">WORKER LEGAL EMPOWERMENT • 100% FREE & PRIVATE</span>
+                        <span class="badge-icon">✓</span>
+                        <span class="badge-text">WORKER LEGAL EMPOWERMENT • FREE MVP DEMO</span>
                     </div>
                 </div>
                 <div class="header-right">
                     <div class="status-indicator">
                         <div class="status-dot"></div>
-                        <span class="status-text">Live Support Counselors Active in 8 Languages</span>
+                        <span class="status-text">Self-guided informational guidance in 6 languages</span>
                     </div>
                 </div>
             </header>
@@ -39,7 +56,7 @@
                     </h1>
                     <h2 class="hero-title-hindi">बिना किसी डर के अपने कानूनी अधिकार जानें</h2>
                     <p class="hero-description">
-                        AI-powered, 100% free, and strictly confidential legal guidance for domestic workers, drivers, delivery partners, and daily wage laborers across India.
+                        AI-assisted, free informational guidance for domestic workers, drivers, delivery partners, and daily wage laborers across India.
                     </p>
                 </div>
             </section>
@@ -48,20 +65,33 @@
             <div class="interactive-card">
                 <!-- Voice input section -->
                 <div class="voice-input-section">
-                    <div class="voice-button">
-                        <div class="voice-icon"></div>
-                        <div class="voice-text">
-                            <span class="voice-label">बोलकर बताएं / Tap to Speak</span>
-                            <span class="voice-sublabel">Hindi, English, Tamil, Bengali, Telugu, Marathi</span>
-                        </div>
+                    <div class="voice-text">
+                        <span class="voice-label">🎤 बोलकर बताएं / Tap to Speak</span>
+                        <span class="voice-sublabel">Hindi, English, Tamil, Bengali, Telugu, and Marathi</span>
                     </div>
-                    <div class="audio-visualizer">
-                        <div class="audio-bar bar-1"></div>
-                        <div class="audio-bar bar-2"></div>
-                        <div class="audio-bar bar-3"></div>
-                        <div class="audio-bar bar-4"></div>
-                        <div class="audio-bar bar-5"></div>
-                        <span class="listening-status">Listening Ready</span>
+                    <div class="voice-container">
+                        <div class="audio-visualizer" id="audioVisualizer">
+                            <div class="audio-bar bar-1"></div>
+                            <div class="audio-bar bar-2"></div>
+                            <div class="audio-bar bar-3"></div>
+                            <div class="audio-bar bar-4"></div>
+                            <div class="audio-bar bar-5"></div>
+                        </div>
+
+                        <!-- Microphone toggle: allows user to disable mic entirely -->
+                        <button class="mic-toggle" id="micToggle" type="button" title="Toggle microphone (on/off)" aria-label="Turn microphone off">
+                            <span id="micToggleIcon">🔊</span>
+                        </button>
+
+                        <button class="voice-button" id="voiceButton" type="button" aria-label="Start voice input">
+                            <div class="voice-icon-wrapper" id="voiceIcon">
+                                <svg class="voice-icon-svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                    <path d="M12 1c-3.866 0-7 3.134-7 7v5c0 3.866 3.134 7 7 7s7-3.134 7-7V8c0-3.866-3.134-7-7-7z"></path>
+                                    <path d="M12 16v4"></path>
+                                    <path d="M8 20h8"></path>
+                                </svg>
+                            </div>
+                        </button>
                     </div>
                 </div>
 
@@ -101,6 +131,41 @@
 
                 <!-- Text input section -->
                 <div class="text-input-section">
+                    <div class="language-control">
+                        <label for="languageSelector">🌐 Your Language</label>
+                        <select id="languageSelector" aria-describedby="languageStatus">
+                            <option value="auto">Auto Detect</option>
+                            <option value="en">English</option>
+                            <option value="hi">हिन्दी</option>
+                            <option value="ta">தமிழ்</option>
+                            <option value="te">తెలుగు</option>
+                            <option value="bn">বাংলা</option>
+                            <option value="mr">मराठी</option>
+                        </select>
+                        <span id="languageStatus" class="language-status" aria-live="polite"></span>
+                    </div>
+                    <div class="accessibility-options" aria-label="Accessibility Options">
+                        <span class="accessibility-title">♿ Accessibility Options</span>
+                        <label class="speech-toggle"><input type="checkbox" id="autoReadToggle"> Automatically read summary</label>
+                        <span id="voiceSupportStatus" class="voice-support-status" aria-live="polite">🔊 Voice guidance available</span>
+                    </div>
+                    <div class="worker-context">
+                        <div class="language-control">
+                            <label for="workerType">Worker type</label>
+                            <select id="workerType">
+                                <option value="">Select worker type</option>
+                                <option value="Domestic worker">Domestic worker</option>
+                                <option value="Driver">Driver</option>
+                                <option value="Delivery partner">Delivery partner</option>
+                                <option value="Daily wage worker">Daily wage worker</option>
+                                <option value="Other worker">Other worker</option>
+                            </select>
+                        </div>
+                        <div class="language-control">
+                            <label for="stateSelector">State or region</label>
+                            <input id="stateSelector" type="text" placeholder="Optional" autocomplete="address-level1">
+                        </div>
+                    </div>
                     <textarea id="userQuestion" class="question-input" placeholder="Describe your situation or ask a question... / अपनी स्थिति बताएं या प्रश्न पूछें..." rows="6"></textarea>
                 </div>
 
@@ -115,7 +180,7 @@
             <div id="responseSection" class="response-section hidden">
                 <div class="response-header">
                     <h3>Legal Guidance</h3>
-                    <button class="close-btn" id="closeResponseBtn">×</button>
+                    <button class="close-btn" id="closeResponseBtn" type="button" aria-label="Close legal guidance">×</button>
                 </div>
                 <div id="responseContent" class="response-content"></div>
             </div>
@@ -126,8 +191,8 @@
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon">🔒</div>
-                        <h3>100% Confidential</h3>
-                        <p>Your information is completely private and secured</p>
+                        <h3>Privacy-aware demo</h3>
+                        <p>Cases are stored locally in this browser for the demo.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🆓</div>
@@ -136,13 +201,13 @@
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🌐</div>
-                        <h3>Multi-Language Support</h3>
-                        <p>Available in 8+ languages for your convenience</p>
+                        <h3>Six languages</h3>
+                        <p>Guidance is available in English, Hindi, Tamil, Telugu, Bengali, and Marathi.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">⚡</div>
-                        <h3>AI-Powered Guidance</h3>
-                        <p>Get instant legal advice powered by advanced AI</p>
+                        <h3>Structured guidance</h3>
+                        <p>Get issue-focused information, checklists, and next steps.</p>
                     </div>
                 </div>
             </section>
@@ -152,39 +217,39 @@
                 <h2>Frequently Asked Questions</h2>
                 <div class="faq-container">
                     <div class="faq-item">
-                        <div class="faq-question">
+                        <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-1">
                             <span>What is minimum wage in India?</span>
                             <span class="faq-toggle">+</span>
-                        </div>
-                        <div class="faq-answer">
-                            Minimum wage in India varies by state and sector. As of 2024, the national minimum wage is ₹350 per day for general workers. However, states may have higher rates. Check your local state labor department for specific rates applicable in your area.
+                        </button>
+                        <div class="faq-answer" id="faq-answer-1">
+                            Minimum wage information varies by state, sector, worker category, and date. Check your local labour department or a qualified adviser for current information.
                         </div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question">
+                        <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-2">
                             <span>Can my employer fire me without notice?</span>
                             <span class="faq-toggle">+</span>
-                        </div>
-                        <div class="faq-answer">
-                            No. Under Indian labor law, employers must provide proper notice (typically 30 days) or payment in lieu of notice. Sudden dismissal is illegal and you may be entitled to compensation. If you were fired without notice, you can file a complaint with the labor commissioner.
+                        </button>
+                        <div class="faq-answer" id="faq-answer-2">
+                            The answer can depend on your employment category, contract, state, and the reason for dismissal. Keep written records and seek qualified local advice before relying on a general answer.
                         </div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question">
+                        <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-3">
                             <span>What should I do if my salary is withheld?</span>
                             <span class="faq-toggle">+</span>
-                        </div>
-                        <div class="faq-answer">
+                        </button>
+                        <div class="faq-answer" id="faq-answer-3">
                             Document the withheld amount and dates. Send a formal written demand to your employer. If unresolved, file a complaint with the District Labor Officer or approach the labor court. You can also contact us for legal guidance.
                         </div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question">
+                        <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-4">
                             <span>Am I entitled to leave and holidays?</span>
                             <span class="faq-toggle">+</span>
-                        </div>
-                        <div class="faq-answer">
-                            Yes. Under the Industrial Employment (Standing Orders) Act, workers are entitled to paid leave, sick leave, and holiday benefits. Domestic workers, drivers, and similar categories also have rights to weekly rest and leave. Consult state-specific labor laws for exact entitlements.
+                        </button>
+                        <div class="faq-answer" id="faq-answer-4">
+                            Leave and holiday rules can vary by state, sector, contract, and worker category. Check current local rules with a qualified adviser.
                         </div>
                     </div>
                 </div>
@@ -200,16 +265,16 @@
                     <div class="footer-section">
                         <h4>Quick Links</h4>
                         <ul>
-                            <li><a href="#home">Home</a></li>
-                            <li><a href="#about">About</a></li>
-                            <li><a href="#faq">FAQ</a></li>
-                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="resources.html">Resources</a></li>
+                            <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </div>
                     <div class="footer-section">
                         <h4>Contact Us</h4>
-                        <p>Email: support@workerlegal.in</p>
-                        <p>Phone: 1800-WORKER-1</p>
+                        <p>Email: <a href="mailto:rightsmitra@gmail.com">rightsmitra@gmail.com</a></p>
+                        <p>Email support for hackathon feedback.</p>
                     </div>
                     <div class="footer-section">
                         <h4>Languages</h4>
