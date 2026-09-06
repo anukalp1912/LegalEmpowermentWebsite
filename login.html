@@ -41,24 +41,39 @@
     <script src="script.js"></script>
     <script>
         // Login page actions (uses script.js stubs)
-        document.getElementById('sendOtpBtn').addEventListener('click', () => {
-            const phone = document.getElementById('phoneInput').value.trim();
-            if (!phone) return alert('Enter phone number');
-            sendOTP(phone);
-            document.getElementById('authMessage').textContent = 'OTP sent (simulated). Check console for code in demo.';
+        document.getElementById('sendOtpBtn').addEventListener('click', async () => {
+            try {
+                const phone = document.getElementById('phoneInput').value.trim();
+                if (!phone) return alert('Enter phone number');
+                document.getElementById('authMessage').textContent = 'Sending OTP...';
+                const ok = await sendOTP(phone);
+                document.getElementById('authMessage').textContent = ok
+                    ? 'OTP sent (simulated for this demo - check the backend/server console for the code).'
+                    : 'Could not send OTP. Please try again.';
+            } catch (err) {
+                console.error(err);
+                document.getElementById('authMessage').textContent = 'Error sending OTP.';
+            }
         });
 
-        document.getElementById('loginBtn').addEventListener('click', () => {
-            const phone = document.getElementById('phoneInput').value.trim();
-            const code = document.getElementById('otpInput').value.trim();
-            const lang = document.getElementById('langSelect').value;
-            if (!phone || !code) return alert('Enter phone and OTP');
-            const user = loginWithPhone(phone, code, lang);
-            if (user) {
-                document.getElementById('authMessage').textContent = 'Signed in as ' + user.user_id;
-                setTimeout(() => { window.location = 'cases.html'; }, 800);
-            } else {
-                document.getElementById('authMessage').textContent = 'Invalid OTP';
+        document.getElementById('loginBtn').addEventListener('click', async () => {
+            try {
+                const phone = document.getElementById('phoneInput').value.trim();
+                const code = document.getElementById('otpInput').value.trim();
+                const lang = document.getElementById('langSelect').value;
+                if (!phone || !code) return alert('Enter phone and OTP');
+                document.getElementById('authMessage').textContent = 'Verifying...';
+                const guestSessionId = localStorage.getItem('guestSessionId');
+                const user = await loginWithPhone(phone, code, lang, guestSessionId);
+                if (user) {
+                    document.getElementById('authMessage').textContent = 'Signed in as ' + user.user_id;
+                    setTimeout(() => { window.location = 'cases.html'; }, 800);
+                } else {
+                    document.getElementById('authMessage').textContent = 'Invalid OTP';
+                }
+            } catch (err) {
+                console.error(err);
+                document.getElementById('authMessage').textContent = 'Verification error. Please try again.';
             }
         });
 

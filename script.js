@@ -589,31 +589,73 @@ if (voiceBtn) {
     });
 }
 
-// Simple Auth stubs for login.html functionality (OTP simulation)
-function sendOTP(phone) {
-    // Simulate OTP sending and return a code stored in sessionStorage for demo
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
-    sessionStorage.setItem('otp_for_' + phone, code);
-    console.log('Simulated OTP for', phone, '=>', code);
-    return true;
+// Auth functions wired to backend endpoints (Twilio + Supabase)
+// Frontend expects two endpoints:
+// POST /api/send-otp  { phone }
+// POST /api/verify-otp { phone, code, preferred_language }
+// Both return JSON: { ok: true, ... } or { ok: false, error: '...' }
+
+async function sendOTP(phone) {
+    try {
+        const res = await fetch('/api/send-otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ phone })
+        });
+        const j = await res.json();
+        if (j && j.ok) return true;
+        console.warn('sendOTP failed', j);
+        return false;
+    } catch (err) {
+        console.warn('sendOTP network error, falling back to local simulation', err);
+        // local fallback for demo/testing
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
+        sessionStorage.setItem('otp_for_' + phone, code);
+        console.log('Simulated OTP for', phone, '=>', code);
+        return true;
+    }
 }
 
-function verifyOTP(phone, code) {
-    const expected = sessionStorage.getItem('otp_for_' + phone);
-    return expected === code;
-}
-
-function loginWithPhone(phone, code, preferred_language) {
-    if (!verifyOTP(phone, code)) return null;
-    // Create user object
-    const userId = 'user_' + Date.now();
-    const user = { user_id: userId, phone_number: phone, preferred_language: preferred_language || 'en', created_at: new Date().toISOString(), guest_flag: false };
-    // Migrate guest cases
-    const guestId = localStorage.getItem('guestSessionId');
-    if (guestId) migrateGuestCasesToUser(guestId, userId);
-    // Save current user
-    setCurrentUser(user);
-    return user;
+async function loginWithPhone(phone, code, preferred_language, guest_session_id) {
+    try {
+        const res = await fetch('/api/verify-otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ phone, code, preferred_language, guest_session_id })
+        });
+        const j = await res.json();
+        if (j && j.ok && j.user) {
+            // migrate guest cases (server may do this too) - keep client-side as safety
+            const guestId = localStorage.getItem('guestSessionId');
+            if (guestId) try { migrateGuestCasesToUser(guestId, j.user.user_id); } catch(e){console.warn(e)}
+            setCurrentUser(j.user);
+            return j.user;
+        }
+        // fallback local verify for demo mode
+        const expected = sessionStorage.getItem('otp_for_' + phone);
+        if (expected && expected === code) {
+            const userId = 'user_' + Date.now();
+            const user = { user_id: userId, phone_number: phone, preferred_language: preferred_language || 'en', created_at: new Date().toISOString(), guest_flag: false };
+            const guestId = localStorage.getItem('guestSessionId');
+            if (guestId) migrateGuestCasesToUser(guestId, userId);
+            setCurrentUser(user);
+            return user;
+        }
+        return null;
+    } catch (err) {
+        console.error('loginWithPhone error', err);
+        // try local fallback
+        const expected = sessionStorage.getItem('otp_for_' + phone);
+        if (expected && expected === code) {
+            const userId = 'user_' + Date.now();
+            const user = { user_id: userId, phone_number: phone, preferred_language: preferred_language || 'en', created_at: new Date().toISOString(), guest_flag: false };
+            const guestId = localStorage.getItem('guestSessionId');
+            if (guestId) migrateGuestCasesToUser(guestId, userId);
+            setCurrentUser(user);
+            return user;
+        }
+        return null;
+    }
 }
 
 // Cases page rendering helper (if on cases.html)
