@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worker Legal Empowerment - Know Your Rights</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Atkinson+Hyperlegible:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Background decorative elements -->
+        <div class="blur-circle blur-orange"></div>
+        <div class="blur-circle blur-green"></div>
+
+        <!-- Content wrapper -->
+        <div class="content-wrapper">
+            <!-- Header section -->
+            <header class="header">
+                <div class="header-left">
+                    <div class="badge badge-green">
+                        <span class="badge-icon"></span>
+                        <span class="badge-text">WORKER LEGAL EMPOWERMENT • 100% FREE & PRIVATE</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span class="status-text">Live Support Counselors Active in 8 Languages</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Hero section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Know Your Workplace Rights in<br>Everyday Language
+                    </h1>
+                    <h2 class="hero-title-hindi">बिना किसी डर के अपने कानूनी अधिकार जानें</h2>
+                    <p class="hero-description">
+                        AI-powered, 100% free, and strictly confidential legal guidance for domestic workers, drivers, delivery partners, and daily wage laborers across India.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Main interactive card -->
+            <div class="interactive-card">
+                <!-- Voice input section -->
+                <div class="voice-input-section">
+                    <div class="voice-button">
+                        <div class="voice-icon"></div>
+                        <div class="voice-text">
+                            <span class="voice-label">बोलकर बताएं / Tap to Speak</span>
+                            <span class="voice-sublabel">Hindi, English, Tamil, Bengali, Telugu, Marathi</span>
+                        </div>
+                    </div>
+                    <div class="audio-visualizer">
+                        <div class="audio-bar bar-1"></div>
+                        <div class="audio-bar bar-2"></div>
+                        <div class="audio-bar bar-3"></div>
+                        <div class="audio-bar bar-4"></div>
+                        <div class="audio-bar bar-5"></div>
+                        <span class="listening-status">Listening Ready</span>
+                    </div>
+                </div>
+
+                <!-- Issue selection -->
+                <div class="issue-selection">
+                    <div class="issue-header">
+                        <span class="issue-title">CHOOSE A COMMON ISSUE / समस्या चुनें:</span>
+                        <span class="issue-hint">Click to auto-fill</span>
+                    </div>
+                    <div class="issue-tags">
+                        <button class="issue-tag" data-issue="Salary Withheld">
+                            <span class="tag-icon"></span>
+                            <span class="tag-text">Salary Withheld / वेतन रोका</span>
+                        </button>
+                        <button class="issue-tag" data-issue="Fired Without Notice">
+                            <span class="tag-icon"></span>
+                            <span class="tag-text">Fired Without Notice / अचानक निकाला</span>
+                        </button>
+                        <button class="issue-tag" data-issue="Excessive Hours">
+                            <span class="tag-icon"></span>
+                            <span class="tag-text">Excessive Hours / ज़्यादा काम</span>
+                        </button>
+                        <button class="issue-tag" data-issue="No Contract">
+                            <span class="tag-icon"></span>
+                            <span class="tag-text">No Written Contract / कोई समझौता नहीं</span>
+                        </button>
+                        <button class="issue-tag" data-issue="Workplace Injury">
+                            <span class="tag-icon"></span>
+                            <span class="tag-text">Workplace Injury / काम में चोट</span>
+                        </button>
+                        <button class="issue-tag" data-issue="Sexual Harassment">
+                            <span class="tag-icon"></span>
+                            <span class="tag-text">Sexual Harassment / यौन उत्पीड़न</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Text input section -->
+                <div class="text-input-section">
+                    <textarea id="userQuestion" class="question-input" placeholder="Describe your situation or ask a question... / अपनी स्थिति बताएं या प्रश्न पूछें..." rows="6"></textarea>
+                </div>
+
+                <!-- Action buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="submitBtn">Get Legal Guidance</button>
+                    <button class="btn btn-secondary" id="clearBtn">Clear</button>
+                </div>
+            </div>
+
+            <!-- Response section -->
+            <div id="responseSection" class="response-section hidden">
+                <div class="response-header">
+                    <h3>Legal Guidance</h3>
+                    <button class="close-btn" id="closeResponseBtn">×</button>
+                </div>
+                <div id="responseContent" class="response-content"></div>
+            </div>
+
+            <!-- Features section -->
+            <section class="features">
+                <h2>Why Workers Trust Us</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>100% Confidential</h3>
+                        <p>Your information is completely private and secured</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🆓</div>
+                        <h3>Completely Free</h3>
+                        <p>No charges, no hidden fees, no subscriptions</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h3>Multi-Language Support</h3>
+                        <p>Available in 8+ languages for your convenience</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>AI-Powered Guidance</h3>
+                        <p>Get instant legal advice powered by advanced AI</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ section -->
+            <section class="faq">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What is minimum wage in India?</span>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            Minimum wage in India varies by state and sector. As of 2024, the national minimum wage is ₹350 per day for general workers. However, states may have higher rates. Check your local state labor department for specific rates applicable in your area.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Can my employer fire me without notice?</span>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            No. Under Indian labor law, employers must provide proper notice (typically 30 days) or payment in lieu of notice. Sudden dismissal is illegal and you may be entitled to compensation. If you were fired without notice, you can file a complaint with the labor commissioner.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What should I do if my salary is withheld?</span>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            Document the withheld amount and dates. Send a formal written demand to your employer. If unresolved, file a complaint with the District Labor Officer or approach the labor court. You can also contact us for legal guidance.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Am I entitled to leave and holidays?</span>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            Yes. Under the Industrial Employment (Standing Orders) Act, workers are entitled to paid leave, sick leave, and holiday benefits. Domestic workers, drivers, and similar categories also have rights to weekly rest and leave. Consult state-specific labor laws for exact entitlements.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h4>About Us</h4>
+                        <p>Empowering workers with free legal guidance and rights awareness across India.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#faq">FAQ</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Contact Us</h4>
+                        <p>Email: support@workerlegal.in</p>
+                        <p>Phone: 1800-WORKER-1</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Languages</h4>
+                        <p>Hindi • English • Tamil • Bengali • Telugu • Marathi</p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Worker Legal Empowerment. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
