@@ -9,12 +9,12 @@ const supportedLanguages = {
 };
 
 const translations = {
-    en: { guidance: 'Your Legal Guidance', issue: 'Issue detected', summary: 'Situation summary', rights: 'Rights and useful information', evidence: 'Evidence checklist', roadmap: 'Action roadmap', next: 'Next steps', disclaimer: 'This is general information, not legal advice. Speak with a qualified lawyer or legal-aid organisation for advice about your situation.', detected: 'Language detected', mixed: 'Mixed language input detected. Choose your response language.', submit: 'Get Legal Guidance', clear: 'Clear', noIssue: 'We could not identify a specific issue. These general steps may help.', general: ['Keep records of messages, payments, and incidents.', 'Learn about your protections under Indian labour law.', 'Collect witnesses, photographs, payslips, and other supporting documents.', 'Make complaints in writing with dates and specific details.', 'Contact your District Labour Officer or a legal-aid organisation.'], evidenceDefault: ['Employment messages or contract', 'Payment records and bank statements', 'Relevant photographs or medical records', 'Names of witnesses'], roadmapDefault: ['Write down the dates and facts.', 'Keep copies of every document and message.', 'Send a written request or complaint.', 'Contact a labour authority or legal-aid organisation.'] },
-    hi: { guidance: 'आपकी कानूनी जानकारी', issue: 'पहचानी गई समस्या', summary: 'स्थिति का सारांश', rights: 'आपके अधिकार और उपयोगी जानकारी', evidence: 'सबूतों की सूची', roadmap: 'आगे की कार्ययोजना', next: 'अगले कदम', disclaimer: 'यह सामान्य जानकारी है, कानूनी सलाह नहीं। अपनी स्थिति के लिए योग्य वकील या कानूनी सहायता संस्था से सलाह लें।', detected: 'भाषा पहचानी गई', mixed: 'मिश्रित भाषा मिली। जवाब की भाषा चुनें।', submit: 'कानूनी जानकारी पाएं', clear: 'साफ करें', noIssue: 'किसी खास समस्या की पहचान नहीं हो सकी। ये सामान्य कदम मदद कर सकते हैं।', general: ['संदेशों, भुगतानों और घटनाओं का रिकॉर्ड रखें।', 'भारतीय श्रम कानून के तहत मिलने वाली सुरक्षा के बारे में जानें।', 'गवाह, फोटो, वेतन पर्ची और दूसरे दस्तावेज इकट्ठा करें।', 'तारीख और पूरी जानकारी के साथ लिखित शिकायत करें।', 'जिला श्रम अधिकारी या कानूनी सहायता संस्था से संपर्क करें।'], evidenceDefault: ['नौकरी से जुड़े संदेश या अनुबंध', 'भुगतान का रिकॉर्ड और बैंक विवरण', 'जरूरी फोटो या चिकित्सा रिकॉर्ड', 'गवाहों के नाम'], roadmapDefault: ['तारीख और घटनाएं लिख लें।', 'सभी दस्तावेजों और संदेशों की प्रतियां रखें।', 'लिखित अनुरोध या शिकायत भेजें।', 'श्रम अधिकारी या कानूनी सहायता संस्था से संपर्क करें।'] },
-    ta: { guidance: 'உங்கள் சட்ட வழிகாட்டுதல்', issue: 'கண்டறியப்பட்ட பிரச்சினை', summary: 'நிலைமையின் சுருக்கம்', rights: 'உங்கள் உரிமைகள் மற்றும் பயனுள்ள தகவல்', evidence: 'ஆதாரப் பட்டியல்', roadmap: 'செயல் திட்டம்', next: 'அடுத்த படிகள்', disclaimer: 'இது பொதுவான தகவல் மட்டுமே; சட்ட ஆலோசனை அல்ல. உங்கள் நிலைக்கு தகுதியான வழக்கறிஞர் அல்லது சட்ட உதவி அமைப்பை அணுகவும்.', detected: 'கண்டறியப்பட்ட மொழி', mixed: 'கலப்பு மொழி உள்ளீடு கண்டறியப்பட்டது. பதில் மொழியைத் தேர்ந்தெடுக்கவும்.', submit: 'சட்ட வழிகாட்டுதலைப் பெறுங்கள்', clear: 'அழிக்கவும்', noIssue: 'குறிப்பிட்ட பிரச்சினையை அடையாளம் காண முடியவில்லை. இந்தப் பொதுவான படிகள் உதவும்.', general: ['செய்திகள், பணம் மற்றும் சம்பவங்களின் பதிவுகளை வைத்திருங்கள்.', 'இந்திய தொழிலாளர் சட்டத்தின் பாதுகாப்புகளைப் பற்றி அறிந்து கொள்ளுங்கள்.', 'சாட்சிகள், புகைப்படங்கள் மற்றும் சம்பளச் சீட்டுகளை சேகரியுங்கள்.', 'தேதிகள் மற்றும் விவரங்களுடன் எழுத்துப்பூர்வமாக புகார் அளியுங்கள்.', 'மாவட்ட தொழிலாளர் அலுவலர் அல்லது சட்ட உதவி அமைப்பை அணுகுங்கள்.'], evidenceDefault: ['வேலை தொடர்பான செய்திகள் அல்லது ஒப்பந்தம்', 'பணம் செலுத்திய பதிவுகள் மற்றும் வங்கி விவரங்கள்', 'புகைப்படங்கள் அல்லது மருத்துவப் பதிவுகள்', 'சாட்சிகளின் பெயர்கள்'], roadmapDefault: ['தேதிகள் மற்றும் நிகழ்வுகளை எழுதுங்கள்.', 'அனைத்து ஆவணங்கள் மற்றும் செய்திகளின் நகல்களை வைத்திருங்கள்.', 'எழுத்துப்பூர்வ கோரிக்கை அல்லது புகார் அனுப்புங்கள்.', 'தொழிலாளர் அலுவலர் அல்லது சட்ட உதவி அமைப்பை அணுகுங்கள்.'] },
-    te: { guidance: 'మీ న్యాయ మార్గదర్శకం', issue: 'గుర్తించిన సమస్య', summary: 'పరిస్థితి సారాంశం', rights: 'మీ హక్కులు మరియు ఉపయోగకరమైన సమాచారం', evidence: 'ఆధారాల జాబితా', roadmap: 'చర్యల ప్రణాళిక', next: 'తదుపరి చర్యలు', disclaimer: 'ఇది సాధారణ సమాచారం మాత్రమే, న్యాయ సలహా కాదు. మీ పరిస్థితికి అర్హత కలిగిన న్యాయవాది లేదా న్యాయ సహాయ సంస్థను సంప్రదించండి.', detected: 'గుర్తించిన భాష', mixed: 'మిశ్రమ భాష గుర్తించబడింది. సమాధాన భాషను ఎంచుకోండి.', submit: 'న్యాయ మార్గదర్శకం పొందండి', clear: 'తొలగించండి', noIssue: 'ప్రత్యేక సమస్యను గుర్తించలేకపోయాము. ఈ సాధారణ చర్యలు సహాయపడవచ్చు.', general: ['సందేశాలు, చెల్లింపులు మరియు సంఘటనల రికార్డులు ఉంచండి.', 'భారత కార్మిక చట్టంలోని రక్షణల గురించి తెలుసుకోండి.', 'సాక్షులు, ఫోటోలు మరియు జీతం రసీదులు సేకరించండి.', 'తేదీలు, వివరాలతో వ్రాతపూర్వక ఫిర్యాదు చేయండి.', 'జిల్లా కార్మిక అధికారి లేదా న్యాయ సహాయ సంస్థను సంప్రదించండి.'], evidenceDefault: ['ఉద్యోగ సందేశాలు లేదా ఒప్పందం', 'చెల్లింపు రికార్డులు మరియు బ్యాంక్ వివరాలు', 'ఫోటోలు లేదా వైద్య రికార్డులు', 'సాక్షుల పేర్లు'], roadmapDefault: ['తేదీలు, సంఘటనలు రాయండి.', 'అన్ని పత్రాలు, సందేశాల కాపీలు ఉంచండి.', 'వ్రాతపూర్వక అభ్యర్థన లేదా ఫిర్యాదు పంపండి.', 'కార్మిక అధికారి లేదా న్యాయ సహాయ సంస్థను సంప్రదించండి.'] },
-    bn: { guidance: 'আপনার আইনি নির্দেশনা', issue: 'চিহ্নিত সমস্যা', summary: 'পরিস্থিতির সারাংশ', rights: 'আপনার অধিকার ও প্রয়োজনীয় তথ্য', evidence: 'প্রমাণের তালিকা', roadmap: 'করণীয় পরিকল্পনা', next: 'পরবর্তী পদক্ষেপ', disclaimer: 'এটি সাধারণ তথ্য, আইনি পরামর্শ নয়। আপনার পরিস্থিতির জন্য যোগ্য আইনজীবী বা আইনি সহায়তা সংস্থার সঙ্গে কথা বলুন।', detected: 'চিহ্নিত ভাষা', mixed: 'মিশ্র ভাষা শনাক্ত হয়েছে। উত্তরের ভাষা বেছে নিন।', submit: 'আইনি নির্দেশনা নিন', clear: 'মুছে ফেলুন', noIssue: 'নির্দিষ্ট সমস্যা শনাক্ত করা যায়নি। এই সাধারণ পদক্ষেপগুলি সাহায্য করতে পারে।', general: ['বার্তা, টাকা দেওয়া এবং ঘটনার রেকর্ড রাখুন।', 'ভারতের শ্রম আইনে আপনার সুরক্ষাগুলি জানুন।', 'সাক্ষী, ছবি, বেতন স্লিপ ও প্রয়োজনীয় কাগজ সংগ্রহ করুন।', 'তারিখ ও বিস্তারিত দিয়ে লিখিত অভিযোগ করুন।', 'জেলা শ্রম আধিকারিক বা আইনি সহায়তা সংস্থার সঙ্গে যোগাযোগ করুন।'], evidenceDefault: ['চাকরির বার্তা বা চুক্তি', 'পেমেন্টের রেকর্ড ও ব্যাংক বিবরণ', 'ছবি বা চিকিৎসার নথি', 'সাক্ষীদের নাম'], roadmapDefault: ['তারিখ ও ঘটনা লিখে রাখুন।', 'সব নথি ও বার্তার কপি রাখুন।', 'লিখিত অনুরোধ বা অভিযোগ পাঠান।', 'শ্রম আধিকারিক বা আইনি সহায়তা সংস্থার সঙ্গে যোগাযোগ করুন।'] },
-    mr: { guidance: 'तुमचे कायदेशीर मार्गदर्शन', issue: 'ओळखलेली समस्या', summary: 'परिस्थितीचा सारांश', rights: 'तुमचे हक्क आणि उपयुक्त माहिती', evidence: 'पुराव्यांची यादी', roadmap: 'कृती आराखडा', next: 'पुढील पावले', disclaimer: 'ही सामान्य माहिती आहे, कायदेशीर सल्ला नाही. तुमच्या परिस्थितीसाठी पात्र वकील किंवा कायदेशीर मदत संस्थेशी बोला.', detected: 'ओळखलेली भाषा', mixed: 'मिश्र भाषा आढळली. उत्तराची भाषा निवडा.', submit: 'कायदेशीर मार्गदर्शन मिळवा', clear: 'पुसा', noIssue: 'विशिष्ट समस्या ओळखता आली नाही. ही सामान्य पावले मदत करू शकतात.', general: ['संदेश, देयके आणि घटनांच्या नोंदी ठेवा.', 'भारतीय कामगार कायद्यातील संरक्षणांची माहिती घ्या.', 'साक्षीदार, फोटो, पगाराच्या पावत्या आणि कागदपत्रे जमा करा.', 'तारीख व तपशीलांसह लेखी तक्रार करा.', 'जिल्हा कामगार अधिकारी किंवा कायदेशीर मदत संस्थेशी संपर्क साधा.'], evidenceDefault: ['नोकरीचे संदेश किंवा करार', 'देयक नोंदी आणि बँक तपशील', 'फोटो किंवा वैद्यकीय नोंदी', 'साक्षीदारांची नावे'], roadmapDefault: ['तारीख आणि घटना लिहून ठेवा.', 'सर्व कागदपत्रे आणि संदेशांच्या प्रती ठेवा.', 'लेखी विनंती किंवा तक्रार पाठवा.', 'कामगार अधिकारी किंवा कायदेशीर मदत संस्थेशी संपर्क करा.'] }
+    en: { guidance: 'Your Legal Guidance', issue: 'Issue detected', summary: 'Situation summary', rights: 'Rights and useful information', evidence: 'Evidence checklist', roadmap: 'Action roadmap', next: 'Next steps', disclaimer: 'This platform provides general informational guidance and is not a substitute for professional legal advice. Rights and procedures may vary depending on individual circumstances, employment category, and jurisdiction.', detected: 'Language detected', mixed: 'Mixed language input detected. Choose your response language.', submit: 'Get Legal Guidance', clear: 'Clear', noIssue: 'We could not identify a specific issue. These general steps may help.', general: ['Keep records of messages, payments, and incidents.', 'Learn about your protections under Indian labour law.', 'Collect witnesses, photographs, payslips, and other supporting documents.', 'Make complaints in writing with dates and specific details.', 'Contact a local labour authority or legal-aid organisation.'], evidenceDefault: ['Employment messages or contract', 'Payment records and bank statements', 'Relevant photographs or medical records', 'Names of witnesses'], roadmapDefault: ['Write down the dates and facts.', 'Keep copies of every document and message.', 'Send a written request or complaint.', 'Contact a local labour authority or legal-aid organisation.'] },
+    hi: { guidance: 'आपकी कानूनी जानकारी', issue: 'पहचानी गई समस्या', summary: 'स्थिति का सारांश', rights: 'आपके अधिकार और उपयोगी जानकारी', evidence: 'सबूतों की सूची', roadmap: 'आगे की कार्ययोजना', next: 'अगले कदम', disclaimer: 'यह प्लेटफॉर्म सामान्य जानकारी देता है और पेशेवर कानूनी सलाह का विकल्प नहीं है। अधिकार और प्रक्रियाएं आपकी परिस्थिति, काम की श्रेणी और क्षेत्र के अनुसार बदल सकती हैं।', detected: 'भाषा पहचानी गई', mixed: 'मिश्रित भाषा मिली। जवाब की भाषा चुनें।', submit: 'कानूनी जानकारी पाएं', clear: 'साफ करें', noIssue: 'किसी खास समस्या की पहचान नहीं हो सकी। ये सामान्य कदम मदद कर सकते हैं।', general: ['संदेशों, भुगतानों और घटनाओं का रिकॉर्ड रखें।', 'भारतीय श्रम कानून के तहत मिलने वाली सुरक्षा के बारे में जानें।', 'गवाह, फोटो, वेतन पर्ची और दूसरे दस्तावेज इकट्ठा करें।', 'तारीख और पूरी जानकारी के साथ लिखित शिकायत करें।', 'स्थानीय श्रम अधिकारी या कानूनी सहायता संस्था से संपर्क करें।'], evidenceDefault: ['नौकरी से जुड़े संदेश या अनुबंध', 'भुगतान का रिकॉर्ड और बैंक विवरण', 'जरूरी फोटो या चिकित्सा रिकॉर्ड', 'गवाहों के नाम'], roadmapDefault: ['तारीख और घटनाएं लिख लें।', 'सभी दस्तावेजों और संदेशों की प्रतियां रखें।', 'लिखित अनुरोध या शिकायत भेजें।', 'स्थानीय श्रम अधिकारी या कानूनी सहायता संस्था से संपर्क करें।'] },
+    ta: { guidance: 'உங்கள் சட்ட வழிகாட்டுதல்', issue: 'கண்டறியப்பட்ட பிரச்சினை', summary: 'நிலைமையின் சுருக்கம்', rights: 'உங்கள் உரிமைகள் மற்றும் பயனுள்ள தகவல்', evidence: 'ஆதாரப் பட்டியல்', roadmap: 'செயல் திட்டம்', next: 'அடுத்த படிகள்', disclaimer: 'இந்த தளம் பொதுவான தகவல் வழிகாட்டுதலை வழங்குகிறது; இது தொழில்முறை சட்ட ஆலோசனைக்கு மாற்றாகாது. உரிமைகள் மற்றும் நடைமுறைகள் உங்கள் சூழ்நிலை, வேலை வகை மற்றும் அதிகார வரம்பைப் பொறுத்து மாறலாம்.', detected: 'கண்டறியப்பட்ட மொழி', mixed: 'கலப்பு மொழி உள்ளீடு கண்டறியப்பட்டது. பதில் மொழியைத் தேர்ந்தெடுக்கவும்.', submit: 'சட்ட வழிகாட்டுதலைப் பெறுங்கள்', clear: 'அழிக்கவும்', noIssue: 'குறிப்பிட்ட பிரச்சினையை அடையாளம் காண முடியவில்லை. இந்தப் பொதுவான படிகள் உதவும்.', general: ['செய்திகள், பணம் மற்றும் சம்பவங்களின் பதிவுகளை வைத்திருங்கள்.', 'இந்திய தொழிலாளர் சட்டத்தின் பாதுகாப்புகளைப் பற்றி அறிந்து கொள்ளுங்கள்.', 'சாட்சிகள், புகைப்படங்கள் மற்றும் சம்பளச் சீட்டுகளை சேகரியுங்கள்.', 'தேதிகள் மற்றும் விவரங்களுடன் எழுத்துப்பூர்வமாக புகார் அளியுங்கள்.', 'உள்ளூர் தொழிலாளர் அலுவலர் அல்லது சட்ட உதவி அமைப்பை அணுகுங்கள்.'], evidenceDefault: ['வேலை தொடர்பான செய்திகள் அல்லது ஒப்பந்தம்', 'பணம் செலுத்திய பதிவுகள் மற்றும் வங்கி விவரங்கள்', 'புகைப்படங்கள் அல்லது மருத்துவப் பதிவுகள்', 'சாட்சிகளின் பெயர்கள்'], roadmapDefault: ['தேதிகள் மற்றும் நிகழ்வுகளை எழுதுங்கள்.', 'அனைத்து ஆவணங்கள் மற்றும் செய்திகளின் நகல்களை வைத்திருங்கள்.', 'எழுத்துப்பூர்வ கோரிக்கை அல்லது புகார் அனுப்புங்கள்.', 'உள்ளூர் தொழிலாளர் அலுவலர் அல்லது சட்ட உதவி அமைப்பை அணுகுங்கள்.'] },
+    te: { guidance: 'మీ న్యాయ మార్గదర్శకం', issue: 'గుర్తించిన సమస్య', summary: 'పరిస్థితి సారాంశం', rights: 'మీ హక్కులు మరియు ఉపయోగకరమైన సమాచారం', evidence: 'ఆధారాల జాబితా', roadmap: 'చర్యల ప్రణాళిక', next: 'తదుపరి చర్యలు', disclaimer: 'ఈ ప్లాట్‌ఫారం సాధారణ సమాచార మార్గదర్శకాన్ని అందిస్తుంది; ఇది వృత్తిపరమైన న్యాయ సలహాకు ప్రత్యామ్నాయం కాదు. హక్కులు మరియు ప్రక్రియలు మీ పరిస్థితి, ఉద్యోగ రకం మరియు పరిధిని బట్టి మారవచ్చు.', detected: 'గుర్తించిన భాష', mixed: 'మిశ్రమ భాష గుర్తించబడింది. సమాధాన భాషను ఎంచుకోండి.', submit: 'న్యాయ మార్గదర్శకం పొందండి', clear: 'తొలగించండి', noIssue: 'ప్రత్యేక సమస్యను గుర్తించలేకపోయాము. ఈ సాధారణ చర్యలు సహాయపడవచ్చు.', general: ['సందేశాలు, చెల్లింపులు మరియు సంఘటనల రికార్డులు ఉంచండి.', 'భారత కార్మిక చట్టంలోని రక్షణల గురించి తెలుసుకోండి.', 'సాక్షులు, ఫోటోలు మరియు జీతం రసీదులు సేకరించండి.', 'తేదీలు, వివరాలతో వ్రాతపూర్వక ఫిర్యాదు చేయండి.', 'స్థానిక కార్మిక అధికారి లేదా న్యాయ సహాయ సంస్థను సంప్రదించండి.'], evidenceDefault: ['ఉద్యోగ సందేశాలు లేదా ఒప్పందం', 'చెల్లింపు రికార్డులు మరియు బ్యాంక్ వివరాలు', 'ఫోటోలు లేదా వైద్య రికార్డులు', 'సాక్షుల పేర్లు'], roadmapDefault: ['తేదీలు, సంఘటనలు రాయండి.', 'అన్ని పత్రాలు, సందేశాల కాపీలు ఉంచండి.', 'వ్రాతపూర్వక అభ్యర్థన లేదా ఫిర్యాదు పంపండి.', 'స్థానిక కార్మిక అధికారి లేదా న్యాయ సహాయ సంస్థను సంప్రదించండి.'] },
+    bn: { guidance: 'আপনার আইনি নির্দেশনা', issue: 'চিহ্নিত সমস্যা', summary: 'পরিস্থিতির সারাংশ', rights: 'আপনার অধিকার ও প্রয়োজনীয় তথ্য', evidence: 'প্রমাণের তালিকা', roadmap: 'করণীয় পরিকল্পনা', next: 'পরবর্তী পদক্ষেপ', disclaimer: 'এই প্ল্যাটফর্ম সাধারণ তথ্যভিত্তিক নির্দেশনা দেয়; এটি পেশাদার আইনি পরামর্শের বিকল্প নয়। অধিকার ও প্রক্রিয়া আপনার পরিস্থিতি, কাজের ধরন ও এলাকার উপর নির্ভর করে বদলাতে পারে।', detected: 'চিহ্নিত ভাষা', mixed: 'মিশ্র ভাষা শনাক্ত হয়েছে। উত্তরের ভাষা বেছে নিন।', submit: 'আইনি নির্দেশনা নিন', clear: 'মুছে ফেলুন', noIssue: 'নির্দিষ্ট সমস্যা শনাক্ত করা যায়নি। এই সাধারণ পদক্ষেপগুলি সাহায্য করতে পারে।', general: ['বার্তা, টাকা দেওয়া এবং ঘটনার রেকর্ড রাখুন।', 'ভারতের শ্রম আইনে আপনার সুরক্ষাগুলি জানুন।', 'সাক্ষী, ছবি, বেতন স্লিপ ও প্রয়োজনীয় কাগজ সংগ্রহ করুন।', 'তারিখ ও বিস্তারিত দিয়ে লিখিত অভিযোগ করুন।', 'স্থানীয় শ্রম আধিকারিক বা আইনি সহায়তা সংস্থার সঙ্গে যোগাযোগ করুন।'], evidenceDefault: ['চাকরির বার্তা বা চুক্তি', 'পেমেন্টের রেকর্ড ও ব্যাংক বিবরণ', 'ছবি বা চিকিৎসার নথি', 'সাক্ষীদের নাম'], roadmapDefault: ['তারিখ ও ঘটনা লিখে রাখুন।', 'সব নথি ও বার্তার কপি রাখুন।', 'লিখিত অনুরোধ বা অভিযোগ পাঠান।', 'স্থানীয় শ্রম আধিকারিক বা আইনি সহায়তা সংস্থার সঙ্গে যোগাযোগ করুন।'] },
+    mr: { guidance: 'तुमचे कायदेशीर मार्गदर्शन', issue: 'ओळखलेली समस्या', summary: 'परिस्थितीचा सारांश', rights: 'तुमचे हक्क आणि उपयुक्त माहिती', evidence: 'पुराव्यांची यादी', roadmap: 'कृती आराखडा', next: 'पुढील पावले', disclaimer: 'हे व्यासपीठ सामान्य माहितीचे मार्गदर्शन देते; हा व्यावसायिक कायदेशीर सल्ल्याचा पर्याय नाही. हक्क आणि प्रक्रिया तुमची परिस्थिती, कामाचा प्रकार आणि अधिकारक्षेत्रानुसार बदलू शकतात.', detected: 'ओळखलेली भाषा', mixed: 'मिश्र भाषा आढळली. उत्तराची भाषा निवडा.', submit: 'कायदेशीर मार्गदर्शन मिळवा', clear: 'पुसा', noIssue: 'विशिष्ट समस्या ओळखता आली नाही. ही सामान्य पावले मदत करू शकतात.', general: ['संदेश, देयके आणि घटनांच्या नोंदी ठेवा.', 'भारतीय कामगार कायद्यातील संरक्षणांची माहिती घ्या.', 'साक्षीदार, फोटो, पगाराच्या पावत्या आणि कागदपत्रे जमा करा.', 'तारीख व तपशीलांसह लेखी तक्रार करा.', 'स्थानिक कामगार अधिकारी किंवा कायदेशीर मदत संस्थेशी संपर्क साधा.'], evidenceDefault: ['नोकरीचे संदेश किंवा करार', 'देयक नोंदी आणि बँक तपशील', 'फोटो किंवा वैद्यकीय नोंदी', 'साक्षीदारांची नावे'], roadmapDefault: ['तारीख आणि घटना लिहून ठेवा.', 'सर्व कागदपत्रे आणि संदेशांच्या प्रती ठेवा.', 'लेखी विनंती किंवा तक्रार पाठवा.', 'स्थानिक कामगार अधिकारी किंवा कायदेशीर मदत संस्थेशी संपर्क करा.'] }
 };
 
 const issueKeywords = {
@@ -63,8 +63,13 @@ function translateUI(key, language) { return translations[language]?.[key] || tr
 function getLocalizedIssueName(issue, language) { return issueNames[issue]?.[language] || issueNames[issue]?.en || issue; }
 function getLocalizedIssueContent(issue, language) {
     const t = translations[language] || translations.en;
-    const base = legalGuidanceDatabase[issue] || [];
-    return { guidance: language === 'en' ? base : t.general, evidence: t.evidenceDefault, roadmap: t.roadmapDefault };
+    const focus = localizedIssueFocus[language]?.[issue];
+    if (!focus) return { guidance: t.general, evidence: t.evidenceDefault, roadmap: t.roadmapDefault };
+    return {
+        guidance: [focus, ...t.general.slice(0, 2)],
+        evidence: [focus, ...t.evidenceDefault],
+        roadmap: [focus, ...t.roadmapDefault]
+    };
 }
 function getLocalizedGuidance(issue, language) { return getLocalizedIssueContent(issue, language).guidance; }
 function getLocalizedEvidence(issue, language) { return getLocalizedIssueContent(issue, language).evidence; }
@@ -136,6 +141,57 @@ const legalGuidanceDatabase = {
     ]
 };
 
+const localizedIssueFocus = {
+    en: {
+        'Salary Withheld': 'Focus on the dates, amount, and messages related to the unpaid or delayed wages.',
+        'Fired Without Notice': 'Focus on the dismissal date, reason given, and any notice or written message you received.',
+        'Excessive Hours': 'Focus on your daily hours, rest breaks, overtime requests, and records of the work performed.',
+        'No Contract': 'Focus on how the job was agreed, the work you perform, the pay arrangement, and messages showing the relationship.',
+        'Workplace Injury': 'Focus on when and where the injury happened, who was informed, treatment received, and related expenses.',
+        'Sexual Harassment': 'Focus on recording each incident safely, preserving messages, and identifying a trusted reporting or support route.'
+    },
+    hi: {
+        'Salary Withheld': 'न मिले या देर से मिले वेतन की तारीख, रकम और उससे जुड़े संदेशों पर ध्यान दें।',
+        'Fired Without Notice': 'नौकरी खत्म होने की तारीख, बताए गए कारण और मिले नोटिस या लिखित संदेश पर ध्यान दें।',
+        'Excessive Hours': 'रोज़ के काम के घंटे, आराम का समय, अतिरिक्त काम के अनुरोध और काम के रिकॉर्ड पर ध्यान दें।',
+        'No Contract': 'नौकरी कैसे तय हुई, काम क्या है, भुगतान कैसे होता है और संबंध दिखाने वाले संदेशों पर ध्यान दें।',
+        'Workplace Injury': 'चोट कब और कहां लगी, किसे बताया, इलाज क्या हुआ और खर्चों पर ध्यान दें।',
+        'Sexual Harassment': 'हर घटना को सुरक्षित तरीके से लिखें, संदेश बचाकर रखें और भरोसेमंद शिकायत या सहायता का रास्ता खोजें।'
+    },
+    ta: {
+        'Salary Withheld': 'வழங்கப்படாத அல்லது தாமதமான சம்பளத்தின் தேதி, தொகை மற்றும் தொடர்புடைய செய்திகளில் கவனம் செலுத்துங்கள்.',
+        'Fired Without Notice': 'வேலை முடிந்த தேதி, கூறப்பட்ட காரணம் மற்றும் கிடைத்த அறிவிப்பு அல்லது எழுத்துப்பூர்வ செய்தியில் கவனம் செலுத்துங்கள்.',
+        'Excessive Hours': 'தினசரி வேலை நேரம், ஓய்வு நேரம், கூடுதல் வேலை கோரிக்கைகள் மற்றும் வேலைப் பதிவுகளில் கவனம் செலுத்துங்கள்.',
+        'No Contract': 'வேலை எப்படி ஒப்புக்கொள்ளப்பட்டது, செய்யும் வேலை, சம்பள ஏற்பாடு மற்றும் தொடர்பைக் காட்டும் செய்திகளில் கவனம் செலுத்துங்கள்.',
+        'Workplace Injury': 'காயம் ஏற்பட்ட நேரம் மற்றும் இடம், தகவல் கொடுத்தவர், பெற்ற சிகிச்சை மற்றும் செலவுகளில் கவனம் செலுத்துங்கள்.',
+        'Sexual Harassment': 'ஒவ்வொரு சம்பவத்தையும் பாதுகாப்பாக பதிவு செய்து, செய்திகளை வைத்துக் கொண்டு நம்பகமான புகார் அல்லது ஆதரவு வழியைத் தேடுங்கள்.'
+    },
+    te: {
+        'Salary Withheld': 'చెల్లించని లేదా ఆలస్యమైన జీతానికి సంబంధించిన తేదీలు, మొత్తం మరియు సందేశాలపై దృష్టి పెట్టండి.',
+        'Fired Without Notice': 'ఉద్యోగం ముగిసిన తేదీ, చెప్పిన కారణం మరియు వచ్చిన నోటీసు లేదా వ్రాతపూర్వక సందేశంపై దృష్టి పెట్టండి.',
+        'Excessive Hours': 'రోజువారీ పని గంటలు, విశ్రాంతి సమయం, అదనపు పని అభ్యర్థనలు మరియు పని రికార్డులపై దృష్టి పెట్టండి.',
+        'No Contract': 'ఉద్యోగం ఎలా అంగీకరించబడింది, పని, చెల్లింపు విధానం మరియు సంబంధాన్ని చూపే సందేశాలపై దృష్టి పెట్టండి.',
+        'Workplace Injury': 'గాయం ఎప్పుడు, ఎక్కడ జరిగింది, ఎవరికి చెప్పారు, చికిత్స మరియు ఖర్చులపై దృష్టి పెట్టండి.',
+        'Sexual Harassment': 'ప్రతి సంఘటనను సురక్షితంగా నమోదు చేసి, సందేశాలను భద్రపరచి, నమ్మకమైన ఫిర్యాదు లేదా సహాయ మార్గాన్ని వెతకండి.'
+    },
+    bn: {
+        'Salary Withheld': 'না পাওয়া বা দেরি হওয়া মজুরির তারিখ, পরিমাণ এবং সম্পর্কিত বার্তাগুলিতে মন দিন।',
+        'Fired Without Notice': 'চাকরি শেষ হওয়ার তারিখ, বলা কারণ এবং পাওয়া নোটিশ বা লিখিত বার্তায় মন দিন।',
+        'Excessive Hours': 'প্রতিদিনের কাজের সময়, বিশ্রামের সময়, অতিরিক্ত কাজের অনুরোধ এবং কাজের রেকর্ডে মন দিন।',
+        'No Contract': 'চাকরি কীভাবে ঠিক হয়েছিল, কাজের ধরন, পারিশ্রমিকের ব্যবস্থা এবং সম্পর্কের প্রমাণ দেওয়া বার্তায় মন দিন।',
+        'Workplace Injury': 'আঘাত কখন ও কোথায় হয়েছে, কাকে জানানো হয়েছে, চিকিৎসা এবং খরচে মন দিন।',
+        'Sexual Harassment': 'প্রতিটি ঘটনা নিরাপদে লিখে রাখুন, বার্তা সংরক্ষণ করুন এবং বিশ্বাসযোগ্য অভিযোগ বা সহায়তার পথ খুঁজুন।'
+    },
+    mr: {
+        'Salary Withheld': 'न मिळालेल्या किंवा उशिरा मिळालेल्या पगाराची तारीख, रक्कम आणि संबंधित संदेशांवर लक्ष द्या.',
+        'Fired Without Notice': 'नोकरी संपल्याची तारीख, सांगितलेले कारण आणि मिळालेली नोटीस किंवा लेखी संदेश यावर लक्ष द्या.',
+        'Excessive Hours': 'दररोजचे कामाचे तास, विश्रांती, अतिरिक्त कामाच्या विनंत्या आणि कामाच्या नोंदी यावर लक्ष द्या.',
+        'No Contract': 'नोकरी कशी ठरली, कामाचे स्वरूप, वेतनाची पद्धत आणि संबंध दाखवणाऱ्या संदेशांवर लक्ष द्या.',
+        'Workplace Injury': 'दुखापत कधी व कुठे झाली, कोणाला सांगितले, उपचार आणि खर्च यावर लक्ष द्या.',
+        'Sexual Harassment': 'प्रत्येक घटना सुरक्षितपणे लिहा, संदेश जतन करा आणि विश्वासार्ह तक्रार किंवा मदतीचा मार्ग शोधा.'
+    }
+};
+
 // DOM Elements
 const submitBtn = document.getElementById('submitBtn');
 const clearBtn = document.getElementById('clearBtn');
@@ -151,6 +207,8 @@ const languageSelector = document.getElementById('languageSelector');
 const languageStatus = document.getElementById('languageStatus');
 const autoReadToggle = document.getElementById('autoReadToggle');
 const voiceSupportStatus = document.getElementById('voiceSupportStatus');
+const workerTypeSelector = document.getElementById('workerType');
+const stateSelector = document.getElementById('stateSelector');
 
 const speechLanguageCodes = { en: 'en-IN', hi: 'hi-IN', ta: 'ta-IN', te: 'te-IN', bn: 'bn-IN', mr: 'mr-IN' };
 let speechState = { status: 'idle', utterance: null, language: 'en' };
@@ -237,7 +295,7 @@ function speakSection(sectionName, caseData) { return speakText(getSpeechSection
 function speakFullGuidance(caseData) {
     const t = translations[caseData.language] || translations.en;
     const intro = { en: 'Here is your case guidance.', hi: 'यह आपकी केस संबंधी जानकारी है।', ta: 'இதோ உங்கள் வழக்கு வழிகாட்டுதல்.', te: 'ఇదిగో మీ కేసు మార్గదర్శకం.', bn: 'এটি আপনার কেসের নির্দেশনা।', mr: 'हे तुमच्या प्रकरणाचे मार्गदर्शन आहे.' }[caseData.language] || 'Here is your case guidance.';
-    const text = [intro, getSpeechSectionText('understanding', caseData), `${t.rights}. ${speechList(caseData.content.guidance)}`, `${t.next}. ${speechList(t.roadmapDefault)}`, getSpeechSectionText('evidence', caseData), getSpeechSectionText('roadmap', caseData), t.disclaimer].join(' ');
+    const text = [intro, getSpeechSectionText('understanding', caseData), `${t.rights}. ${speechList(caseData.content.guidance)}`, `${t.next}. ${speechList(caseData.content.roadmap)}`, getSpeechSectionText('evidence', caseData), getSpeechSectionText('roadmap', caseData), t.disclaimer].join(' ');
     return speakText(text, caseData.language);
 }
 
@@ -285,8 +343,9 @@ issueTags.forEach(tag => {
 // FAQ accordion
 faqQuestions.forEach(question => {
     question.addEventListener('click', () => {
-        const faqItem = question.parentElement;
-        faqItem.classList.toggle('active');
+        const faqItem = question.closest('.faq-item');
+        const expanded = faqItem.classList.toggle('active');
+        question.setAttribute('aria-expanded', String(expanded));
     });
 });
 
@@ -331,10 +390,14 @@ function saveAnalysisCase(userInput, category, language, languageResult) {
         languageConfidence: languageResult.confidence,
         userQuestion: userInput,
         issue: category,
+        workerType: workerTypeSelector?.value || '',
+        state: stateSelector?.value || '',
         localizedIssueName: getLocalizedIssueName(category, language),
         guidance: content.guidance,
         evidenceChecklist: content.evidence,
         roadmap: content.roadmap,
+        evidenceProgress: content.evidence.map(() => false),
+        roadmapProgress: content.roadmap.map(() => false),
         issue_summary: getLocalizedIssueName(category, language),
         full_conversation_log: [{ type: 'text', text: userInput, ts: new Date().toISOString() }],
         verdict: null
@@ -371,14 +434,21 @@ function generateLegalGuidance(userInput, category, language) {
     content.roadmap.forEach(point => { response += `<li style="margin-bottom: 10px;">${point}</li>`; });
     response += `</ol></div><h4 style="margin-top: 20px;">${t.next}</h4>`;
     response += '<ul style="margin-left: 20px;">';
-    t.roadmapDefault.forEach(point => { response += `<li style="margin-bottom: 10px;">${point}</li>`; });
+    content.roadmap.forEach(point => { response += `<li style="margin-bottom: 10px;">${point}</li>`; });
     response += '</ul>';
 
     response += `<p style="margin-top: 20px; color: #34D399;"><strong>${t.disclaimer}</strong></p>`;
     response += `<button class="btn btn-secondary" type="button" onclick="downloadCaseSummary()">${language === 'en' ? 'Download Case Summary' : language === 'hi' ? 'केस सारांश डाउनलोड करें' : language === 'ta' ? 'வழக்கு சுருக்கத்தைப் பதிவிறக்கவும்' : language === 'te' ? 'కేసు సారాంశాన్ని డౌన్‌లోడ్ చేయండి' : language === 'bn' ? 'কেসের সারাংশ ডাউনলোড করুন' : 'केस सारांश डाउनलोड करा'}</button>`;
     response += '</div>';
 
-    window.latestCaseSummary = { userInput, category, language, content };
+    window.latestCaseSummary = {
+        userInput,
+        category,
+        language,
+        content,
+        workerType: workerTypeSelector?.value || '',
+        state: stateSelector?.value || ''
+    };
 
     return response;
 }
@@ -501,6 +571,7 @@ if (micToggle) {
     micToggle.addEventListener('click', () => {
         micEnabled = !micEnabled;
         micToggleIcon.textContent = micEnabled ? '🔊' : '🔇';
+        micToggle.setAttribute('aria-label', micEnabled ? 'Turn microphone off' : 'Turn microphone on');
         micToggle.classList.toggle('off', !micEnabled);
         // If mic disabled while listening, stop recognition
         if (!micEnabled && ongoingRecognition) {
@@ -542,6 +613,7 @@ if (voiceBtn) {
 
         recognition.onstart = () => {
             if (voiceIcon) voiceIcon.classList.add('speaking');
+            voiceBtn.setAttribute('aria-label', 'Stop voice input');
             audioBars.forEach(bar => bar.classList.add('animating'));
         };
 
@@ -553,26 +625,11 @@ if (voiceBtn) {
             }
             const voiceLanguage = getSelectedLanguage(transcript);
             if (languageStatus) languageStatus.textContent = `${translateUI('detected', voiceLanguage.language)}: ${supportedLanguages[voiceLanguage.language].name}`;
-            // Save a draft case automatically (minimal)
-            const c = {
-                case_id: 'case_' + Date.now() + '_' + Math.random().toString(36).slice(2,6),
-                user_id: getCurrentUser() && getCurrentUser().user_id,
-                timestamp: new Date().toISOString(),
-                issue_summary: transcript.slice(0,120),
-                originalLanguage: voiceLanguage.language,
-                responseLanguage: voiceLanguage.language,
-                languageConfidence: voiceLanguage.confidence,
-                userQuestion: transcript,
-                full_conversation_log: [{type:'voice', text: transcript, ts: new Date().toISOString()}],
-                verdict: null,
-                notice_generated: false,
-                region: null
-            };
-            saveCase(c);
         };
 
         recognition.onend = () => {
             if (voiceIcon) voiceIcon.classList.remove('speaking');
+            voiceBtn.setAttribute('aria-label', 'Start voice input');
             audioBars.forEach(bar => bar.classList.remove('animating'));
             ongoingRecognition = null;
         };
@@ -580,6 +637,7 @@ if (voiceBtn) {
         recognition.onerror = (e) => {
             console.error('Speech recognition error', e);
             if (voiceIcon) voiceIcon.classList.remove('speaking');
+            voiceBtn.setAttribute('aria-label', 'Start voice input');
             audioBars.forEach(bar => bar.classList.remove('animating'));
             ongoingRecognition = null;
             alert('Speech recognition error: ' + (e.error || 'unknown'));
@@ -662,6 +720,7 @@ async function loginWithPhone(phone, code, preferred_language, guest_session_id)
 function renderCasesOnPage() {
     const casesContainer = document.getElementById('casesList');
     if (!casesContainer) return;
+    const detailContainer = document.getElementById('caseDetail');
     const user = getCurrentUser();
     const owner = (user && user.user_id) || localStorage.getItem('guestSessionId');
     const cases = getCasesForOwner(owner) || [];
@@ -671,16 +730,103 @@ function renderCasesOnPage() {
         const div = document.createElement('div');
         div.className = 'case-card';
         const savedLanguage = supportedLanguages[c.responseLanguage]?.name || '';
-        div.innerHTML = `<div class="case-card-header"><strong>${c.localizedIssueName || c.issue_summary}</strong><span class="case-ts">${new Date(c.timestamp).toLocaleString()}</span></div>
-                         <div class="case-card-body"><p>${(c.full_conversation_log && c.full_conversation_log[0] && c.full_conversation_log[0].text) || ''}</p></div>
-                 <div class="case-card-footer"><small>${savedLanguage ? savedLanguage + ' | ' : ''}${c.verdict || 'Pending'}</small></div>`;
+        const header = document.createElement('div');
+        header.className = 'case-card-header';
+        const title = document.createElement('strong');
+        title.textContent = c.localizedIssueName || c.issue_summary || 'Saved case';
+        const timestamp = document.createElement('span');
+        timestamp.className = 'case-ts';
+        timestamp.textContent = new Date(c.timestamp).toLocaleString();
+        header.append(title, timestamp);
+        const body = document.createElement('div');
+        body.className = 'case-card-body';
+        const description = document.createElement('p');
+        description.textContent = c.userQuestion || (c.full_conversation_log?.[0]?.text || '');
+        body.appendChild(description);
+        const footer = document.createElement('div');
+        footer.className = 'case-card-footer';
+        const metadata = document.createElement('small');
+        metadata.textContent = `${savedLanguage ? savedLanguage + ' | ' : ''}${c.verdict || 'Saved locally'}`;
+        footer.appendChild(metadata);
+        div.append(header, body, footer);
         div.addEventListener('click', () => {
             cleanupSpeech();
-            // navigate to case detail view (not implemented fully)
-            alert('Case details not yet implemented in demo.');
+            showCaseDetail(c, detailContainer);
         });
         casesContainer.appendChild(div);
     });
+}
+
+function showCaseDetail(caseData, detailContainer) {
+    if (!detailContainer) return;
+    const language = caseData.responseLanguage || caseData.originalLanguage || 'en';
+    const t = translations[language] || translations.en;
+    const guidance = caseData.guidance || [];
+    const evidence = caseData.evidenceChecklist || [];
+    const roadmap = caseData.roadmap || [];
+    const evidenceProgress = caseData.evidenceProgress || evidence.map(() => false);
+    const roadmapProgress = caseData.roadmapProgress || roadmap.map(() => false);
+    detailContainer.innerHTML = '';
+
+    const heading = document.createElement('h3');
+    heading.textContent = caseData.localizedIssueName || caseData.issue_summary || t.guidance;
+    detailContainer.appendChild(heading);
+    const context = document.createElement('p');
+    context.textContent = `${t.summary}: ${caseData.userQuestion || ''}`;
+    detailContainer.appendChild(context);
+    if (caseData.workerType || caseData.state) {
+        const workerContext = document.createElement('p');
+        workerContext.textContent = [caseData.workerType, caseData.state].filter(Boolean).join(' | ');
+        detailContainer.appendChild(workerContext);
+    }
+
+    appendCaseList(detailContainer, t.rights, guidance, 'ul');
+    appendCaseList(detailContainer, t.evidence, evidence, 'ul', evidenceProgress, (index, checked) => {
+        updateCaseProgress(caseData.case_id, 'evidenceProgress', index, checked);
+    });
+    appendCaseList(detailContainer, t.roadmap, roadmap, 'ol', roadmapProgress, (index, checked) => {
+        updateCaseProgress(caseData.case_id, 'roadmapProgress', index, checked);
+    });
+    const disclaimer = document.createElement('p');
+    disclaimer.className = 'case-disclaimer';
+    disclaimer.textContent = t.disclaimer;
+    detailContainer.appendChild(disclaimer);
+    detailContainer.classList.add('visible');
+    detailContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function appendCaseList(container, headingText, items, listType, progress, onChange) {
+    const heading = document.createElement('h4');
+    heading.textContent = headingText;
+    container.appendChild(heading);
+    const list = document.createElement(listType);
+    (items || []).forEach((item, index) => {
+        const listItem = document.createElement('li');
+        if (progress) {
+            const label = document.createElement('label');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = Boolean(progress[index]);
+            checkbox.addEventListener('change', () => onChange(index, checkbox.checked));
+            label.append(checkbox, document.createTextNode(item));
+            listItem.appendChild(label);
+        } else {
+            listItem.textContent = item;
+        }
+        list.appendChild(listItem);
+    });
+    container.appendChild(list);
+}
+
+function updateCaseProgress(caseId, field, index, checked) {
+    const user = getCurrentUser();
+    const owner = (user && user.user_id) || localStorage.getItem('guestSessionId');
+    const cases = getCasesForOwner(owner);
+    const savedCase = cases.find(item => item.case_id === caseId);
+    if (!savedCase) return;
+    savedCase[field] = savedCase[field] || [];
+    savedCase[field][index] = checked;
+    localStorage.setItem('cases_' + owner, JSON.stringify(cases));
 }
 
 // Run on pages where DOM loaded

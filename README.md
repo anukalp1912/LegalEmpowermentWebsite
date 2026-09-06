@@ -6,8 +6,8 @@ A modern, fully functional website providing free legal guidance and support for
 
 ✨ **Core Features:**
 - 🎤 Multi-language voice input support (Hindi, English, Tamil, Bengali, Telugu, Marathi)
-- ⚖️ AI-powered legal guidance system
-- 🔒 100% confidential and completely free
+- ⚖️ Structured informational guidance demo
+- 🔒 Local browser case storage for the hackathon MVP; do not enter sensitive information
 - 📱 Fully responsive design
 - 🌙 Modern dark theme with gradient accents
 - ♿ Accessibility-friendly UI
@@ -106,7 +106,7 @@ Click any issue tag to auto-populate common problems:
 
 ### Legal Guidance
 - Enter your situation or question
-- AI-powered system analyzes your input
+- The static MVP matches issue categories and shows general informational guidance
 - Provides category-specific legal guidance
 - Includes actionable next steps
 - References Indian labor laws
@@ -121,8 +121,7 @@ Click any issue tag to auto-populate common problems:
 This website provides **general legal information**, not professional legal advice. For specific legal consultation, contact:
 
 - **District Labor Officer** - Local authority in your district
-- **Worker Helpline:** 1800-WORKER-1 (toll-free)
-- **Women Helpline:** 181 (for harassment cases)
+- **Local support:** Verify current local legal-aid and emergency contacts before relying on them
 - **Legal Aid Organizations** - Government-sponsored free legal aid
 
 ## Customization
@@ -195,13 +194,13 @@ Potential features to add:
 - PDF report generation
 - Integration with legal aid databases
 - Video tutorials
-- Live chat support
+- Secure backend and live chat are not included in this MVP
 - Offline mode support
 
 ## Contact & Feedback
 
 Email: support@workerlegal.in
-Helpline: 1800-WORKER-1
+Email: support@workerlegal.in (demo contact)
 
 ---
 

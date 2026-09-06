@@ -223,4 +223,4 @@ For issues or questions, refer to:
 
 **Version**: 2.0  
 **Last Updated**: September 2026  
-**Status**: Production Ready ✅
+**Status**: Hackathon MVP; browser/device voice support varies.

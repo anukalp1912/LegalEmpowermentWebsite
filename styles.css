@@ -17,6 +17,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    box-sizing: border-box;
 }
 
 .nav-brand {
@@ -47,6 +49,11 @@
     list-style: none;
     gap: 8px;
     align-items: center;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    min-width: 0;
 }
 
 .nav-link {
@@ -98,12 +105,17 @@ html, body {
     height: 100%;
 }
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Atkinson Hyperlegible', sans-serif;
     background: #0B0F17;
     color: #CBD5E1;
     line-height: 1.6;
     overflow-x: hidden;
+    margin: 0;
 }
 
 /* Main Container */
@@ -152,6 +164,7 @@ body {
     max-width: 1280px;
     padding-left: 24px;
     padding-right: 24px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 36px;
@@ -525,6 +538,29 @@ body {
     font-size: 0.85rem;
 }
 
+.worker-context {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.worker-context .language-control {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 0;
+}
+
+.worker-context input {
+    width: 100%;
+    background: #111827;
+    border: 1px solid #475569;
+    border-radius: 6px;
+    color: #F8FAFC;
+    padding: 8px 10px;
+    font: inherit;
+}
+
 .accessibility-title {
     color: #F8FAFC;
     font-weight: 700;
@@ -819,6 +855,9 @@ body {
     font-size: 16px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     transition: background 0.3s ease;
+    width: 100%;
+    border: 0;
+    text-align: left;
 }
 
 .faq-question:hover {
@@ -1128,6 +1167,7 @@ body {
     border-radius: 12px;
     padding: 16px;
     margin-bottom: 12px;
+    cursor: pointer;
 }
 .case-card-header {
     display:flex;
@@ -1141,6 +1181,22 @@ body {
 }
 .case-card-body p { color: #CBD5E1; margin: 8px 0; }
 .case-card-footer small { color: #94A3B8; }
+
+.case-detail {
+    display: none;
+    background: rgba(15,23,42,0.95);
+    border: 1px solid rgba(52,211,153,0.35);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 0 0 24px;
+}
+
+.case-detail.visible { display: block; }
+.case-detail h3, .case-detail h4 { color: white; }
+.case-detail p, .case-detail li { color: #CBD5E1; }
+.case-detail ul, .case-detail ol { padding-left: 24px; }
+.case-detail label { display: block; margin: 8px 0; }
+.case-detail input { margin-right: 8px; accent-color: #34D399; }
 
 /* Login page basics */
 .auth-box {
@@ -1158,6 +1214,22 @@ body {
 .auth-primary { background: linear-gradient(45deg,#EA580C,#FB923C); color:white; border:none; padding:10px 14px; border-radius:9999px; cursor:pointer; }
 
 @media (max-width:768px) {
+    .navbar-content {
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .nav-links {
+        flex: 1 1 100%;
+        justify-content: flex-start;
+        gap: 4px;
+    }
+
+    .nav-link {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
     .auth-box { margin:24px; }
 }
 
@@ -1769,6 +1841,16 @@ body {
         filter: blur(40px);
     }
 
+    .blur-orange {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .blur-green {
+        left: auto;
+        right: 0;
+    }
+
     .values-section h2,
     .resources-section h2,
     .guides-section h2,
@@ -1796,6 +1878,34 @@ body {
     .interactive-card {
         padding: 16px;
         gap: 16px;
+    }
+
+    .navbar-content {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .nav-links {
+        gap: 2px;
+    }
+
+    .nav-link {
+        padding-left: 7px;
+        padding-right: 7px;
+    }
+
+    .voice-container {
+        align-items: stretch;
+    }
+
+    .worker-context {
+        grid-template-columns: 1fr;
+    }
+
+    .audio-visualizer {
+        min-width: 0;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .hero-title,
