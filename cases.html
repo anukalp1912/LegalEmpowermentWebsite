@@ -5,20 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>My Cases - RightsMitra</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Atkinson+Hyperlegible:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="content-wrapper">
-        <header style="margin-top:24px; margin-bottom:12px;">
-            <h2 style="color:white;">My Previous Cases</h2>
-            <p style="color:#94A3B8;">Your saved cases (guest session preserved until you sign up).</p>
-        </header>
+    <div class="main-container">
+        <!-- Background decorative elements -->
+        <div class="blur-circle blur-orange"></div>
+        <div class="blur-circle blur-green"></div>
 
-        <div id="casesList"></div>
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="navbar-content">
+                <div class="nav-brand">
+                    <span class="brand-icon">⚖️</span>
+                    <span class="brand-text">RightsMitra</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="resources.html" class="nav-link">Resources</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="cases.html" class="nav-link active">My Cases</a></li>
+                    <li><a href="login.html" class="nav-link">Login</a></li>
+                </ul>
+            </div>
+        </nav>
 
-        <div style="margin-top:24px;">
-            <a href="index.html" class="btn btn-secondary">Back to Home</a>
+        <!-- Content wrapper -->
+        <div class="content-wrapper">
+            <header style="margin-top:24px; margin-bottom:12px;">
+                <h2 style="color:white;">My Previous Cases</h2>
+                <p style="color:#94A3B8;">Your saved cases (guest session preserved until you sign up).</p>
+            </header>
+
+            <div id="casesList"></div>
+
+            <div style="margin-top:24px;">
+                <a href="index.html" class="btn btn-secondary">Back to Home</a>
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h4>About Us</h4>
+                        <p>Empowering workers with free legal guidance and rights awareness across India.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="resources.html">Resources</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Contact Us</h4>
+                        <p>Email: <a href="mailto:rightsmitra@gmail.com">rightsmitra@gmail.com</a></p>
+                        <p>Phone: 1800-WORKER-1</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Languages</h4>
+                        <p>Hindi • English • Tamil • Bengali • Telugu • Marathi</p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 RightsMitra. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+                </div>
+            </footer>
         </div>
-    </div>
 
     <script src="script.js"></script>
     <script>
@@ -34,5 +90,7 @@
             }
         });
     </script>
+        </div>
+    </div>
 </body>
 </html>
