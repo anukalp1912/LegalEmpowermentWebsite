@@ -80,8 +80,28 @@ function detectLanguage(text) {
     return { language: 'en', confidence: counts.en ? 0.8 : 0.25, mixed: false };
 }
 
+function getCaseLanguageStatusText(language, detected = false) {
+    const label = supportedLanguages[language]?.name || language;
+    return detected ? `Detected case language: ${label}` : `Case language: ${label}`;
+}
+
+function getCaseLanguagePreference() {
+    const saved = localStorage.getItem('rightsMitraCaseLanguage');
+    return saved && supportedLanguages[saved] ? saved : 'auto';
+}
+
+function setCaseLanguagePreference(language) {
+    if (!language || language === 'auto') {
+        localStorage.removeItem('rightsMitraCaseLanguage');
+        return;
+    }
+    if (supportedLanguages[language]) {
+        localStorage.setItem('rightsMitraCaseLanguage', language);
+    }
+}
+
 function getSelectedLanguage(text) {
-    const selected = document.getElementById('languageSelector')?.value || 'auto';
+    const selected = document.getElementById('languageSelector')?.value || getCaseLanguagePreference();
     if (selected !== 'auto') return { language: selected, confidence: 1, manual: true };
     return detectLanguage(text);
 }
@@ -340,11 +360,23 @@ function wireSpeechControls() {
 if (languageSelector) {
     languageSelector.addEventListener('change', () => {
         const language = languageSelector.value;
-        if (language !== 'auto') setAppLanguage(language);
-        if (language !== 'auto' && languageStatus) languageStatus.textContent = `${translateUI('detected', language)}: ${supportedLanguages[language].name}`;
-        if (language === 'auto' && languageStatus) languageStatus.textContent = '';
-        if (submitBtn && language !== 'auto') submitBtn.textContent = translateUI('submit', language);
-        if (clearBtn && language !== 'auto') clearBtn.textContent = translateUI('clear', language);
+        setCaseLanguagePreference(language);
+
+        if (language === 'auto') {
+            if (userQuestionInput?.value.trim()) {
+                const detected = detectLanguage(userQuestionInput.value.trim());
+                if (languageStatus) languageStatus.textContent = getCaseLanguageStatusText(detected.language, true);
+                languageSelector.value = detected.language;
+                setCaseLanguagePreference(detected.language);
+            } else if (languageStatus) {
+                languageStatus.textContent = 'Detected case language: Auto';
+            }
+            return;
+        }
+
+        if (languageStatus) languageStatus.textContent = getCaseLanguageStatusText(language, false);
+        if (submitBtn) submitBtn.textContent = getUiText('understand', getInterfaceLanguage() || 'en');
+        if (clearBtn) clearBtn.textContent = getUiText('clear', getInterfaceLanguage() || 'en');
     });
 }
 if (voiceSupportStatus && (!window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined')) {
@@ -389,7 +421,12 @@ function handleSubmit() {
     const languageResult = getSelectedLanguage(userInput);
     const language = languageResult.language;
     const languageStatus = document.getElementById('languageStatus');
-    if (languageStatus) languageStatus.textContent = languageResult.mixed && !languageResult.manual ? translateUI('mixed', language) : `${translateUI('detected', language)}: ${supportedLanguages[language].name}`;
+    const selectedCaseLanguage = languageSelector?.value || 'auto';
+    if (languageStatus) {
+        languageStatus.textContent = selectedCaseLanguage === 'auto'
+            ? getCaseLanguageStatusText(language, true)
+            : getCaseLanguageStatusText(language, false);
+    }
     const matchingCategory = detectIssue(userInput, language);
 
     // Generate response
@@ -746,7 +783,11 @@ if (voiceBtn) {
                 userQuestionInput.focus();
             }
             const voiceLanguage = getSelectedLanguage(transcript);
-            if (languageStatus) languageStatus.textContent = `${translateUI('detected', voiceLanguage.language)}: ${supportedLanguages[voiceLanguage.language].name}`;
+            if (languageSelector && languageSelector.value === 'auto') {
+                languageSelector.value = voiceLanguage.language;
+                setCaseLanguagePreference(voiceLanguage.language);
+            }
+            if (languageStatus) languageStatus.textContent = getCaseLanguageStatusText(voiceLanguage.language, true);
         };
 
         recognition.onend = () => {
@@ -779,7 +820,7 @@ if (voiceBtn) {
 async function sendOTP({ phone, email }) {
     try {
         if (email && !phone) {
-            const res = await fetch('/api/send-email-otp', {
+            const res = await fetch(`${API_BASE_URL}/api/send-email-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
@@ -791,12 +832,13 @@ async function sendOTP({ phone, email }) {
         }
 
         // default: phone
-        const res = await fetch('/api/send-otp', {
+        const res = await fetch(`${API_BASE_URL}/api/send-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phone })
         });
         const j = await res.json();
+        if (j && j.success) return true;
         if (j && j.ok) return true;
         console.warn('sendOTP(phone) failed', j);
         return false;
@@ -816,14 +858,19 @@ async function loginWithPhone(phoneOrEmail, code, preferred_language, guest_sess
     const isEmail = typeof phoneOrEmail === 'string' && phoneOrEmail.includes('@');
     try {
         const payload = isEmail ? { email: phoneOrEmail, code, preferred_language, guest_session_id } : { phone: phoneOrEmail, code, preferred_language, guest_session_id };
-        const res = await fetch('/api/verify-otp', {
+        const res = await fetch(`${API_BASE_URL}/api/verify-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
         const j = await res.json();
+        if (j && j.success && j.user) {
+            const guestId = localStorage.getItem('guestSessionId');
+            if (guestId) try { migrateGuestCasesToUser(guestId, j.user.user_id); } catch(e){console.warn(e)}
+            setCurrentUser(j.user);
+            return j.user;
+        }
         if (j && j.ok && j.user) {
-            // migrate guest cases (server may do this too) - keep client-side as safety
             const guestId = localStorage.getItem('guestSessionId');
             if (guestId) try { migrateGuestCasesToUser(guestId, j.user.user_id); } catch(e){console.warn(e)}
             setCurrentUser(j.user);
@@ -1045,7 +1092,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Legal Empowerment Website Loaded Successfully');
     
     // Preload animations
-    const elements = document.querySelectorAll('.interactive-card, .feature-card, .faq-item');
+     const elements = document.querySelectorAll('.interactive-card, .feature-card, .faq-item');
     elements.forEach(el => {
         el.style.animation = 'none';
     });
@@ -1135,9 +1182,12 @@ function applyInterfaceLanguage(language) {
     const switcher = document.querySelector('.app-language-switcher select');
     if (switcher) { switcher.value = language; switcher.setAttribute('aria-label', getUiText('changeLanguage', language)); }
     if (languageSelector) {
-        languageSelector.value = language;
         const autoOption = languageSelector.querySelector('option[value="auto"]');
         if (autoOption) autoOption.textContent = getUiText('autoDetect', language);
+        languageSelector.value = getCaseLanguagePreference();
+        if (!supportedLanguages[languageSelector.value] && languageSelector.value !== 'auto') {
+            languageSelector.value = 'auto';
+        }
     }
     const placeholders = { en: 'Describe your work-related problem...', hi: 'अपनी काम से जुड़ी समस्या बताएं...', ta: 'உங்கள் வேலை தொடர்பான பிரச்சினையை விவரிக்கவும்...', te: 'మీ పని సంబంధిత సమస్యను వివరించండి...', bn: 'আপনার কাজের সমস্যাটি বর্ণনা করুন...', mr: 'तुमची कामाशी संबंधित समस्या सांगा...' };
     if (userQuestionInput) userQuestionInput.placeholder = placeholders[language] || placeholders.en;
@@ -1170,10 +1220,6 @@ function setAppLanguage(language) {
     if (!supportedLanguages[language]) return;
     localStorage.setItem('rightsMitraLanguage', language);
     applyInterfaceLanguage(language);
-    if (window.latestCaseSummary && responseContent && !responseSection?.classList.contains('hidden')) {
-        const summary = window.latestCaseSummary;
-        displayResponse(generateLegalGuidance(summary.userInput, summary.category, language));
-    }
 }
 
 createLanguageExperience();

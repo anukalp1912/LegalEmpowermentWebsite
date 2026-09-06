@@ -23,9 +23,14 @@ const PORT = process.env.PORT || 4000;
 // --- tiny router ---------------------------------------------------------
 const routes = [
   { method: 'GET', pattern: /^\/api\/health$/, handler: (req, res) => res.status(200).json({ status: 'ok', service: 'rightsmitra-backend' }) },
+
+  // Backward-compatible auth routes for the demo frontend and newer backend routes.
+  { method: 'POST', pattern: /^\/api\/send-otp$/, handler: (req, res, body) => auth.sendOtp(req, res, body) },
+  { method: 'POST', pattern: /^\/api\/verify-otp$/, handler: (req, res, body) => auth.verifyOtp(req, res, body) },
   { method: 'POST', pattern: /^\/api\/auth\/send-otp$/, handler: (req, res, body) => auth.sendOtp(req, res, body) },
   { method: 'POST', pattern: /^\/api\/auth\/verify-otp$/, handler: (req, res, body) => auth.verifyOtp(req, res, body) },
   { method: 'POST', pattern: /^\/api\/auth\/guest$/, handler: (req, res) => auth.createGuest(req, res) },
+
   { method: 'POST', pattern: /^\/api\/guidance$/, handler: (req, res, body) => guidance.postGuidance(req, res, body) },
   { method: 'GET', pattern: /^\/api\/cases$/, handler: (req, res, body, query) => cases.listCases(req, res, body, query) },
   { method: 'POST', pattern: /^\/api\/cases$/, handler: (req, res, body) => cases.createCase(req, res, body) },
