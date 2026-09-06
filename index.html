@@ -131,6 +131,24 @@
 
                 <!-- Text input section -->
                 <div class="text-input-section">
+                    <div class="language-control">
+                        <label for="languageSelector">🌐 Your Language</label>
+                        <select id="languageSelector" aria-describedby="languageStatus">
+                            <option value="auto">Auto Detect</option>
+                            <option value="en">English</option>
+                            <option value="hi">हिन्दी</option>
+                            <option value="ta">தமிழ்</option>
+                            <option value="te">తెలుగు</option>
+                            <option value="bn">বাংলা</option>
+                            <option value="mr">मराठी</option>
+                        </select>
+                        <span id="languageStatus" class="language-status" aria-live="polite"></span>
+                    </div>
+                    <div class="accessibility-options" aria-label="Accessibility Options">
+                        <span class="accessibility-title">♿ Accessibility Options</span>
+                        <label class="speech-toggle"><input type="checkbox" id="autoReadToggle"> Automatically read summary</label>
+                        <span id="voiceSupportStatus" class="voice-support-status" aria-live="polite">🔊 Voice guidance available</span>
+                    </div>
                     <textarea id="userQuestion" class="question-input" placeholder="Describe your situation or ask a question... / अपनी स्थिति बताएं या प्रश्न पूछें..." rows="6"></textarea>
                 </div>
 

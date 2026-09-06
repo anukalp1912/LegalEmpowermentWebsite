@@ -1,3 +1,89 @@
+// Language data stays centralized so new languages can be added without changing the analysis flow.
+const supportedLanguages = {
+    en: { name: 'English', speechCode: 'en-IN' },
+    hi: { name: 'Hindi', speechCode: 'hi-IN' },
+    ta: { name: 'Tamil', speechCode: 'ta-IN' },
+    te: { name: 'Telugu', speechCode: 'te-IN' },
+    bn: { name: 'Bengali', speechCode: 'bn-IN' },
+    mr: { name: 'Marathi', speechCode: 'mr-IN' }
+};
+
+const translations = {
+    en: { guidance: 'Your Legal Guidance', issue: 'Issue detected', summary: 'Situation summary', rights: 'Rights and useful information', evidence: 'Evidence checklist', roadmap: 'Action roadmap', next: 'Next steps', disclaimer: 'This is general information, not legal advice. Speak with a qualified lawyer or legal-aid organisation for advice about your situation.', detected: 'Language detected', mixed: 'Mixed language input detected. Choose your response language.', submit: 'Get Legal Guidance', clear: 'Clear', noIssue: 'We could not identify a specific issue. These general steps may help.', general: ['Keep records of messages, payments, and incidents.', 'Learn about your protections under Indian labour law.', 'Collect witnesses, photographs, payslips, and other supporting documents.', 'Make complaints in writing with dates and specific details.', 'Contact your District Labour Officer or a legal-aid organisation.'], evidenceDefault: ['Employment messages or contract', 'Payment records and bank statements', 'Relevant photographs or medical records', 'Names of witnesses'], roadmapDefault: ['Write down the dates and facts.', 'Keep copies of every document and message.', 'Send a written request or complaint.', 'Contact a labour authority or legal-aid organisation.'] },
+    hi: { guidance: 'आपकी कानूनी जानकारी', issue: 'पहचानी गई समस्या', summary: 'स्थिति का सारांश', rights: 'आपके अधिकार और उपयोगी जानकारी', evidence: 'सबूतों की सूची', roadmap: 'आगे की कार्ययोजना', next: 'अगले कदम', disclaimer: 'यह सामान्य जानकारी है, कानूनी सलाह नहीं। अपनी स्थिति के लिए योग्य वकील या कानूनी सहायता संस्था से सलाह लें।', detected: 'भाषा पहचानी गई', mixed: 'मिश्रित भाषा मिली। जवाब की भाषा चुनें।', submit: 'कानूनी जानकारी पाएं', clear: 'साफ करें', noIssue: 'किसी खास समस्या की पहचान नहीं हो सकी। ये सामान्य कदम मदद कर सकते हैं।', general: ['संदेशों, भुगतानों और घटनाओं का रिकॉर्ड रखें।', 'भारतीय श्रम कानून के तहत मिलने वाली सुरक्षा के बारे में जानें।', 'गवाह, फोटो, वेतन पर्ची और दूसरे दस्तावेज इकट्ठा करें।', 'तारीख और पूरी जानकारी के साथ लिखित शिकायत करें।', 'जिला श्रम अधिकारी या कानूनी सहायता संस्था से संपर्क करें।'], evidenceDefault: ['नौकरी से जुड़े संदेश या अनुबंध', 'भुगतान का रिकॉर्ड और बैंक विवरण', 'जरूरी फोटो या चिकित्सा रिकॉर्ड', 'गवाहों के नाम'], roadmapDefault: ['तारीख और घटनाएं लिख लें।', 'सभी दस्तावेजों और संदेशों की प्रतियां रखें।', 'लिखित अनुरोध या शिकायत भेजें।', 'श्रम अधिकारी या कानूनी सहायता संस्था से संपर्क करें।'] },
+    ta: { guidance: 'உங்கள் சட்ட வழிகாட்டுதல்', issue: 'கண்டறியப்பட்ட பிரச்சினை', summary: 'நிலைமையின் சுருக்கம்', rights: 'உங்கள் உரிமைகள் மற்றும் பயனுள்ள தகவல்', evidence: 'ஆதாரப் பட்டியல்', roadmap: 'செயல் திட்டம்', next: 'அடுத்த படிகள்', disclaimer: 'இது பொதுவான தகவல் மட்டுமே; சட்ட ஆலோசனை அல்ல. உங்கள் நிலைக்கு தகுதியான வழக்கறிஞர் அல்லது சட்ட உதவி அமைப்பை அணுகவும்.', detected: 'கண்டறியப்பட்ட மொழி', mixed: 'கலப்பு மொழி உள்ளீடு கண்டறியப்பட்டது. பதில் மொழியைத் தேர்ந்தெடுக்கவும்.', submit: 'சட்ட வழிகாட்டுதலைப் பெறுங்கள்', clear: 'அழிக்கவும்', noIssue: 'குறிப்பிட்ட பிரச்சினையை அடையாளம் காண முடியவில்லை. இந்தப் பொதுவான படிகள் உதவும்.', general: ['செய்திகள், பணம் மற்றும் சம்பவங்களின் பதிவுகளை வைத்திருங்கள்.', 'இந்திய தொழிலாளர் சட்டத்தின் பாதுகாப்புகளைப் பற்றி அறிந்து கொள்ளுங்கள்.', 'சாட்சிகள், புகைப்படங்கள் மற்றும் சம்பளச் சீட்டுகளை சேகரியுங்கள்.', 'தேதிகள் மற்றும் விவரங்களுடன் எழுத்துப்பூர்வமாக புகார் அளியுங்கள்.', 'மாவட்ட தொழிலாளர் அலுவலர் அல்லது சட்ட உதவி அமைப்பை அணுகுங்கள்.'], evidenceDefault: ['வேலை தொடர்பான செய்திகள் அல்லது ஒப்பந்தம்', 'பணம் செலுத்திய பதிவுகள் மற்றும் வங்கி விவரங்கள்', 'புகைப்படங்கள் அல்லது மருத்துவப் பதிவுகள்', 'சாட்சிகளின் பெயர்கள்'], roadmapDefault: ['தேதிகள் மற்றும் நிகழ்வுகளை எழுதுங்கள்.', 'அனைத்து ஆவணங்கள் மற்றும் செய்திகளின் நகல்களை வைத்திருங்கள்.', 'எழுத்துப்பூர்வ கோரிக்கை அல்லது புகார் அனுப்புங்கள்.', 'தொழிலாளர் அலுவலர் அல்லது சட்ட உதவி அமைப்பை அணுகுங்கள்.'] },
+    te: { guidance: 'మీ న్యాయ మార్గదర్శకం', issue: 'గుర్తించిన సమస్య', summary: 'పరిస్థితి సారాంశం', rights: 'మీ హక్కులు మరియు ఉపయోగకరమైన సమాచారం', evidence: 'ఆధారాల జాబితా', roadmap: 'చర్యల ప్రణాళిక', next: 'తదుపరి చర్యలు', disclaimer: 'ఇది సాధారణ సమాచారం మాత్రమే, న్యాయ సలహా కాదు. మీ పరిస్థితికి అర్హత కలిగిన న్యాయవాది లేదా న్యాయ సహాయ సంస్థను సంప్రదించండి.', detected: 'గుర్తించిన భాష', mixed: 'మిశ్రమ భాష గుర్తించబడింది. సమాధాన భాషను ఎంచుకోండి.', submit: 'న్యాయ మార్గదర్శకం పొందండి', clear: 'తొలగించండి', noIssue: 'ప్రత్యేక సమస్యను గుర్తించలేకపోయాము. ఈ సాధారణ చర్యలు సహాయపడవచ్చు.', general: ['సందేశాలు, చెల్లింపులు మరియు సంఘటనల రికార్డులు ఉంచండి.', 'భారత కార్మిక చట్టంలోని రక్షణల గురించి తెలుసుకోండి.', 'సాక్షులు, ఫోటోలు మరియు జీతం రసీదులు సేకరించండి.', 'తేదీలు, వివరాలతో వ్రాతపూర్వక ఫిర్యాదు చేయండి.', 'జిల్లా కార్మిక అధికారి లేదా న్యాయ సహాయ సంస్థను సంప్రదించండి.'], evidenceDefault: ['ఉద్యోగ సందేశాలు లేదా ఒప్పందం', 'చెల్లింపు రికార్డులు మరియు బ్యాంక్ వివరాలు', 'ఫోటోలు లేదా వైద్య రికార్డులు', 'సాక్షుల పేర్లు'], roadmapDefault: ['తేదీలు, సంఘటనలు రాయండి.', 'అన్ని పత్రాలు, సందేశాల కాపీలు ఉంచండి.', 'వ్రాతపూర్వక అభ్యర్థన లేదా ఫిర్యాదు పంపండి.', 'కార్మిక అధికారి లేదా న్యాయ సహాయ సంస్థను సంప్రదించండి.'] },
+    bn: { guidance: 'আপনার আইনি নির্দেশনা', issue: 'চিহ্নিত সমস্যা', summary: 'পরিস্থিতির সারাংশ', rights: 'আপনার অধিকার ও প্রয়োজনীয় তথ্য', evidence: 'প্রমাণের তালিকা', roadmap: 'করণীয় পরিকল্পনা', next: 'পরবর্তী পদক্ষেপ', disclaimer: 'এটি সাধারণ তথ্য, আইনি পরামর্শ নয়। আপনার পরিস্থিতির জন্য যোগ্য আইনজীবী বা আইনি সহায়তা সংস্থার সঙ্গে কথা বলুন।', detected: 'চিহ্নিত ভাষা', mixed: 'মিশ্র ভাষা শনাক্ত হয়েছে। উত্তরের ভাষা বেছে নিন।', submit: 'আইনি নির্দেশনা নিন', clear: 'মুছে ফেলুন', noIssue: 'নির্দিষ্ট সমস্যা শনাক্ত করা যায়নি। এই সাধারণ পদক্ষেপগুলি সাহায্য করতে পারে।', general: ['বার্তা, টাকা দেওয়া এবং ঘটনার রেকর্ড রাখুন।', 'ভারতের শ্রম আইনে আপনার সুরক্ষাগুলি জানুন।', 'সাক্ষী, ছবি, বেতন স্লিপ ও প্রয়োজনীয় কাগজ সংগ্রহ করুন।', 'তারিখ ও বিস্তারিত দিয়ে লিখিত অভিযোগ করুন।', 'জেলা শ্রম আধিকারিক বা আইনি সহায়তা সংস্থার সঙ্গে যোগাযোগ করুন।'], evidenceDefault: ['চাকরির বার্তা বা চুক্তি', 'পেমেন্টের রেকর্ড ও ব্যাংক বিবরণ', 'ছবি বা চিকিৎসার নথি', 'সাক্ষীদের নাম'], roadmapDefault: ['তারিখ ও ঘটনা লিখে রাখুন।', 'সব নথি ও বার্তার কপি রাখুন।', 'লিখিত অনুরোধ বা অভিযোগ পাঠান।', 'শ্রম আধিকারিক বা আইনি সহায়তা সংস্থার সঙ্গে যোগাযোগ করুন।'] },
+    mr: { guidance: 'तुमचे कायदेशीर मार्गदर्शन', issue: 'ओळखलेली समस्या', summary: 'परिस्थितीचा सारांश', rights: 'तुमचे हक्क आणि उपयुक्त माहिती', evidence: 'पुराव्यांची यादी', roadmap: 'कृती आराखडा', next: 'पुढील पावले', disclaimer: 'ही सामान्य माहिती आहे, कायदेशीर सल्ला नाही. तुमच्या परिस्थितीसाठी पात्र वकील किंवा कायदेशीर मदत संस्थेशी बोला.', detected: 'ओळखलेली भाषा', mixed: 'मिश्र भाषा आढळली. उत्तराची भाषा निवडा.', submit: 'कायदेशीर मार्गदर्शन मिळवा', clear: 'पुसा', noIssue: 'विशिष्ट समस्या ओळखता आली नाही. ही सामान्य पावले मदत करू शकतात.', general: ['संदेश, देयके आणि घटनांच्या नोंदी ठेवा.', 'भारतीय कामगार कायद्यातील संरक्षणांची माहिती घ्या.', 'साक्षीदार, फोटो, पगाराच्या पावत्या आणि कागदपत्रे जमा करा.', 'तारीख व तपशीलांसह लेखी तक्रार करा.', 'जिल्हा कामगार अधिकारी किंवा कायदेशीर मदत संस्थेशी संपर्क साधा.'], evidenceDefault: ['नोकरीचे संदेश किंवा करार', 'देयक नोंदी आणि बँक तपशील', 'फोटो किंवा वैद्यकीय नोंदी', 'साक्षीदारांची नावे'], roadmapDefault: ['तारीख आणि घटना लिहून ठेवा.', 'सर्व कागदपत्रे आणि संदेशांच्या प्रती ठेवा.', 'लेखी विनंती किंवा तक्रार पाठवा.', 'कामगार अधिकारी किंवा कायदेशीर मदत संस्थेशी संपर्क करा.'] }
+};
+
+const issueKeywords = {
+    'Salary Withheld': { en: ['salary', 'wage', 'unpaid', 'payment delayed', 'not paid'], hi: ['वेतन', 'सैलरी', 'पैसे नहीं मिले', 'मजदूरी नहीं मिली'], ta: ['சம்பளம்', 'ஊதியம்'], te: ['జీతం', 'వేతనం'], bn: ['বেতন', 'মজুরি'], mr: ['पगार', 'वेतन'] },
+    'Fired Without Notice': { en: ['fired', 'dismissed', 'terminated', 'job ended', 'notice'], hi: ['निकाल', 'बर्खास्त', 'नोटिस नहीं'], ta: ['வேலையிலிருந்து நீக்க', 'பணி நீக்க'], te: ['ఉద్యోగం నుంచి తొలగ', 'నోటీసు లేకుండా'], bn: ['চাকরি থেকে বরখাস্ত', 'নোটিশ ছাড়া'], mr: ['कामावरून काढ', 'नोटीस नाही'] },
+    'Excessive Hours': { en: ['long hours', 'overtime', 'too many hours', 'working hours'], hi: ['बहुत घंटे', 'ओवरटाइम', 'ज्यादा काम'], ta: ['நீண்ட நேரம்', 'கூடுதல் நேரம்'], te: ['ఎక్కువ గంటలు', 'ఓవర్‌టైమ్'], bn: ['বেশি সময়', 'ওভারটাইম'], mr: ['जास्त तास', 'ओव्हरटाईम'] },
+    'No Contract': { en: ['no contract', 'without contract', 'written agreement'], hi: ['अनुबंध नहीं', 'समझौता नहीं', 'लिखित करार नहीं'], ta: ['ஒப்பந்தம் இல்லை'], te: ['ఒప్పందం లేదు'], bn: ['চুক্তি নেই'], mr: ['करार नाही', 'लेखी करार नाही'] },
+    'Workplace Injury': { en: ['injury', 'injured', 'accident at work'], hi: ['चोट', 'दुर्घटना'], ta: ['காயம்', 'விபத்து'], te: ['గాయం', 'ప్రమాదం'], bn: ['আঘাত', 'দুর্ঘটনা'], mr: ['दुखापत', 'अपघात'] },
+    'Sexual Harassment': { en: ['sexual harassment', 'harassed', 'inappropriate touching'], hi: ['यौन उत्पीड़न', 'छेड़छाड़'], ta: ['பாலியல் தொல்லை'], te: ['లైంగిక వేధింపు'], bn: ['যৌন হয়রানি'], mr: ['लैंगिक छळ'] }
+};
+
+const issueNames = {
+    'Salary Withheld': { en: 'Salary withheld or delayed', hi: 'वेतन रोका गया या भुगतान में देरी', ta: 'சம்பளம் நிறுத்தப்பட்டது அல்லது தாமதமானது', te: 'జీతం నిలిపివేయబడింది లేదా ఆలస్యమైంది', bn: 'বেতন আটকে রাখা বা দেরি', mr: 'पगार थांबवला किंवा देण्यास उशीर' },
+    'Fired Without Notice': { en: 'Dismissed without notice', hi: 'बिना नोटिस नौकरी से निकालना', ta: 'அறிவிப்பின்றி பணிநீக்கம்', te: 'నోటీసు లేకుండా ఉద్యోగం నుంచి తొలగింపు', bn: 'নোটিশ ছাড়া চাকরি থেকে বরখাস্ত', mr: 'नोटीसशिवाय कामावरून काढणे' },
+    'Excessive Hours': { en: 'Excessive working hours', hi: 'बहुत अधिक काम के घंटे', ta: 'அதிக வேலை நேரம்', te: 'అధిక పని గంటలు', bn: 'অতিরিক্ত কাজের সময়', mr: 'अतिरिक्त कामाचे तास' },
+    'No Contract': { en: 'No written employment contract', hi: 'लिखित नौकरी का अनुबंध नहीं', ta: 'எழுத்துப்பூர்வ வேலை ஒப்பந்தம் இல்லை', te: 'వ్రాతపూర్వక ఉద్యోగ ఒప్పందం లేదు', bn: 'লিখিত চাকরির চুক্তি নেই', mr: 'लेखी नोकरीचा करार नाही' },
+    'Workplace Injury': { en: 'Workplace injury', hi: 'काम की जगह पर चोट', ta: 'வேலை இடத்தில் ஏற்பட்ட காயம்', te: 'పనిచోటు గాయం', bn: 'কর্মক্ষেত্রে আঘাত', mr: 'कामाच्या ठिकाणी झालेली दुखापत' },
+    'Sexual Harassment': { en: 'Sexual harassment', hi: 'यौन उत्पीड़न', ta: 'பாலியல் தொல்லை', te: 'లైంగిక వేధింపు', bn: 'যৌন হয়রানি', mr: 'लैंगिक छळ' }
+};
+
+function detectLanguage(text) {
+    const value = String(text || '');
+    const counts = { hi: (value.match(/[\u0900-\u097F]/g) || []).length, ta: (value.match(/[\u0B80-\u0BFF]/g) || []).length, te: (value.match(/[\u0C00-\u0C7F]/g) || []).length, bn: (value.match(/[\u0980-\u09FF]/g) || []).length, en: (value.match(/[A-Za-z]/g) || []).length };
+    if (counts.ta) return { language: 'ta', confidence: Math.min(1, counts.ta / Math.max(1, value.length) * 3) };
+    if (counts.te) return { language: 'te', confidence: Math.min(1, counts.te / Math.max(1, value.length) * 3) };
+    if (counts.bn) return { language: 'bn', confidence: Math.min(1, counts.bn / Math.max(1, value.length) * 3) };
+    if (counts.hi) {
+        const marathiScriptWords = /(मला|पासून|पगार|मिळाला|आहे)/.test(value);
+        return { language: marathiScriptWords ? 'mr' : 'hi', confidence: marathiScriptWords ? 0.78 : 0.7, ambiguous: !marathiScriptWords };
+    }
+    const latin = value.toLowerCase();
+    const marathiWords = /\b(majha|mala|pagar|milala|ahe|nahi|pasun)\b/.test(latin);
+    const hindiWords = /\b(meri|mujhe|nahi|mila|hai|se)\b/.test(latin);
+    if (marathiWords && !hindiWords) return { language: 'mr', confidence: 0.62, mixed: true };
+    if (hindiWords) return { language: 'hi', confidence: 0.58, mixed: true };
+    return { language: 'en', confidence: counts.en ? 0.8 : 0.25, mixed: false };
+}
+
+function getSelectedLanguage(text) {
+    const selected = document.getElementById('languageSelector')?.value || 'auto';
+    if (selected !== 'auto') return { language: selected, confidence: 1, manual: true };
+    return detectLanguage(text);
+}
+
+function translateUI(key, language) { return translations[language]?.[key] || translations.en[key] || key; }
+function getLocalizedIssueName(issue, language) { return issueNames[issue]?.[language] || issueNames[issue]?.en || issue; }
+function getLocalizedIssueContent(issue, language) {
+    const t = translations[language] || translations.en;
+    const base = legalGuidanceDatabase[issue] || [];
+    return { guidance: language === 'en' ? base : t.general, evidence: t.evidenceDefault, roadmap: t.roadmapDefault };
+}
+function getLocalizedGuidance(issue, language) { return getLocalizedIssueContent(issue, language).guidance; }
+function getLocalizedEvidence(issue, language) { return getLocalizedIssueContent(issue, language).evidence; }
+function getLocalizedRoadmap(issue, language) { return getLocalizedIssueContent(issue, language).roadmap; }
+function getLocalizedFollowUpQuestions(issue, language) {
+    const questions = {
+        en: ['When did this start?', 'What written records or messages do you have?', 'Have you already asked your employer to resolve it?'],
+        hi: ['यह कब से हो रहा है?', 'आपके पास कौन से लिखित रिकॉर्ड या संदेश हैं?', 'क्या आपने नियोक्ता से इसे ठीक करने के लिए बात की है?'],
+        ta: ['இது எப்போது தொடங்கியது?', 'உங்களிடம் என்ன எழுத்துப்பூர்வ பதிவுகள் அல்லது செய்திகள் உள்ளன?', 'இதைத் தீர்க்க உங்கள் முதலாளியிடம் கேட்டீர்களா?'],
+        te: ['ఇది ఎప్పుడు ప్రారంభమైంది?', 'మీ వద్ద ఏ వ్రాతపూర్వక రికార్డులు లేదా సందేశాలు ఉన్నాయి?', 'దీనిని పరిష్కరించమని మీరు మీ యజమానిని అడిగారా?'],
+        bn: ['এটি কবে থেকে শুরু হয়েছে?', 'আপনার কাছে কী লিখিত রেকর্ড বা বার্তা আছে?', 'সমাধানের জন্য আপনি কি নিয়োগকর্তাকে বলেছেন?'],
+        mr: ['हे कधीपासून सुरू आहे?', 'तुमच्याकडे कोणते लेखी रेकॉर्ड किंवा संदेश आहेत?', 'हे सोडवण्यासाठी तुम्ही नियोक्त्याशी बोलला आहात का?']
+    };
+    return questions[language] || questions.en;
+}
+function getFollowUpHeading(language) {
+    return ({ en: 'Follow-up questions', hi: 'आगे के सवाल', ta: 'தொடர் கேள்விகள்', te: 'తదుపరి ప్రశ్నలు', bn: 'পরবর্তী প্রশ্ন', mr: 'पुढील प्रश्न' })[language] || 'Follow-up questions';
+}
+
 // Sample legal guidance database
 const legalGuidanceDatabase = {
     'Salary Withheld': [
@@ -61,6 +147,123 @@ const issueTags = document.querySelectorAll('.issue-tag');
 const faqQuestions = document.querySelectorAll('.faq-question');
 const contactForm = document.getElementById('contactForm');
 const formResponse = document.getElementById('formResponse');
+const languageSelector = document.getElementById('languageSelector');
+const languageStatus = document.getElementById('languageStatus');
+const autoReadToggle = document.getElementById('autoReadToggle');
+const voiceSupportStatus = document.getElementById('voiceSupportStatus');
+
+const speechLanguageCodes = { en: 'en-IN', hi: 'hi-IN', ta: 'ta-IN', te: 'te-IN', bn: 'bn-IN', mr: 'mr-IN' };
+let speechState = { status: 'idle', utterance: null, language: 'en' };
+
+function getLanguageCode(language) { return speechLanguageCodes[language] || speechLanguageCodes.en; }
+function getAvailableVoices() { return typeof window !== 'undefined' && window.speechSynthesis ? window.speechSynthesis.getVoices() : []; }
+function findMatchingVoice(language) {
+    const prefix = getLanguageCode(language).split('-')[0].toLowerCase();
+    return getAvailableVoices().find(voice => voice.lang.toLowerCase().startsWith(prefix));
+}
+
+function getSpeechLabels(language) {
+    return ({
+        en: { listen: '🔊 Listen to My Guidance', pause: '⏸ Pause', resume: '▶ Resume', stop: '⏹ Stop', ready: '🔊 Your guidance is ready to listen', unavailable: 'Voice support for this language depends on your browser and device. Try another browser or enable additional system voices.' },
+        hi: { listen: '🔊 मेरी जानकारी सुनें', pause: '⏸ रोकें', resume: '▶ फिर सुनें', stop: '⏹ बंद करें', ready: '🔊 आपकी जानकारी सुनने के लिए तैयार है', unavailable: 'इस भाषा का आवाज़ समर्थन आपके ब्राउज़र और डिवाइस पर निर्भर करता है। दूसरा ब्राउज़र आज़माएं या अतिरिक्त सिस्टम आवाज़ें चालू करें।' },
+        ta: { listen: '🔊 வழிகாட்டுதலைக் கேளுங்கள்', pause: '⏸ இடைநிறுத்து', resume: '▶ மீண்டும் தொடங்கு', stop: '⏹ நிறுத்து', ready: '🔊 உங்கள் வழிகாட்டுதல் கேட்கத் தயாராக உள்ளது', unavailable: 'இந்த மொழிக்கான குரல் ஆதரவு உங்கள் உலாவி மற்றும் சாதனத்தைப் பொறுத்தது. வேறு உலாவியை முயற்சிக்கவும் அல்லது கூடுதல் குரல்களை இயக்கவும்.' },
+        te: { listen: '🔊 నా మార్గదర్శకం వినండి', pause: '⏸ ఆపండి', resume: '▶ మళ్లీ కొనసాగించండి', stop: '⏹ ఆపివేయండి', ready: '🔊 మీ మార్గదర్శకం వినడానికి సిద్ధంగా ఉంది', unavailable: 'ఈ భాషకు వాయిస్ మద్దతు మీ బ్రౌజర్ మరియు పరికరంపై ఆధారపడి ఉంటుంది. మరో బ్రౌజర్ ప్రయత్నించండి లేదా అదనపు సిస్టమ్ వాయిస్‌లను ప్రారంభించండి.' },
+        bn: { listen: '🔊 আমার নির্দেশনা শুনুন', pause: '⏸ বিরতি', resume: '▶ আবার চালান', stop: '⏹ বন্ধ করুন', ready: '🔊 আপনার নির্দেশনা শোনার জন্য প্রস্তুত', unavailable: 'এই ভাষার ভয়েস সাপোর্ট আপনার ব্রাউজার ও ডিভাইসের উপর নির্ভর করে। অন্য ব্রাউজার চেষ্টা করুন বা অতিরিক্ত সিস্টেম ভয়েস চালু করুন।' },
+        mr: { listen: '🔊 माझे मार्गदर्शन ऐका', pause: '⏸ थांबवा', resume: '▶ पुन्हा सुरू करा', stop: '⏹ थांबवा', ready: '🔊 तुमचे मार्गदर्शन ऐकण्यासाठी तयार आहे', unavailable: 'या भाषेचा आवाज तुमच्या ब्राउझर आणि डिव्हाइसवर अवलंबून आहे. दुसरा ब्राउझर वापरा किंवा अतिरिक्त सिस्टम आवाज सुरू करा.' }
+    })[language] || ({ listen: '🔊 Listen to My Guidance', pause: '⏸ Pause', resume: '▶ Resume', stop: '⏹ Stop', ready: '🔊 Your guidance is ready to listen', unavailable: 'Voice support depends on your browser and device.' });
+}
+
+function updateSpeechControls() {
+    const summary = window.latestCaseSummary;
+    const language = summary?.language || speechState.language || 'en';
+    const labels = getSpeechLabels(language);
+    const playButton = document.getElementById('listenGuidanceBtn');
+    const pauseButton = document.getElementById('pauseSpeechBtn');
+    const stopButton = document.getElementById('stopSpeechBtn');
+    const status = document.getElementById('speechStatus');
+    if (playButton) playButton.textContent = speechState.status === 'paused' ? labels.resume : labels.listen;
+    if (pauseButton) pauseButton.hidden = speechState.status !== 'playing';
+    if (stopButton) stopButton.hidden = speechState.status === 'idle';
+    if (status) status.textContent = speechState.status === 'playing' ? '🔊 Playing' : speechState.status === 'paused' ? '⏸ Paused' : labels.ready;
+}
+
+function speakText(text, language) {
+    if (!text || typeof window === 'undefined' || !window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined') {
+        if (voiceSupportStatus) voiceSupportStatus.textContent = 'Voice guidance is not supported in this browser.';
+        return false;
+    }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    const code = getLanguageCode(language);
+    const voice = findMatchingVoice(language);
+    utterance.lang = code;
+    if (voice) utterance.voice = voice;
+    utterance.rate = 0.9;
+    speechState = { status: 'playing', utterance, language };
+    utterance.onend = () => { speechState.status = 'idle'; speechState.utterance = null; updateSpeechControls(); };
+    utterance.onerror = () => { speechState.status = 'idle'; speechState.utterance = null; updateSpeechControls(); };
+    if (!voice && voiceSupportStatus) voiceSupportStatus.textContent = getSpeechLabels(language).unavailable;
+    window.speechSynthesis.speak(utterance);
+    updateSpeechControls();
+    return true;
+}
+
+function pauseSpeech() {
+    if (speechState.status === 'playing' && window.speechSynthesis) { window.speechSynthesis.pause(); speechState.status = 'paused'; updateSpeechControls(); }
+}
+function resumeSpeech() {
+    if (speechState.status === 'paused' && window.speechSynthesis) { window.speechSynthesis.resume(); speechState.status = 'playing'; updateSpeechControls(); }
+}
+function stopSpeech() {
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    speechState = { status: 'idle', utterance: null, language: speechState.language };
+    updateSpeechControls();
+}
+function cleanupSpeech() { stopSpeech(); }
+
+function speechList(items) { return (items || []).map((item, index) => `${index + 1}. ${item}`).join(' '); }
+function getSpeechSectionText(sectionName, caseData) {
+    const t = translations[caseData.language] || translations.en;
+    const issue = getLocalizedIssueName(caseData.category, caseData.language);
+    const sections = {
+        understanding: `${t.issue}: ${issue}. ${t.summary}: ${caseData.userInput}.`,
+        rights: `${t.rights}. ${speechList(caseData.content.guidance)} `,
+        evidence: `${t.evidence}. ${speechList(caseData.content.evidence)}`,
+        roadmap: `${t.roadmap}. ${speechList(caseData.content.roadmap)} ${t.next}. ${speechList(t.roadmapDefault)}`
+    };
+    return sections[sectionName] || '';
+}
+function speakSection(sectionName, caseData) { return speakText(getSpeechSectionText(sectionName, caseData), caseData.language); }
+function speakFullGuidance(caseData) {
+    const t = translations[caseData.language] || translations.en;
+    const intro = { en: 'Here is your case guidance.', hi: 'यह आपकी केस संबंधी जानकारी है।', ta: 'இதோ உங்கள் வழக்கு வழிகாட்டுதல்.', te: 'ఇదిగో మీ కేసు మార్గదర్శకం.', bn: 'এটি আপনার কেসের নির্দেশনা।', mr: 'हे तुमच्या प्रकरणाचे मार्गदर्शन आहे.' }[caseData.language] || 'Here is your case guidance.';
+    const text = [intro, getSpeechSectionText('understanding', caseData), `${t.rights}. ${speechList(caseData.content.guidance)}`, `${t.next}. ${speechList(t.roadmapDefault)}`, getSpeechSectionText('evidence', caseData), getSpeechSectionText('roadmap', caseData), t.disclaimer].join(' ');
+    return speakText(text, caseData.language);
+}
+
+function wireSpeechControls() {
+    document.getElementById('listenGuidanceBtn')?.addEventListener('click', () => {
+        if (speechState.status === 'paused') resumeSpeech();
+        else speakFullGuidance(window.latestCaseSummary);
+    });
+    document.getElementById('pauseSpeechBtn')?.addEventListener('click', pauseSpeech);
+    document.getElementById('stopSpeechBtn')?.addEventListener('click', stopSpeech);
+    document.querySelectorAll('[data-speech-section]').forEach(button => button.addEventListener('click', () => speakSection(button.dataset.speechSection, window.latestCaseSummary)));
+    updateSpeechControls();
+}
+
+if (languageSelector) {
+    languageSelector.addEventListener('change', () => {
+        const language = languageSelector.value;
+        if (language !== 'auto' && languageStatus) languageStatus.textContent = `${translateUI('detected', language)}: ${supportedLanguages[language].name}`;
+        if (language === 'auto' && languageStatus) languageStatus.textContent = '';
+        if (submitBtn && language !== 'auto') submitBtn.textContent = translateUI('submit', language);
+        if (clearBtn && language !== 'auto') clearBtn.textContent = translateUI('clear', language);
+    });
+}
+if (voiceSupportStatus && (!window.speechSynthesis || typeof SpeechSynthesisUtterance === 'undefined')) {
+    voiceSupportStatus.textContent = 'Voice guidance is not supported in this browser.';
+}
 
 // Event Listeners
 if (submitBtn) submitBtn.addEventListener('click', handleSubmit);
@@ -96,75 +299,133 @@ function handleSubmit() {
         return;
     }
 
-    // Find matching issue category
-    let matchingCategory = null;
-    for (const category in legalGuidanceDatabase) {
-        if (userInput.toLowerCase().includes(category.toLowerCase()) || 
-            userInput.toLowerCase().includes(category.toLowerCase().split(' ')[0])) {
-            matchingCategory = category;
-            break;
-        }
-    }
+    const languageResult = getSelectedLanguage(userInput);
+    const language = languageResult.language;
+    const languageStatus = document.getElementById('languageStatus');
+    if (languageStatus) languageStatus.textContent = languageResult.mixed && !languageResult.manual ? translateUI('mixed', language) : `${translateUI('detected', language)}: ${supportedLanguages[language].name}`;
+    const matchingCategory = detectIssue(userInput, language);
 
     // Generate response
-    const response = generateLegalGuidance(userInput, matchingCategory);
+    const response = generateLegalGuidance(userInput, matchingCategory, language);
     displayResponse(response);
+    saveAnalysisCase(userInput, matchingCategory, language, languageResult);
+}
+
+function detectIssue(userInput, language) {
+    const normalized = userInput.toLocaleLowerCase();
+    for (const category of Object.keys(issueKeywords)) {
+        const words = Object.values(issueKeywords[category]).flat();
+        if (words.some(keyword => normalized.includes(keyword.toLocaleLowerCase()))) return category;
+    }
+    return null;
+}
+
+function saveAnalysisCase(userInput, category, language, languageResult) {
+    const content = getLocalizedIssueContent(category, language);
+    saveCase({
+        case_id: 'case_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+        user_id: getCurrentUser() && getCurrentUser().user_id,
+        timestamp: new Date().toISOString(),
+        originalLanguage: languageResult.language,
+        responseLanguage: language,
+        languageConfidence: languageResult.confidence,
+        userQuestion: userInput,
+        issue: category,
+        localizedIssueName: getLocalizedIssueName(category, language),
+        guidance: content.guidance,
+        evidenceChecklist: content.evidence,
+        roadmap: content.roadmap,
+        issue_summary: getLocalizedIssueName(category, language),
+        full_conversation_log: [{ type: 'text', text: userInput, ts: new Date().toISOString() }],
+        verdict: null
+    });
 }
 
 // Generate legal guidance
-function generateLegalGuidance(userInput, category) {
+function generateLegalGuidance(userInput, category, language) {
+    const t = translations[language] || translations.en;
+    const content = getLocalizedIssueContent(category, language);
+    const speechLabels = getSpeechLabels(language);
     let response = '<div class="guidance-response">';
-    
-    response += '<h4>Your Legal Guidance:</h4>';
+    response += `<div class="speech-controls" aria-label="Voice guidance controls"><button id="listenGuidanceBtn" type="button" aria-label="${speechLabels.listen}">${speechLabels.listen}</button><button id="pauseSpeechBtn" type="button" aria-label="${speechLabels.pause}" hidden>${speechLabels.pause}</button><button id="stopSpeechBtn" type="button" aria-label="${speechLabels.stop}" hidden>${speechLabels.stop}</button><span id="speechStatus" class="speech-status" aria-live="polite">${speechLabels.ready}</span></div>`;
+    response += `<div class="guidance-section" data-speech-content="understanding"><div class="guidance-section-heading"><h4>${t.guidance}</h4><button class="section-speech-button" type="button" data-speech-section="understanding" aria-label="Listen to AI understanding">🔊</button></div>`;
     
     if (category && legalGuidanceDatabase[category]) {
-        response += `<p><strong>Category: ${category}</strong></p>`;
-        response += '<ul style="margin-left: 20px;">';
-        legalGuidanceDatabase[category].forEach(point => {
-            response += `<li style="margin-bottom: 10px;">${point}</li>`;
-        });
-        response += '</ul>';
+        response += `<p><strong>${t.issue}: ${getLocalizedIssueName(category, language)}</strong></p>`;
+        response += `<p><strong>${t.summary}:</strong> ${escapeHtml(userInput)}</p>`;
     } else {
-        response += '<p>Based on your situation, here are some general guidelines:</p>';
-        response += '<ul style="margin-left: 20px;">';
-        response += '<li style="margin-bottom: 10px;">Document everything: Keep records of all employment-related communications, payments, and incidents.</li>';
-        response += '<li style="margin-bottom: 10px;">Know your rights: As a worker in India, you have legal protections under various labor laws.</li>';
-        response += '<li style="margin-bottom: 10px;">Seek evidence: Collect witnesses, photographs, salary slips, or any supporting documents.</li>';
-        response += '<li style="margin-bottom: 10px;">Report formally: Send written complaints to your employer with dates and specific details.</li>';
-        response += '<li style="margin-bottom: 10px;">Contact authorities: Reach out to your District Labor Officer or labor department.</li>';
-        response += '<li style="margin-bottom: 10px;">Get legal help: Consider consulting with a labor lawyer for complex cases.</li>';
-        response += '</ul>';
+        response += `<p>${t.noIssue}</p>`;
     }
+    response += '</div>';
 
-    response += '<h4 style="margin-top: 20px;">Next Steps:</h4>';
+    response += `<div class="guidance-section" data-speech-content="rights"><div class="guidance-section-heading"><h4>${t.rights}</h4><button class="section-speech-button" type="button" data-speech-section="rights" aria-label="Listen to possible rights">🔊</button></div><ul style="margin-left: 20px;">`;
+    content.guidance.forEach(point => { response += `<li style="margin-bottom: 10px;">${point}</li>`; });
+    response += '</ul></div>';
+
+    response += `<h4 style="margin-top: 20px;">${getFollowUpHeading(language)}</h4><ul style="margin-left: 20px;">`;
+    getLocalizedFollowUpQuestions(category, language).forEach(question => { response += `<li style="margin-bottom: 10px;">${question} <button class="section-speech-button question-speech-button" type="button" data-speech-text="${escapeHtml(question)}" aria-label="Listen to question">🔊</button></li>`; });
+    response += '</ul>';
+    response += `<div class="guidance-section" data-speech-content="evidence"><div class="guidance-section-heading"><h4 style="margin-top: 20px;">${t.evidence}</h4><button class="section-speech-button" type="button" data-speech-section="evidence" aria-label="Listen to evidence checklist">🔊</button></div><ul style="margin-left: 20px;">`;
+    content.evidence.forEach(point => { response += `<li style="margin-bottom: 10px;">${point}</li>`; });
+    response += `</ul></div><div class="guidance-section" data-speech-content="roadmap"><div class="guidance-section-heading"><h4 style="margin-top: 20px;">${t.roadmap}</h4><button class="section-speech-button" type="button" data-speech-section="roadmap" aria-label="Listen to action roadmap">🔊</button></div><ol style="margin-left: 20px;">`;
+    content.roadmap.forEach(point => { response += `<li style="margin-bottom: 10px;">${point}</li>`; });
+    response += `</ol></div><h4 style="margin-top: 20px;">${t.next}</h4>`;
     response += '<ul style="margin-left: 20px;">';
-    response += '<li style="margin-bottom: 10px;">Contact the District Labor Officer in your area for formal assistance.</li>';
-    response += '<li style="margin-bottom: 10px;">Call the Worker Helpline: 1800-WORKER-1 (toll-free)</li>';
-    response += '<li style="margin-bottom: 10px;">Consult with a legal aid organization for free legal advice.</li>';
-    response += '<li style="margin-bottom: 10px;">Document your case thoroughly before filing any complaint.</li>';
+    t.roadmapDefault.forEach(point => { response += `<li style="margin-bottom: 10px;">${point}</li>`; });
     response += '</ul>';
 
-    response += '<p style="margin-top: 20px; color: #34D399;"><strong>Remember:</strong> This is general guidance. For specific legal advice about your situation, please consult with a qualified labor lawyer or legal aid organization.</p>';
+    response += `<p style="margin-top: 20px; color: #34D399;"><strong>${t.disclaimer}</strong></p>`;
+    response += `<button class="btn btn-secondary" type="button" onclick="downloadCaseSummary()">${language === 'en' ? 'Download Case Summary' : language === 'hi' ? 'केस सारांश डाउनलोड करें' : language === 'ta' ? 'வழக்கு சுருக்கத்தைப் பதிவிறக்கவும்' : language === 'te' ? 'కేసు సారాంశాన్ని డౌన్‌లోడ్ చేయండి' : language === 'bn' ? 'কেসের সারাংশ ডাউনলোড করুন' : 'केस सारांश डाउनलोड करा'}</button>`;
     response += '</div>';
+
+    window.latestCaseSummary = { userInput, category, language, content };
 
     return response;
 }
 
+function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
+}
+
+function downloadCaseSummary() {
+    const summary = window.latestCaseSummary;
+    if (!summary) return;
+    const t = translations[summary.language] || translations.en;
+    const lines = [t.guidance, `${t.issue}: ${getLocalizedIssueName(summary.category, summary.language)}`, `${t.summary}: ${summary.userInput}`, '', t.evidence, ...summary.content.evidence.map((item, index) => `${index + 1}. ${item}`), '', t.roadmap, ...summary.content.roadmap.map((item, index) => `${index + 1}. ${item}`), '', t.disclaimer];
+    const blob = new Blob([`\ufeff${lines.join('\n')}`], { type: 'text/plain;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'rightsmitra-case-summary.txt';
+    link.click();
+    URL.revokeObjectURL(link.href);
+}
+
 // Display response
 function displayResponse(response) {
+    cleanupSpeech();
     responseContent.innerHTML = response;
     responseSection.classList.remove('hidden');
+    wireSpeechControls();
+    document.querySelectorAll('[data-speech-text]').forEach(button => button.addEventListener('click', () => speakText(button.dataset.speechText, window.latestCaseSummary.language)));
+    if (voiceSupportStatus && window.speechSynthesis) voiceSupportStatus.textContent = getSpeechLabels(window.latestCaseSummary.language).ready;
+    if (autoReadToggle?.checked && window.latestCaseSummary) {
+        const caseData = window.latestCaseSummary;
+        const firstAction = caseData.content.roadmap[0] || '';
+        setTimeout(() => speakText(`${getSpeechSectionText('understanding', caseData)} ${firstAction}`, caseData.language), 250);
+    }
     responseSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 // Close response
 function closeResponse() {
+    cleanupSpeech();
     responseSection.classList.add('hidden');
 }
 
 // Clear form
 function handleClear() {
     userQuestionInput.value = '';
+    if (languageStatus) languageStatus.textContent = '';
     userQuestionInput.focus();
 }
 
@@ -272,7 +533,9 @@ if (voiceBtn) {
         }
 
         const recognition = new Recognition();
-        recognition.lang = 'en-IN';
+        const selectedLanguage = languageSelector?.value || 'auto';
+        recognition.lang = supportedLanguages[selectedLanguage]?.speechCode || 'en-IN';
+        if (selectedLanguage === 'auto' && languageStatus) languageStatus.textContent = 'Auto Detect uses English speech recognition by default. Choose a language for best results.';
         recognition.interimResults = false;
         recognition.maxAlternatives = 1;
         ongoingRecognition = recognition;
@@ -288,12 +551,18 @@ if (voiceBtn) {
                 userQuestionInput.value = transcript;
                 userQuestionInput.focus();
             }
+            const voiceLanguage = getSelectedLanguage(transcript);
+            if (languageStatus) languageStatus.textContent = `${translateUI('detected', voiceLanguage.language)}: ${supportedLanguages[voiceLanguage.language].name}`;
             // Save a draft case automatically (minimal)
             const c = {
                 case_id: 'case_' + Date.now() + '_' + Math.random().toString(36).slice(2,6),
                 user_id: getCurrentUser() && getCurrentUser().user_id,
                 timestamp: new Date().toISOString(),
                 issue_summary: transcript.slice(0,120),
+                originalLanguage: voiceLanguage.language,
+                responseLanguage: voiceLanguage.language,
+                languageConfidence: voiceLanguage.confidence,
+                userQuestion: transcript,
                 full_conversation_log: [{type:'voice', text: transcript, ts: new Date().toISOString()}],
                 verdict: null,
                 notice_generated: false,
@@ -359,10 +628,12 @@ function renderCasesOnPage() {
     cases.forEach(c => {
         const div = document.createElement('div');
         div.className = 'case-card';
-        div.innerHTML = `<div class="case-card-header"><strong>${c.issue_summary}</strong><span class="case-ts">${new Date(c.timestamp).toLocaleString()}</span></div>
+        const savedLanguage = supportedLanguages[c.responseLanguage]?.name || '';
+        div.innerHTML = `<div class="case-card-header"><strong>${c.localizedIssueName || c.issue_summary}</strong><span class="case-ts">${new Date(c.timestamp).toLocaleString()}</span></div>
                          <div class="case-card-body"><p>${(c.full_conversation_log && c.full_conversation_log[0] && c.full_conversation_log[0].text) || ''}</p></div>
-                         <div class="case-card-footer"><small>Verdict: ${c.verdict || 'Pending'}</small></div>`;
+                 <div class="case-card-footer"><small>${savedLanguage ? savedLanguage + ' | ' : ''}${c.verdict || 'Pending'}</small></div>`;
         div.addEventListener('click', () => {
+            cleanupSpeech();
             // navigate to case detail view (not implemented fully)
             alert('Case details not yet implemented in demo.');
         });
@@ -414,11 +685,13 @@ function handleContactForm(e) {
 }
 
 // Add enter key submit
-userQuestionInput.addEventListener('keydown', (e) => {
-    if (e.ctrlKey && e.key === 'Enter') {
-        handleSubmit();
-    }
-});
+if (userQuestionInput) {
+    userQuestionInput.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.key === 'Enter') {
+            handleSubmit();
+        }
+    });
+}
 
 // Initialize tooltips and accessibility features
 document.addEventListener('DOMContentLoaded', () => {
@@ -432,335 +705,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Prevent form submission on enter in textarea (allow Ctrl+Enter instead)
-userQuestionInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && !e.ctrlKey) {
-        e.preventDefault();
-    }
-});
-
-
-/***********************
- Multilingual Guidance + TTS Renderer
- Paste into script.js (after existing helpers)
-***********************/
-
-// Global tracked spoken language (e.g., 'hi-IN', 'ta-IN', 'en-IN')
-let userSpokenLang = null;
-
-// Map codes -> display name for LLM prompt (server side can reuse)
-const LANG_CODE_TO_NAME = {
-  'hi-IN':'Hindi','hi':'Hindi',
-  'ta-IN':'Tamil','ta':'Tamil',
-  'bn-IN':'Bengali','bn':'Bengali',
-  'te-IN':'Telugu','te':'Telugu',
-  'mr-IN':'Marathi','mr':'Marathi',
-  'en-IN':'English','en':'English'
-};
-
-// Lightweight script-based detection for typed input fallback
-function detectLanguageFromText(text){
-  if (!text || !text.trim()) return 'en-IN';
-  // Devanagari (Hindi/Marathi)
-  if (/[\\u0900-\\u097F]/.test(text)) return 'hi-IN';
-  // Tamil
-  if (/[\\u0B80-\\u0BFF]/.test(text)) return 'ta-IN';
-  // Bengali
-  if (/[\\u0980-\\u09FF]/.test(text)) return 'bn-IN';
-  // Telugu
-  if (/[\\u0C00-\\u0C7F]/.test(text)) return 'te-IN';
-  // Latin script fallback -> English
-  return 'en-IN';
-}
-
-function langCodeToName(code){
-  if (!code) return 'English';
-  return LANG_CODE_TO_NAME[code] || LANG_CODE_TO_NAME[code.split('-')[0]] || 'English';
-}
-
-/* ========== LLM call wrapper (client) ==========
-Assumes you have a server endpoint or client function named getLegalGuidance(userText, userSpokenLang)
-that returns JSON matching the schema described in your prompt:
-{
-  verdict, confidence_score, case_summary, explanation,
-  relevant_law_citation, action_plan (array), additional_advice (object),
-  who_to_contact (array), disclaimer
-}
-If you need a sample server payload for the LLM, use:
-{
-  system: "Never give medical diagnoses... Respond ONLY in [LANGNAME] - use simple language.",
-  user: "User issue: {userText} ... Output strict JSON with keys: verdict, confidence_score, ..."
-}
-************************************************** */
-
-async function requestAndRenderGuidance(userText){
-  // Determine language: prefer userSpokenLang (from voice), else current user pref, else detect from text
-  let lang = userSpokenLang || (getCurrentUser && getCurrentUser().preferred_language ? getCurrentUser().preferred_language : null);
-  if (!lang) lang = detectLanguageFromText(userText);
-  userSpokenLang = lang;
-
-  // Optional: show loading UI
-  responseContent.innerHTML = `<div class="guidance-loading">Generating guidance…</div>`;
-  responseSection.classList.remove('hidden');
-
-  try {
-    // Call backend function (developer: implement this to call your LLM and return the structured JSON)
-    // Example usage: const guidance = await getLegalGuidance(userText, lang);
-    // Here we call the provided function name (assumed present).
-    const guidance = await getLegalGuidance(userText, lang);
-
-    // Validate/parse guidance
-    if (!guidance || typeof guidance !== 'object' || !('verdict' in guidance)) {
-      responseContent.innerHTML = `<div class="error">Invalid response from server. Please try again.</div>`;
-      return;
-    }
-
-    renderGuidance(guidance, lang);
-  } catch (err) {
-    console.error('Guidance error', err);
-    responseContent.innerHTML = `<div class="error">Failed to get guidance. Please try again later.</div>`;
-  }
-}
-
-/* ========== Render UI ========= */
-function renderGuidance(g, langCode){
-  // Ensure we keep keys English but values are in user's language per backend contract
-  const langName = langCodeToName(langCode);
-  // Verdict badge color
-  const verdictColor = (g.verdict === 'illegal') ? 'verdict-illegal' : (g.verdict === 'grey_area' ? 'verdict-grey' : 'verdict-legal');
-
-  // Build action plan list (checkable)
-  const actionItemsHtml = (g.action_plan && g.action_plan.length) ? g.action_plan.map(item =>
-    `<li class="action-item"><label><input type="checkbox" class="action-check" data-step="${item.step}"> <span class="action-text">${escapeHtml(item.action)}</span></label></li>`
-  ).join('') : '<li class="muted">No action steps provided.</li>';
-
-  // Additional advice collapsibles
-  const advice = g.additional_advice || {};
-  const adviceSections = [
-    {key:'financial', title: translateLabel('Financial', langCode), content: advice.financial},
-    {key:'medical', title: translateLabel('Medical / Safety', langCode), content: advice.medical},
-    {key:'emotional_support', title: translateLabel('Emotional Support', langCode), content: advice.emotional_support},
-    {key:'documentation_tips', title: translateLabel('Documentation Tips', langCode), content: advice.documentation_tips}
-  ].map(s => {
-    if (!s.content) return '';
-    return `<div class="advice-section">
-              <button class="collapsible">${escapeHtml(s.title)} <span class="coll-arrow">▾</span></button>
-              <div class="collapsible-body">${escapeHtml(s.content)}</div>
-            </div>`;
-  }).join('');
-
-  // Who to contact list (tel: links if available)
-  const contactsHtml = (g.who_to_contact && g.who_to_contact.length) ? g.who_to_contact.map(c => {
-    const call = c.how && /\\+?\\d/.test(c.how) ? `<a href="tel:${c.how.replace(/[^+\\d]/g,'')}" class="contact-link">${escapeHtml(c.how)}</a>` : `<span>${escapeHtml(c.how || '')}</span>`;
-    return `<li><strong>${escapeHtml(c.name)}</strong> — ${call}</li>`;
-  }).join('') : '<li class="muted">No direct contacts available.</li>';
-
-  // Render HTML into responseContent
-  responseContent.innerHTML = `
-    <div class="guidance-root" lang="${escapeHtml(langCode)}">
-      <div class="guidance-card">
-        <div class="guidance-header">
-          <h3 class="case-summary-title">${escapeHtml(g.case_summary || translateLabel('Case Summary', langCode))}</h3>
-          <div class="guidance-controls">
-            <button class="tts-button tts-play-section" data-section="summary">🔊</button>
-            <button class="tts-button tts-play-section" data-section="verdict">🔊</button>
-            <button id="ttsPlayFull" class="tts-button">▶ Play Full Guidance</button>
-            <button id="ttsStop" class="tts-button">⏹ Stop</button>
-          </div>
-        </div>
-
-        <div class="verdict-row">
-          <div class="verdict-badge ${verdictColor}">${escapeHtml(g.verdict || '')} • ${escapeHtml(String(g.confidence_score || ''))}%</div>
-          <div class="relevant-law">${escapeHtml(g.relevant_law_citation || '')}</div>
-        </div>
-
-        <section class="explanation">
-          <h4>${translateLabel('Explanation', langCode)} <button class="tts-button tts-play-section" data-section="explanation">🔊</button></h4>
-          <p>${escapeHtml(g.explanation || '')}</p>
-        </section>
-
-        <section class="action-plan">
-          <h4>${translateLabel('Action Plan', langCode)}</h4>
-          <ol>${actionItemsHtml}</ol>
-        </section>
-
-        <section class="additional-advice">
-          <h4>${translateLabel('Additional Advice', langCode)}</h4>
-          ${adviceSections || '<p class="muted">No additional advice.</p>'}
-        </section>
-
-        <section class="who-to-contact">
-          <h4>${translateLabel('Who to Contact', langCode)}</h4>
-          <ul>${contactsHtml}</ul>
-        </section>
-
-        <footer class="guidance-disclaimer">
-          <small>${escapeHtml(g.disclaimer || translateLabel('This is general guidance and not a substitute for professional legal or medical advice.', langCode))}</small>
-        </footer>
-      </div>
-    </div>
-  `;
-
-  // Wire collapsibles
-  Array.from(responseContent.querySelectorAll('.collapsible')).forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.classList.toggle('open');
-      const body = btn.nextElementSibling;
-      if (body) body.style.display = btn.classList.contains('open') ? 'block' : 'none';
-      const arrow = btn.querySelector('.coll-arrow'); if (arrow) arrow.textContent = btn.classList.contains('open') ? '▴' : '▾';
+if (userQuestionInput) {
+    userQuestionInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !e.ctrlKey) {
+            e.preventDefault();
+        }
     });
-    // Start collapsed
-    const b = btn.nextElementSibling; if (b) b.style.display = 'none';
-  });
-
-  // Wire per-section TTS
-  Array.from(responseContent.querySelectorAll('.tts-play-section')).forEach(b => {
-    b.addEventListener('click', () => {
-      const section = b.getAttribute('data-section');
-      let textToSpeak = '';
-      if (section === 'summary') textToSpeak = g.case_summary || '';
-      if (section === 'verdict') textToSpeak = `${translateLabel('Verdict', langCode)}: ${g.verdict || ''}. ${translateLabel('Confidence', langCode)}: ${g.confidence_score || ''}%`;
-      if (section === 'explanation') textToSpeak = g.explanation || '';
-      if (textToSpeak) speakText(textToSpeak, langCode);
-    });
-  });
-
-  // Wire full playback and stop
-  document.getElementById('ttsPlayFull').onclick = () => speakGuidanceSequentially(g, langCode);
-  document.getElementById('ttsStop').onclick = () => stopSpeaking();
-
-  // Make action items checkable (persist little state in-memory or localStorage if desired)
-  Array.from(responseContent.querySelectorAll('.action-check')).forEach(chk => {
-    chk.addEventListener('change', (e) => {
-      // Optional: persist state per-case (not implemented here)
-      chk.parentElement.classList.toggle('completed', chk.checked);
-    });
-  });
-
-  // Scroll into view
-  responseSection.classList.remove('hidden');
-  responseSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
-
-/* ========== TTS Helpers ========= */
-function getVoiceForLang(langCode) {
-  // Populate voices (some browsers populate asynchronously)
-  const voices = window.speechSynthesis.getVoices();
-  if (!voices || !voices.length) return null;
-  // Try exact match then prefix
-  let v = voices.find(x => x.lang && x.lang.toLowerCase() === langCode.toLowerCase());
-  if (!v) v = voices.find(x => x.lang && x.lang.toLowerCase().startsWith(langCode.split('-')[0]));
-  return v || null;
-}
-
-let ttsPlayingQueue = null;
-let ttsIsPlaying = false;
-
-function speakText(text, langCode, onend) {
-  stopSpeaking(); // stop any existing speech
-  if (!text || !('speechSynthesis' in window)) {
-    alert(translateLabel('Audio playback not available on this device.', langCode));
-    return;
-  }
-
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = langCode || 'en-IN';
-  const voice = getVoiceForLang(langCode);
-  if (voice) utter.voice = voice;
-  utter.rate = 0.95;
-  utter.onend = () => {
-    ttsIsPlaying = false;
-    if (typeof onend === 'function') onend();
-  };
-  speechSynthesis.speak(utter);
-  ttsIsPlaying = true;
-}
-
-function speakGuidanceSequentially(g, langCode) {
-  // Stop existing
-  stopSpeaking();
-  // Build queue section-by-section (plain text)
-  const queue = [];
-  if (g.case_summary) queue.push({label: translateLabel('Case Summary', langCode), text: g.case_summary});
-  queue.push({label: translateLabel('Verdict', langCode), text: `${translateLabel('Verdict', langCode)}: ${g.verdict || ''}. ${translateLabel('Confidence', langCode)}: ${g.confidence_score || ''}%`});
-  if (g.explanation) queue.push({label: translateLabel('Explanation', langCode), text: g.explanation});
-  if (g.action_plan && g.action_plan.length) {
-    const steps = g.action_plan.map(s=> `${translateLabel('Step', langCode)} ${s.step}: ${s.action}`).join('. ');
-    queue.push({label: translateLabel('Action Plan', langCode), text: steps});
-  }
-  if (g.additional_advice) {
-    const adv = Object.entries(g.additional_advice).map(([k,v]) => v ? `${translateLabel(k.replace('_',' '), langCode)}: ${v}` : '').filter(Boolean).join('. ');
-    if (adv) queue.push({label: translateLabel('Additional Advice', langCode), text: adv});
-  }
-  // Play sequentially
-  ttsPlayingQueue = queue;
-  playNextInQueue(langCode);
-}
-
-function playNextInQueue(langCode){
-  if (!ttsPlayingQueue || !ttsPlayingQueue.length) {
-    ttsPlayingQueue = null; ttsIsPlaying = false; return;
-  }
-  const item = ttsPlayingQueue.shift();
-  const text = item.text;
-  speakText(text, langCode, () => {
-    setTimeout(()=> playNextInQueue(langCode), 250); // small gap
-  });
-}
-
-function stopSpeaking(){
-  if ('speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
-  }
-  ttsPlayingQueue = null;
-  ttsIsPlaying = false;
-}
-
-/* ========== Utility helpers ========= */
-function escapeHtml(s){
-  if (s === null || s === undefined) return '';
-  return (''+s)
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#039;');
-}
-
-// Small translator hook for UI labels — here we keep labels in English (server should translate values)
-// but we provide a few common UI label translations by language for the static UI.
-function translateLabel(key, langCode){
-  // key may be English or short key; return same key if no translation available
-  const map = {
-    'Explanation': {'hi-IN':'विवरण','ta-IN':'விளக்கம்','bn-IN':'ব্যাখ্যা','te-IN':'వివరణ','mr-IN':'स्पष्टीकरण','en-IN':'Explanation'},
-    'Action Plan': {'hi-IN':'कार्रवाई की योजना','ta-IN':'செயல் திட்டம்','bn-IN':'কর্মপরিকল্পনা','te-IN':'చర్యా ప్రణాళిక','mr-IN':'कृती योजना','en-IN':'Action Plan'},
-    'Additional Advice': {'hi-IN':'अतिरिक्त सलाह','ta-IN':'கூடுதல் ஆலோசனை','bn-IN':'অতিরিক্ত পরামর্শ','te-IN':'అదనపు సలహా','mr-IN':'अतिरिक्त सल्ला','en-IN':'Additional Advice'},
-    'Who to Contact': {'hi-IN':'संपर्क करें','ta-IN':'யாரை தொடர்பு கொள்ள வேண்டும்','bn-IN':'কারো সাথে যোগাযোগ করুন','te-IN':'ఏవారి సంప్రదించాలి','mr-IN':'कोणाशी संपर्क साधायचा','en-IN':'Who to Contact'},
-    'Case Summary': {'hi-IN':'मामले का सारांश','ta-IN':'கேஸின் சுருக்கம்','bn-IN':'কেস সারসংক্ষেপ','te-IN':'కేస్ సారాంశం','mr-IN':'केस सारांश','en-IN':'Case Summary'},
-    'Verdict': {'hi-IN':'निष्कर्ष','ta-IN':'தீர்ப்பு','bn-IN':'ফলাফল','te-IN':'తిరుగుబాటు','mr-IN':'निर्णय','en-IN':'Verdict'},
-    'Confidence': {'hi-IN':'विश्वास','ta-IN':'நம்பிக்கை','bn-IN':'নিশ্চয়তা','te-IN':'నమ్మకం','mr-IN':'विश्वास','en-IN':'Confidence'},
-    'Financial': {'hi-IN':'आर्थिक','ta-IN':'நிதி','bn-IN':'আর্থিক','te-IN':'ఆర్థిక','mr-IN':'आर्थिक','en-IN':'Financial'},
-    'Medical / Safety': {'hi-IN':'चिकित्सा / सुरक्षा','ta-IN':'மருத்துவம் / பாதுகாப்பு','bn-IN':'চিকিৎসা / নিরাপত্তা','te-IN':'వైద్య / భద్రత','mr-IN':'वैद्यकीय / सुरक्षा','en-IN':'Medical / Safety'},
-    'Emotional Support': {'hi-IN':'भावनात्मक समर्थन','ta-IN':'உணர்ச்சி ஆதரவு','bn-IN':'অনুভূতিগত সমর্থন','te-IN':'భావోద్వేగ మద్దతు','mr-IN':'भावनिक मदत','en-IN':'Emotional Support'},
-    'Documentation Tips': {'hi-IN':'दस्तावेज़ीकरण युक्तियाँ','ta-IN':'ஆவணக்கරණ குறிப்புகள்','bn-IN':'নথি পরামর্শ','te-IN':'డాక్యుమెంటేషన్ సూచనలు','mr-IN':'दस्तऐवजीकरण टिपा','en-IN':'Documentation Tips'},
-    'Step': {'hi-IN':'कदम','ta-IN':'படி','bn-IN':'ধাপ','te-IN':'దశ','mr-IN':'पाऊल','en-IN':'Step'}
-  };
-  const lc = (langCode || 'en-IN');
-  if (map[key] && map[key][lc]) return map[key][lc];
-  if (map[key] && map[key][lc.split('-')[0]]) return map[key][lc.split('-')[0]];
-  return key;
-}
-
-/* ========== Hook into existing submit flow ========= */
-/*
-Where you previously called generateLegalGuidance(userInput, ...),
-replace that invocation with:
-  await requestAndRenderGuidance(userInput);
-This will call the backend function getLegalGuidance(userText, userSpokenLang)
-and render the full UI including TTS controls.
-*/
-
-// Example integration (if your current handleSubmit does synchronous work):
-// modify handleSubmit() to call requestAndRenderGuidance
-// e.g. replace generateLegalGuidance(...) with: await requestAndRenderGuidance(userInput);
-
-/* End of guidance renderer */
