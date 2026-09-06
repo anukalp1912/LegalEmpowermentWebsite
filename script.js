@@ -1,54 +1,23 @@
-// Sample legal guidance database
-const legalGuidanceDatabase = {
-    'Salary Withheld': [
-        'Under the Payment of Wages Act, 1936, withholding salary is illegal.',
-        'Your employer must pay you within specified periods (usually by the 7th of next month).',
-        'You can file a complaint with the District Labor Officer (DLO).',
-        'Collect evidence: salary slips, employment contract, bank statements.',
-        'Send a formal written demand to your employer with dates and amounts.',
-        'You may be entitled to compensation and penalties under the law.'
-    ],
-    'Fired Without Notice': [
-        'Under the Industrial Employment (Standing Orders) Act, termination requires notice.',
-        'Illegal termination can result in compensation: at least 15 days wages.',
-        'Document everything: termination date, reasons given, any communications.',
-        'File a complaint with the Conciliation Officer within 60 days.',
-        'You can approach the Labor Court for reinstatement or compensation.',
-        'Keep copies of all employment-related documents.'
-    ],
-    'Excessive Hours': [
-        'The Factories Act limits work to 48 hours per week with mandatory rest.',
-        'Overtime must be compensated at 1.5x or 2x the regular wage depending on state.',
-        'You are entitled to at least one rest day per week.',
-        'Document your working hours for evidence.',
-        'File a complaint if working hours exceed legal limits.',
-        'Seek compensation for unpaid overtime through labor authorities.'
-    ],
-    'No Contract': [
-        'While written contracts are ideal, absence doesn\'t deny you worker rights.',
-        'All labor laws apply regardless of a written agreement.',
-        'You should request a written contract from your employer.',
-        'In disputes, witness testimony can prove the employment relationship.',
-        'You remain entitled to minimum wage, leave, and safety protections.',
-        'Document your employment: salary receipts, communications, witnesses.'
-    ],
-    'Workplace Injury': [
-        'Your employer is liable for workplace injuries under the Workmen\'s Compensation Act.',
-        'Report the injury immediately to your employer.',
-        'Seek medical treatment and get a medical certificate.',
-        'You may claim disability compensation and medical expenses.',
-        'Notify the appropriate labor authority about the incident.',
-        'Keep all medical documents and injury evidence.'
-    ],
-    'Sexual Harassment': [
-        'Sexual harassment is a serious crime under the IPC and POSH Act.',
-        'Report immediately to your employer\'s Internal Complaints Committee.',
-        'File a complaint with the police if the harassment is severe.',
-        'Document all incidents with dates, times, and witnesses.',
-        'You have legal protection against retaliation for reporting.',
-        'Contact women\'s helplines for immediate support: 181 (Women Helpline).'
-    ]
-};
+// ============================================================
+// Backend config - change this when you deploy the backend
+// (e.g. to your Render/Railway URL) instead of running locally.
+// ============================================================
+const API_BASE_URL = window.RIGHTSMITRA_API_URL || 'http://localhost:4000';
+
+function getAuthToken() {
+    return localStorage.getItem('authToken');
+}
+
+async function apiFetch(path, options = {}) {
+    const token = getAuthToken();
+    const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    const res = await fetch(`${API_BASE_URL}${path}`, { ...options, headers });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+    return data;
+}
 
 // DOM Elements
 const submitBtn = document.getElementById('submitBtn');
@@ -59,18 +28,23 @@ const responseContent = document.getElementById('responseContent');
 const closeResponseBtn = document.getElementById('closeResponseBtn');
 const issueTags = document.querySelectorAll('.issue-tag');
 const faqQuestions = document.querySelectorAll('.faq-question');
+const contactForm = document.getElementById('contactForm');
+const formResponse = document.getElementById('formResponse');
 
 // Event Listeners
-submitBtn.addEventListener('click', handleSubmit);
-clearBtn.addEventListener('click', handleClear);
-closeResponseBtn.addEventListener('click', closeResponse);
+if (submitBtn) submitBtn.addEventListener('click', handleSubmit);
+if (clearBtn) clearBtn.addEventListener('click', handleClear);
+if (closeResponseBtn) closeResponseBtn.addEventListener('click', closeResponse);
+if (contactForm) contactForm.addEventListener('submit', handleContactForm);
 
 // Issue tag click handlers
 issueTags.forEach(tag => {
     tag.addEventListener('click', () => {
         const issue = tag.getAttribute('data-issue');
-        userQuestionInput.value = `I have a problem with: ${issue}`;
-        userQuestionInput.focus();
+        if (userQuestionInput) {
+            userQuestionInput.value = `I have a problem with: ${issue}`;
+            userQuestionInput.focus();
+        }
     });
 });
 
@@ -82,8 +56,9 @@ faqQuestions.forEach(question => {
     });
 });
 
-// Handle form submission
-function handleSubmit() {
+// Handle form submission - now calls the real backend (AI-powered, with
+// an offline fallback baked in server-side if no AI key is configured)
+async function handleSubmit() {
     const userInput = userQuestionInput.value.trim();
 
     if (!userInput) {
@@ -91,58 +66,55 @@ function handleSubmit() {
         return;
     }
 
-    // Find matching issue category
-    let matchingCategory = null;
-    for (const category in legalGuidanceDatabase) {
-        if (userInput.toLowerCase().includes(category.toLowerCase()) || 
-            userInput.toLowerCase().includes(category.toLowerCase().split(' ')[0])) {
-            matchingCategory = category;
-            break;
-        }
-    }
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Getting guidance...';
 
-    // Generate response
-    const response = generateLegalGuidance(userInput, matchingCategory);
-    displayResponse(response);
+    try {
+        const owner = (getCurrentUser() && getCurrentUser().user_id) || localStorage.getItem('guestSessionId');
+        const language = (getCurrentUser() && getCurrentUser().preferred_language) || 'en';
+
+        const result = await apiFetch('/api/guidance', {
+            method: 'POST',
+            body: JSON.stringify({ query: userInput, language, owner_id: owner }),
+        });
+
+        displayResponse(renderGuidanceHtml(result));
+    } catch (err) {
+        console.error('Guidance request failed:', err);
+        displayResponse(`<div class="guidance-response"><p style="color:#f87171;">Sorry, something went wrong reaching the guidance service: ${err.message}. Please try again.</p></div>`);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Get Legal Guidance';
+    }
 }
 
-// Generate legal guidance
-function generateLegalGuidance(userInput, category) {
-    let response = '<div class="guidance-response">';
-    
-    response += '<h4>Your Legal Guidance:</h4>';
-    
-    if (category && legalGuidanceDatabase[category]) {
-        response += `<p><strong>Category: ${category}</strong></p>`;
-        response += '<ul style="margin-left: 20px;">';
-        legalGuidanceDatabase[category].forEach(point => {
-            response += `<li style="margin-bottom: 10px;">${point}</li>`;
+// Render the structured { category, guidance_points, next_steps, disclaimer }
+// response from the backend into the same HTML shape the UI already expects.
+function renderGuidanceHtml(result) {
+    let html = '<div class="guidance-response">';
+    html += '<h4>Your Legal Guidance:</h4>';
+    if (result.category) html += `<p><strong>Category: ${result.category}</strong></p>`;
+
+    html += '<ul style="margin-left: 20px;">';
+    (result.guidance_points || []).forEach(point => {
+        html += `<li style="margin-bottom: 10px;">${point}</li>`;
+    });
+    html += '</ul>';
+
+    if (result.next_steps && result.next_steps.length) {
+        html += '<h4 style="margin-top: 20px;">Next Steps:</h4>';
+        html += '<ul style="margin-left: 20px;">';
+        result.next_steps.forEach(step => {
+            html += `<li style="margin-bottom: 10px;">${step}</li>`;
         });
-        response += '</ul>';
-    } else {
-        response += '<p>Based on your situation, here are some general guidelines:</p>';
-        response += '<ul style="margin-left: 20px;">';
-        response += '<li style="margin-bottom: 10px;">Document everything: Keep records of all employment-related communications, payments, and incidents.</li>';
-        response += '<li style="margin-bottom: 10px;">Know your rights: As a worker in India, you have legal protections under various labor laws.</li>';
-        response += '<li style="margin-bottom: 10px;">Seek evidence: Collect witnesses, photographs, salary slips, or any supporting documents.</li>';
-        response += '<li style="margin-bottom: 10px;">Report formally: Send written complaints to your employer with dates and specific details.</li>';
-        response += '<li style="margin-bottom: 10px;">Contact authorities: Reach out to your District Labor Officer or labor department.</li>';
-        response += '<li style="margin-bottom: 10px;">Get legal help: Consider consulting with a labor lawyer for complex cases.</li>';
-        response += '</ul>';
+        html += '</ul>';
     }
 
-    response += '<h4 style="margin-top: 20px;">Next Steps:</h4>';
-    response += '<ul style="margin-left: 20px;">';
-    response += '<li style="margin-bottom: 10px;">Contact the District Labor Officer in your area for formal assistance.</li>';
-    response += '<li style="margin-bottom: 10px;">Call the Worker Helpline: 1800-WORKER-1 (toll-free)</li>';
-    response += '<li style="margin-bottom: 10px;">Consult with a legal aid organization for free legal advice.</li>';
-    response += '<li style="margin-bottom: 10px;">Document your case thoroughly before filing any complaint.</li>';
-    response += '</ul>';
-
-    response += '<p style="margin-top: 20px; color: #34D399;"><strong>Remember:</strong> This is general guidance. For specific legal advice about your situation, please consult with a qualified labor lawyer or legal aid organization.</p>';
-    response += '</div>';
-
-    return response;
+    if (result.disclaimer) {
+        html += `<p style="margin-top: 20px; color: #34D399;"><strong>Remember:</strong> ${result.disclaimer}</p>`;
+    }
+    html += '</div>';
+    return html;
 }
 
 // Display response
@@ -177,37 +149,232 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Add voice input functionality (basic)
-document.querySelector('.voice-button').addEventListener('click', () => {
-    const recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    
-    if (recognition) {
-        const speechRecognition = new recognition();
-        speechRecognition.lang = 'en-IN';
-        
-        speechRecognition.onstart = () => {
-            console.log('Listening...');
-        };
-        
-        speechRecognition.onresult = (event) => {
-            const transcript = Array.from(event.results)
-                .map(result => result[0].transcript)
-                .join('');
-            
-            userQuestionInput.value = transcript;
-            userQuestionInput.focus();
-        };
-        
-        speechRecognition.onerror = (event) => {
-            console.error('Speech recognition error:', event.error);
-            alert('Speech recognition not available or access denied.');
-        };
-        
-        speechRecognition.start();
-    } else {
-        alert('Speech recognition is not supported in your browser. Please use Chrome, Edge, or Safari.');
+// Enhanced voice input with mic toggle and guest/session case storage
+let micEnabled = true; // user can toggle to disable microphone
+let ongoingRecognition = null; // keep reference to stop mid-listen
+
+// Ensure a guest session exists (stored in localStorage). The backend just
+// treats this as an opaque owner_id string, so no server call is needed here.
+function createGuestSessionIfNeeded() {
+    if (!localStorage.getItem('guestSessionId')) {
+        const id = 'guest_' + Date.now() + '_' + Math.random().toString(36).slice(2,9);
+        localStorage.setItem('guestSessionId', id);
+        localStorage.setItem('currentUser', JSON.stringify({ user_id: id, guest_flag: true, created_at: new Date().toISOString() }));
     }
+}
+createGuestSessionIfNeeded();
+
+function getCurrentUser() {
+    const raw = localStorage.getItem('currentUser');
+    return raw ? JSON.parse(raw) : null;
+}
+
+function setCurrentUser(user) {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+}
+
+// Case storage now goes through the backend instead of localStorage.
+async function saveCase(caseObj) {
+    const owner = caseObj.user_id || (getCurrentUser() && getCurrentUser().user_id) || localStorage.getItem('guestSessionId');
+    try {
+        const result = await apiFetch('/api/cases', {
+            method: 'POST',
+            body: JSON.stringify({
+                owner_id: owner,
+                issue_summary: caseObj.issue_summary,
+                full_conversation_log: caseObj.full_conversation_log,
+                category: caseObj.category,
+                language: caseObj.language,
+                region: caseObj.region,
+            }),
+        });
+        return result.case_id;
+    } catch (err) {
+        console.error('Failed to save case to backend:', err);
+        return null;
+    }
+}
+
+async function getCasesForOwner(ownerId) {
+    try {
+        const result = await apiFetch(`/api/cases?owner_id=${encodeURIComponent(ownerId)}`);
+        return result.cases || [];
+    } catch (err) {
+        console.error('Failed to fetch cases from backend:', err);
+        return [];
+    }
+}
+
+// Mic toggle handler
+const micToggle = document.getElementById('micToggle');
+const micToggleIcon = document.getElementById('micToggleIcon');
+if (micToggle) {
+    micToggle.addEventListener('click', () => {
+        micEnabled = !micEnabled;
+        micToggleIcon.textContent = micEnabled ? '🔊' : '🔇';
+        micToggle.classList.toggle('off', !micEnabled);
+        if (!micEnabled && ongoingRecognition) {
+            try { ongoingRecognition.stop(); } catch(e) { console.warn(e); }
+            ongoingRecognition = null;
+        }
+    });
+}
+
+// Voice button: start/stop recognition only if micEnabled
+const voiceBtn = document.getElementById('voiceButton');
+if (voiceBtn) {
+    voiceBtn.addEventListener('click', async () => {
+        if (!micEnabled) { alert('Microphone is turned off. Toggle the mic to enable voice input.'); return; }
+
+        const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const voiceIcon = document.getElementById('voiceIcon');
+        const audioBars = document.querySelectorAll('.audio-bar');
+
+        if (!Recognition) {
+            alert('Speech recognition is not supported in your browser. Please use Chrome, Edge, or Safari.');
+            return;
+        }
+
+        if (ongoingRecognition) {
+            try { ongoingRecognition.stop(); } catch(e) { console.warn(e); }
+            ongoingRecognition = null;
+            return;
+        }
+
+        const recognition = new Recognition();
+        recognition.lang = 'en-IN';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        ongoingRecognition = recognition;
+
+        recognition.onstart = () => {
+            if (voiceIcon) voiceIcon.classList.add('speaking');
+            audioBars.forEach(bar => bar.classList.add('animating'));
+        };
+
+        recognition.onresult = (event) => {
+            const transcript = Array.from(event.results).map(r => r[0].transcript).join('');
+            if (userQuestionInput) {
+                userQuestionInput.value = transcript;
+                userQuestionInput.focus();
+            }
+            // Save a draft case to the backend (fire-and-forget)
+            saveCase({
+                user_id: getCurrentUser() && getCurrentUser().user_id,
+                issue_summary: transcript.slice(0,120),
+                full_conversation_log: [{type:'voice', text: transcript, ts: new Date().toISOString()}],
+            });
+        };
+
+        recognition.onend = () => {
+            if (voiceIcon) voiceIcon.classList.remove('speaking');
+            audioBars.forEach(bar => bar.classList.remove('animating'));
+            ongoingRecognition = null;
+        };
+
+        recognition.onerror = (e) => {
+            console.error('Speech recognition error', e);
+            if (voiceIcon) voiceIcon.classList.remove('speaking');
+            audioBars.forEach(bar => bar.classList.remove('animating'));
+            ongoingRecognition = null;
+            alert('Speech recognition error: ' + (e.error || 'unknown'));
+        };
+
+        try { recognition.start(); } catch (e) { console.error(e); }
+    });
+}
+
+// Auth: now calls the real backend OTP endpoints instead of simulating locally.
+async function sendOTP(phone) {
+    try {
+        await apiFetch('/api/auth/send-otp', { method: 'POST', body: JSON.stringify({ phone }) });
+        return true;
+    } catch (err) {
+        console.error('sendOTP failed:', err);
+        alert(err.message);
+        return false;
+    }
+}
+
+async function loginWithPhone(phone, code, preferred_language) {
+    const guestId = localStorage.getItem('guestSessionId');
+    try {
+        const result = await apiFetch('/api/auth/verify-otp', {
+            method: 'POST',
+            body: JSON.stringify({ phone, otp: code, preferred_language, guest_id: guestId }),
+        });
+        localStorage.setItem('authToken', result.token);
+        setCurrentUser(result.user);
+        return result.user;
+    } catch (err) {
+        console.error('loginWithPhone failed:', err);
+        return null;
+    }
+}
+
+// Cases page rendering helper (if on cases.html)
+async function renderCasesOnPage() {
+    const casesContainer = document.getElementById('casesList');
+    if (!casesContainer) return;
+    const user = getCurrentUser();
+    const owner = (user && user.user_id) || localStorage.getItem('guestSessionId');
+    casesContainer.innerHTML = '<p class="muted">Loading your cases...</p>';
+    const cases = await getCasesForOwner(owner);
+    casesContainer.innerHTML = '';
+    if (!cases.length) { casesContainer.innerHTML = '<p class="muted">No cases found. Your recent voice inputs and guidance requests will appear here.</p>'; return; }
+    cases.forEach(c => {
+        const div = document.createElement('div');
+        div.className = 'case-card';
+        const firstLogText = (c.full_conversation_log && c.full_conversation_log[0] && c.full_conversation_log[0].text) || '';
+        div.innerHTML = `<div class="case-card-header"><strong>${c.issue_summary}</strong><span class="case-ts">${new Date(c.timestamp).toLocaleString()}</span></div>
+                         <div class="case-card-body"><p>${firstLogText}</p></div>
+                         <div class="case-card-footer"><small>Verdict: ${c.verdict || 'Pending'}</small></div>`;
+        div.addEventListener('click', () => {
+            alert('Case details not yet implemented in demo.');
+        });
+        casesContainer.appendChild(div);
+    });
+}
+
+// Run on pages where DOM loaded
+document.addEventListener('DOMContentLoaded', () => {
+    renderCasesOnPage();
 });
+
+// Contact form handler - now submits to the backend
+async function handleContactForm(e) {
+    e.preventDefault();
+
+    const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        issue: document.getElementById('issue').value,
+        message: document.getElementById('message').value
+    };
+
+    if (!formData.name || !formData.email || !formData.issue || !formData.message) {
+        alert('Please fill in all required fields.');
+        return;
+    }
+
+    try {
+        const result = await apiFetch('/api/contact', { method: 'POST', body: JSON.stringify(formData) });
+        if (formResponse) {
+            formResponse.textContent = '✓ ' + result.message;
+            formResponse.classList.remove('hidden');
+            formResponse.style.animation = 'slideIn 0.3s ease';
+        }
+        contactForm.reset();
+        setTimeout(() => { if (formResponse) formResponse.classList.add('hidden'); }, 5000);
+    } catch (err) {
+        console.error('Contact form submission failed:', err);
+        if (formResponse) {
+            formResponse.textContent = 'Something went wrong sending your message. Please try again.';
+            formResponse.classList.remove('hidden');
+        }
+    }
+}
 
 // Add enter key submit
 userQuestionInput.addEventListener('keydown', (e) => {
@@ -219,8 +386,6 @@ userQuestionInput.addEventListener('keydown', (e) => {
 // Initialize tooltips and accessibility features
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Legal Empowerment Website Loaded Successfully');
-    
-    // Preload animations
     const elements = document.querySelectorAll('.interactive-card, .feature-card, .faq-item');
     elements.forEach(el => {
         el.style.animation = 'none';
