@@ -1,3 +1,4 @@
+const axios = require('axios');
 const store = require('../lib/store');
 const token = require('../lib/token');
 
@@ -11,7 +12,7 @@ function genId(prefix) {
 // POST /api/auth/send-otp { phone }
 // Simulates OTP delivery (logs to server console), same as the frontend's
 // own demo note. Swap the console.log for Twilio/MSG91/Firebase to go live.
-function sendOtp(req, res, body) {
+async function sendOtp(req, res, body) {
   const { phone } = body;
   if (!phone || !/^\+?[0-9]{10,15}$/.test(phone)) {
     return res.status(400).json({ error: 'Valid phone number required' });
@@ -25,6 +26,24 @@ function sendOtp(req, res, body) {
   );
 
   console.log(`[OTP] ${phone} => ${code} (expires in 5 min)`);
+  if (process.env.FAST2SMS_API_KEY) {
+      try {
+        const cleanPhone = phone.replace(/\D/g, '').slice(-10);
+        await axios.get('https://www.fast2sms.com/dev/bulkV2', {
+          params: {
+            authorization: process.env.FAST2SMS_API_KEY,
+            route: 'q',
+            message: `Your RightsMitra verification code is ${code}`,
+            language: 'english',
+            flash: 0,
+            numbers: cleanPhone
+          }
+        });
+        console.log(`[Fast2SMS] Real SMS dispatched to ${cleanPhone}`);
+      } catch (smsErr) {
+        console.error('[Fast2SMS Error]:', smsErr.response ? smsErr.response.data : smsErr.message);
+      }
+    }
   res.status(200).json({ success: true, message: 'OTP sent', expires_in_seconds: OTP_TTL_MS / 1000 });
 }
 
