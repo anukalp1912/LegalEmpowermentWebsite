@@ -1727,3 +1727,23 @@ body {
         font-size: 36px;
     }
 }
+
+
+
+.guidance-card { padding:18px; border-radius:12px; background: rgba(15,23,42,0.96); border:1px solid rgba(51,65,85,0.6); }
+.guidance-header { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+.guidance-controls { display:flex; gap:8px; align-items:center; }
+.tts-button { background: rgba(255,255,255,0.03); border:1px solid rgba(51,65,85,0.6); padding:6px 8px; border-radius:8px; cursor:pointer; }
+.verdict-badge { display:inline-block; padding:8px 12px; border-radius:999px; color:white; font-weight:700; }
+.verdict-illegal { background: linear-gradient(90deg,#ef4444,#f97316); }
+.verdict-legal { background: linear-gradient(90deg,#10b981,#34d399); }
+.verdict-grey { background: linear-gradient(90deg,#f59e0b,#f97316); color:#082a00; }
+.verdict-row { display:flex; justify-content:space-between; align-items:center; margin-top:10px; gap:12px; }
+.explanation, .action-plan, .additional-advice, .who-to-contact { margin-top:12px; }
+.action-item { margin:8px 0; }
+.action-item.completed .action-text { text-decoration:line-through; opacity:0.7; }
+.collapsible { width:100%; text-align:left; padding:10px; background:rgba(255,255,255,0.02); border:none; border-radius:8px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+.collapsible-body { padding:10px 12px; background:rgba(255,255,255,0.02); margin-top:6px; border-radius:8px; }
+.guidance-disclaimer { margin-top:14px; border-top:1px solid rgba(51,65,85,0.3); padding-top:10px; color:#94A3B8; font-size:13px; }
+.muted { color:#94A3B8; }
+.case-summary-title { margin:0 0 8px 0; font-size:18px; }
