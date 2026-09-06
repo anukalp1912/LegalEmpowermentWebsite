@@ -437,3 +437,330 @@ userQuestionInput.addEventListener('keypress', (e) => {
         e.preventDefault();
     }
 });
+
+
+/***********************
+ Multilingual Guidance + TTS Renderer
+ Paste into script.js (after existing helpers)
+***********************/
+
+// Global tracked spoken language (e.g., 'hi-IN', 'ta-IN', 'en-IN')
+let userSpokenLang = null;
+
+// Map codes -> display name for LLM prompt (server side can reuse)
+const LANG_CODE_TO_NAME = {
+  'hi-IN':'Hindi','hi':'Hindi',
+  'ta-IN':'Tamil','ta':'Tamil',
+  'bn-IN':'Bengali','bn':'Bengali',
+  'te-IN':'Telugu','te':'Telugu',
+  'mr-IN':'Marathi','mr':'Marathi',
+  'en-IN':'English','en':'English'
+};
+
+// Lightweight script-based detection for typed input fallback
+function detectLanguageFromText(text){
+  if (!text || !text.trim()) return 'en-IN';
+  // Devanagari (Hindi/Marathi)
+  if (/[\\u0900-\\u097F]/.test(text)) return 'hi-IN';
+  // Tamil
+  if (/[\\u0B80-\\u0BFF]/.test(text)) return 'ta-IN';
+  // Bengali
+  if (/[\\u0980-\\u09FF]/.test(text)) return 'bn-IN';
+  // Telugu
+  if (/[\\u0C00-\\u0C7F]/.test(text)) return 'te-IN';
+  // Latin script fallback -> English
+  return 'en-IN';
+}
+
+function langCodeToName(code){
+  if (!code) return 'English';
+  return LANG_CODE_TO_NAME[code] || LANG_CODE_TO_NAME[code.split('-')[0]] || 'English';
+}
+
+/* ========== LLM call wrapper (client) ==========
+Assumes you have a server endpoint or client function named getLegalGuidance(userText, userSpokenLang)
+that returns JSON matching the schema described in your prompt:
+{
+  verdict, confidence_score, case_summary, explanation,
+  relevant_law_citation, action_plan (array), additional_advice (object),
+  who_to_contact (array), disclaimer
+}
+If you need a sample server payload for the LLM, use:
+{
+  system: "Never give medical diagnoses... Respond ONLY in [LANGNAME] - use simple language.",
+  user: "User issue: {userText} ... Output strict JSON with keys: verdict, confidence_score, ..."
+}
+************************************************** */
+
+async function requestAndRenderGuidance(userText){
+  // Determine language: prefer userSpokenLang (from voice), else current user pref, else detect from text
+  let lang = userSpokenLang || (getCurrentUser && getCurrentUser().preferred_language ? getCurrentUser().preferred_language : null);
+  if (!lang) lang = detectLanguageFromText(userText);
+  userSpokenLang = lang;
+
+  // Optional: show loading UI
+  responseContent.innerHTML = `<div class="guidance-loading">Generating guidance…</div>`;
+  responseSection.classList.remove('hidden');
+
+  try {
+    // Call backend function (developer: implement this to call your LLM and return the structured JSON)
+    // Example usage: const guidance = await getLegalGuidance(userText, lang);
+    // Here we call the provided function name (assumed present).
+    const guidance = await getLegalGuidance(userText, lang);
+
+    // Validate/parse guidance
+    if (!guidance || typeof guidance !== 'object' || !('verdict' in guidance)) {
+      responseContent.innerHTML = `<div class="error">Invalid response from server. Please try again.</div>`;
+      return;
+    }
+
+    renderGuidance(guidance, lang);
+  } catch (err) {
+    console.error('Guidance error', err);
+    responseContent.innerHTML = `<div class="error">Failed to get guidance. Please try again later.</div>`;
+  }
+}
+
+/* ========== Render UI ========= */
+function renderGuidance(g, langCode){
+  // Ensure we keep keys English but values are in user's language per backend contract
+  const langName = langCodeToName(langCode);
+  // Verdict badge color
+  const verdictColor = (g.verdict === 'illegal') ? 'verdict-illegal' : (g.verdict === 'grey_area' ? 'verdict-grey' : 'verdict-legal');
+
+  // Build action plan list (checkable)
+  const actionItemsHtml = (g.action_plan && g.action_plan.length) ? g.action_plan.map(item =>
+    `<li class="action-item"><label><input type="checkbox" class="action-check" data-step="${item.step}"> <span class="action-text">${escapeHtml(item.action)}</span></label></li>`
+  ).join('') : '<li class="muted">No action steps provided.</li>';
+
+  // Additional advice collapsibles
+  const advice = g.additional_advice || {};
+  const adviceSections = [
+    {key:'financial', title: translateLabel('Financial', langCode), content: advice.financial},
+    {key:'medical', title: translateLabel('Medical / Safety', langCode), content: advice.medical},
+    {key:'emotional_support', title: translateLabel('Emotional Support', langCode), content: advice.emotional_support},
+    {key:'documentation_tips', title: translateLabel('Documentation Tips', langCode), content: advice.documentation_tips}
+  ].map(s => {
+    if (!s.content) return '';
+    return `<div class="advice-section">
+              <button class="collapsible">${escapeHtml(s.title)} <span class="coll-arrow">▾</span></button>
+              <div class="collapsible-body">${escapeHtml(s.content)}</div>
+            </div>`;
+  }).join('');
+
+  // Who to contact list (tel: links if available)
+  const contactsHtml = (g.who_to_contact && g.who_to_contact.length) ? g.who_to_contact.map(c => {
+    const call = c.how && /\\+?\\d/.test(c.how) ? `<a href="tel:${c.how.replace(/[^+\\d]/g,'')}" class="contact-link">${escapeHtml(c.how)}</a>` : `<span>${escapeHtml(c.how || '')}</span>`;
+    return `<li><strong>${escapeHtml(c.name)}</strong> — ${call}</li>`;
+  }).join('') : '<li class="muted">No direct contacts available.</li>';
+
+  // Render HTML into responseContent
+  responseContent.innerHTML = `
+    <div class="guidance-root" lang="${escapeHtml(langCode)}">
+      <div class="guidance-card">
+        <div class="guidance-header">
+          <h3 class="case-summary-title">${escapeHtml(g.case_summary || translateLabel('Case Summary', langCode))}</h3>
+          <div class="guidance-controls">
+            <button class="tts-button tts-play-section" data-section="summary">🔊</button>
+            <button class="tts-button tts-play-section" data-section="verdict">🔊</button>
+            <button id="ttsPlayFull" class="tts-button">▶ Play Full Guidance</button>
+            <button id="ttsStop" class="tts-button">⏹ Stop</button>
+          </div>
+        </div>
+
+        <div class="verdict-row">
+          <div class="verdict-badge ${verdictColor}">${escapeHtml(g.verdict || '')} • ${escapeHtml(String(g.confidence_score || ''))}%</div>
+          <div class="relevant-law">${escapeHtml(g.relevant_law_citation || '')}</div>
+        </div>
+
+        <section class="explanation">
+          <h4>${translateLabel('Explanation', langCode)} <button class="tts-button tts-play-section" data-section="explanation">🔊</button></h4>
+          <p>${escapeHtml(g.explanation || '')}</p>
+        </section>
+
+        <section class="action-plan">
+          <h4>${translateLabel('Action Plan', langCode)}</h4>
+          <ol>${actionItemsHtml}</ol>
+        </section>
+
+        <section class="additional-advice">
+          <h4>${translateLabel('Additional Advice', langCode)}</h4>
+          ${adviceSections || '<p class="muted">No additional advice.</p>'}
+        </section>
+
+        <section class="who-to-contact">
+          <h4>${translateLabel('Who to Contact', langCode)}</h4>
+          <ul>${contactsHtml}</ul>
+        </section>
+
+        <footer class="guidance-disclaimer">
+          <small>${escapeHtml(g.disclaimer || translateLabel('This is general guidance and not a substitute for professional legal or medical advice.', langCode))}</small>
+        </footer>
+      </div>
+    </div>
+  `;
+
+  // Wire collapsibles
+  Array.from(responseContent.querySelectorAll('.collapsible')).forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('open');
+      const body = btn.nextElementSibling;
+      if (body) body.style.display = btn.classList.contains('open') ? 'block' : 'none';
+      const arrow = btn.querySelector('.coll-arrow'); if (arrow) arrow.textContent = btn.classList.contains('open') ? '▴' : '▾';
+    });
+    // Start collapsed
+    const b = btn.nextElementSibling; if (b) b.style.display = 'none';
+  });
+
+  // Wire per-section TTS
+  Array.from(responseContent.querySelectorAll('.tts-play-section')).forEach(b => {
+    b.addEventListener('click', () => {
+      const section = b.getAttribute('data-section');
+      let textToSpeak = '';
+      if (section === 'summary') textToSpeak = g.case_summary || '';
+      if (section === 'verdict') textToSpeak = `${translateLabel('Verdict', langCode)}: ${g.verdict || ''}. ${translateLabel('Confidence', langCode)}: ${g.confidence_score || ''}%`;
+      if (section === 'explanation') textToSpeak = g.explanation || '';
+      if (textToSpeak) speakText(textToSpeak, langCode);
+    });
+  });
+
+  // Wire full playback and stop
+  document.getElementById('ttsPlayFull').onclick = () => speakGuidanceSequentially(g, langCode);
+  document.getElementById('ttsStop').onclick = () => stopSpeaking();
+
+  // Make action items checkable (persist little state in-memory or localStorage if desired)
+  Array.from(responseContent.querySelectorAll('.action-check')).forEach(chk => {
+    chk.addEventListener('change', (e) => {
+      // Optional: persist state per-case (not implemented here)
+      chk.parentElement.classList.toggle('completed', chk.checked);
+    });
+  });
+
+  // Scroll into view
+  responseSection.classList.remove('hidden');
+  responseSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+/* ========== TTS Helpers ========= */
+function getVoiceForLang(langCode) {
+  // Populate voices (some browsers populate asynchronously)
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices || !voices.length) return null;
+  // Try exact match then prefix
+  let v = voices.find(x => x.lang && x.lang.toLowerCase() === langCode.toLowerCase());
+  if (!v) v = voices.find(x => x.lang && x.lang.toLowerCase().startsWith(langCode.split('-')[0]));
+  return v || null;
+}
+
+let ttsPlayingQueue = null;
+let ttsIsPlaying = false;
+
+function speakText(text, langCode, onend) {
+  stopSpeaking(); // stop any existing speech
+  if (!text || !('speechSynthesis' in window)) {
+    alert(translateLabel('Audio playback not available on this device.', langCode));
+    return;
+  }
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = langCode || 'en-IN';
+  const voice = getVoiceForLang(langCode);
+  if (voice) utter.voice = voice;
+  utter.rate = 0.95;
+  utter.onend = () => {
+    ttsIsPlaying = false;
+    if (typeof onend === 'function') onend();
+  };
+  speechSynthesis.speak(utter);
+  ttsIsPlaying = true;
+}
+
+function speakGuidanceSequentially(g, langCode) {
+  // Stop existing
+  stopSpeaking();
+  // Build queue section-by-section (plain text)
+  const queue = [];
+  if (g.case_summary) queue.push({label: translateLabel('Case Summary', langCode), text: g.case_summary});
+  queue.push({label: translateLabel('Verdict', langCode), text: `${translateLabel('Verdict', langCode)}: ${g.verdict || ''}. ${translateLabel('Confidence', langCode)}: ${g.confidence_score || ''}%`});
+  if (g.explanation) queue.push({label: translateLabel('Explanation', langCode), text: g.explanation});
+  if (g.action_plan && g.action_plan.length) {
+    const steps = g.action_plan.map(s=> `${translateLabel('Step', langCode)} ${s.step}: ${s.action}`).join('. ');
+    queue.push({label: translateLabel('Action Plan', langCode), text: steps});
+  }
+  if (g.additional_advice) {
+    const adv = Object.entries(g.additional_advice).map(([k,v]) => v ? `${translateLabel(k.replace('_',' '), langCode)}: ${v}` : '').filter(Boolean).join('. ');
+    if (adv) queue.push({label: translateLabel('Additional Advice', langCode), text: adv});
+  }
+  // Play sequentially
+  ttsPlayingQueue = queue;
+  playNextInQueue(langCode);
+}
+
+function playNextInQueue(langCode){
+  if (!ttsPlayingQueue || !ttsPlayingQueue.length) {
+    ttsPlayingQueue = null; ttsIsPlaying = false; return;
+  }
+  const item = ttsPlayingQueue.shift();
+  const text = item.text;
+  speakText(text, langCode, () => {
+    setTimeout(()=> playNextInQueue(langCode), 250); // small gap
+  });
+}
+
+function stopSpeaking(){
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+  }
+  ttsPlayingQueue = null;
+  ttsIsPlaying = false;
+}
+
+/* ========== Utility helpers ========= */
+function escapeHtml(s){
+  if (s === null || s === undefined) return '';
+  return (''+s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
+}
+
+// Small translator hook for UI labels — here we keep labels in English (server should translate values)
+// but we provide a few common UI label translations by language for the static UI.
+function translateLabel(key, langCode){
+  // key may be English or short key; return same key if no translation available
+  const map = {
+    'Explanation': {'hi-IN':'विवरण','ta-IN':'விளக்கம்','bn-IN':'ব্যাখ্যা','te-IN':'వివరణ','mr-IN':'स्पष्टीकरण','en-IN':'Explanation'},
+    'Action Plan': {'hi-IN':'कार्रवाई की योजना','ta-IN':'செயல் திட்டம்','bn-IN':'কর্মপরিকল্পনা','te-IN':'చర్యా ప్రణాళిక','mr-IN':'कृती योजना','en-IN':'Action Plan'},
+    'Additional Advice': {'hi-IN':'अतिरिक्त सलाह','ta-IN':'கூடுதல் ஆலோசனை','bn-IN':'অতিরিক্ত পরামর্শ','te-IN':'అదనపు సలహా','mr-IN':'अतिरिक्त सल्ला','en-IN':'Additional Advice'},
+    'Who to Contact': {'hi-IN':'संपर्क करें','ta-IN':'யாரை தொடர்பு கொள்ள வேண்டும்','bn-IN':'কারো সাথে যোগাযোগ করুন','te-IN':'ఏవారి సంప్రదించాలి','mr-IN':'कोणाशी संपर्क साधायचा','en-IN':'Who to Contact'},
+    'Case Summary': {'hi-IN':'मामले का सारांश','ta-IN':'கேஸின் சுருக்கம்','bn-IN':'কেস সারসংক্ষেপ','te-IN':'కేస్ సారాంశం','mr-IN':'केस सारांश','en-IN':'Case Summary'},
+    'Verdict': {'hi-IN':'निष्कर्ष','ta-IN':'தீர்ப்பு','bn-IN':'ফলাফল','te-IN':'తిరుగుబాటు','mr-IN':'निर्णय','en-IN':'Verdict'},
+    'Confidence': {'hi-IN':'विश्वास','ta-IN':'நம்பிக்கை','bn-IN':'নিশ্চয়তা','te-IN':'నమ్మకం','mr-IN':'विश्वास','en-IN':'Confidence'},
+    'Financial': {'hi-IN':'आर्थिक','ta-IN':'நிதி','bn-IN':'আর্থিক','te-IN':'ఆర్థిక','mr-IN':'आर्थिक','en-IN':'Financial'},
+    'Medical / Safety': {'hi-IN':'चिकित्सा / सुरक्षा','ta-IN':'மருத்துவம் / பாதுகாப்பு','bn-IN':'চিকিৎসা / নিরাপত্তা','te-IN':'వైద్య / భద్రత','mr-IN':'वैद्यकीय / सुरक्षा','en-IN':'Medical / Safety'},
+    'Emotional Support': {'hi-IN':'भावनात्मक समर्थन','ta-IN':'உணர்ச்சி ஆதரவு','bn-IN':'অনুভূতিগত সমর্থন','te-IN':'భావోద్వేగ మద్దతు','mr-IN':'भावनिक मदत','en-IN':'Emotional Support'},
+    'Documentation Tips': {'hi-IN':'दस्तावेज़ीकरण युक्तियाँ','ta-IN':'ஆவணக்கරණ குறிப்புகள்','bn-IN':'নথি পরামর্শ','te-IN':'డాక్యుమెంటేషన్ సూచనలు','mr-IN':'दस्तऐवजीकरण टिपा','en-IN':'Documentation Tips'},
+    'Step': {'hi-IN':'कदम','ta-IN':'படி','bn-IN':'ধাপ','te-IN':'దశ','mr-IN':'पाऊल','en-IN':'Step'}
+  };
+  const lc = (langCode || 'en-IN');
+  if (map[key] && map[key][lc]) return map[key][lc];
+  if (map[key] && map[key][lc.split('-')[0]]) return map[key][lc.split('-')[0]];
+  return key;
+}
+
+/* ========== Hook into existing submit flow ========= */
+/*
+Where you previously called generateLegalGuidance(userInput, ...),
+replace that invocation with:
+  await requestAndRenderGuidance(userInput);
+This will call the backend function getLegalGuidance(userText, userSpokenLang)
+and render the full UI including TTS controls.
+*/
+
+// Example integration (if your current handleSubmit does synchronous work):
+// modify handleSubmit() to call requestAndRenderGuidance
+// e.g. replace generateLegalGuidance(...) with: await requestAndRenderGuidance(userInput);
+
+/* End of guidance renderer */
