@@ -8,18 +8,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Atkinson+Hyperlegible:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="main-container">
+        <div class="main-container">
         <!-- Background decorative elements -->
         <div class="blur-circle blur-orange"></div>
         <div class="blur-circle blur-green"></div>
 
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="navbar-content">
+                <div class="nav-brand">
+                    <span class="brand-icon">⚖️</span>
+                    <span class="brand-text">RightsMitra</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link active">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="resources.html" class="nav-link">Resources</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="cases.html" class="nav-link">My Cases</a></li>
+                    <li><a href="login.html" class="nav-link">Login</a></li>
+                </ul>
+            </div>
+        </nav>
+
         <!-- Content wrapper -->
         <div class="content-wrapper">
-            <!-- Header section -->
             <header class="header">
                 <div class="header-left">
                     <div class="badge badge-green">
-                        <span class="badge-icon"></span>
+                        <span class="badge-icon">✓</span>
                         <span class="badge-text">WORKER LEGAL EMPOWERMENT • 100% FREE & PRIVATE</span>
                     </div>
                 </div>
@@ -48,20 +65,33 @@
             <div class="interactive-card">
                 <!-- Voice input section -->
                 <div class="voice-input-section">
-                    <div class="voice-button">
-                        <div class="voice-icon"></div>
-                        <div class="voice-text">
-                            <span class="voice-label">बोलकर बताएं / Tap to Speak</span>
-                            <span class="voice-sublabel">Hindi, English, Tamil, Bengali, Telugu, Marathi</span>
-                        </div>
+                    <div class="voice-text">
+                        <span class="voice-label">🎤 बोलकर बताएं / Tap to Speak</span>
+                        <span class="voice-sublabel">Hindi, English, Tamil, Bengali, Telugu, Marathi</span>
                     </div>
-                    <div class="audio-visualizer">
-                        <div class="audio-bar bar-1"></div>
-                        <div class="audio-bar bar-2"></div>
-                        <div class="audio-bar bar-3"></div>
-                        <div class="audio-bar bar-4"></div>
-                        <div class="audio-bar bar-5"></div>
-                        <span class="listening-status">Listening Ready</span>
+                    <div class="voice-container">
+                        <div class="audio-visualizer" id="audioVisualizer">
+                            <div class="audio-bar bar-1"></div>
+                            <div class="audio-bar bar-2"></div>
+                            <div class="audio-bar bar-3"></div>
+                            <div class="audio-bar bar-4"></div>
+                            <div class="audio-bar bar-5"></div>
+                        </div>
+
+                        <!-- Microphone toggle: allows user to disable mic entirely -->
+                        <button class="mic-toggle" id="micToggle" title="Toggle Microphone (On/Off)">
+                            <span id="micToggleIcon">🔊</span>
+                        </button>
+
+                        <button class="voice-button" id="voiceButton">
+                            <div class="voice-icon-wrapper" id="voiceIcon">
+                                <svg class="voice-icon-svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                    <path d="M12 1c-3.866 0-7 3.134-7 7v5c0 3.866 3.134 7 7 7s7-3.134 7-7V8c0-3.866-3.134-7-7-7z"></path>
+                                    <path d="M12 16v4"></path>
+                                    <path d="M8 20h8"></path>
+                                </svg>
+                            </div>
+                        </button>
                     </div>
                 </div>
 
@@ -208,7 +238,7 @@
                     </div>
                     <div class="footer-section">
                         <h4>Contact Us</h4>
-                        <p>Email: support@workerlegal.in</p>
+                        <p>Email: <a href="mailto:rightsmitra@gmail.com">rightsmitra@gmail.com</a></p>
                         <p>Phone: 1800-WORKER-1</p>
                     </div>
                     <div class="footer-section">

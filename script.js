@@ -59,18 +59,23 @@ const responseContent = document.getElementById('responseContent');
 const closeResponseBtn = document.getElementById('closeResponseBtn');
 const issueTags = document.querySelectorAll('.issue-tag');
 const faqQuestions = document.querySelectorAll('.faq-question');
+const contactForm = document.getElementById('contactForm');
+const formResponse = document.getElementById('formResponse');
 
 // Event Listeners
-submitBtn.addEventListener('click', handleSubmit);
-clearBtn.addEventListener('click', handleClear);
-closeResponseBtn.addEventListener('click', closeResponse);
+if (submitBtn) submitBtn.addEventListener('click', handleSubmit);
+if (clearBtn) clearBtn.addEventListener('click', handleClear);
+if (closeResponseBtn) closeResponseBtn.addEventListener('click', closeResponse);
+if (contactForm) contactForm.addEventListener('submit', handleContactForm);
 
 // Issue tag click handlers
 issueTags.forEach(tag => {
     tag.addEventListener('click', () => {
         const issue = tag.getAttribute('data-issue');
-        userQuestionInput.value = `I have a problem with: ${issue}`;
-        userQuestionInput.focus();
+        if (userQuestionInput) {
+            userQuestionInput.value = `I have a problem with: ${issue}`;
+            userQuestionInput.focus();
+        }
     });
 });
 
@@ -177,37 +182,236 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Add voice input functionality (basic)
-document.querySelector('.voice-button').addEventListener('click', () => {
-    const recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    
-    if (recognition) {
-        const speechRecognition = new recognition();
-        speechRecognition.lang = 'en-IN';
-        
-        speechRecognition.onstart = () => {
-            console.log('Listening...');
-        };
-        
-        speechRecognition.onresult = (event) => {
-            const transcript = Array.from(event.results)
-                .map(result => result[0].transcript)
-                .join('');
-            
-            userQuestionInput.value = transcript;
-            userQuestionInput.focus();
-        };
-        
-        speechRecognition.onerror = (event) => {
-            console.error('Speech recognition error:', event.error);
-            alert('Speech recognition not available or access denied.');
-        };
-        
-        speechRecognition.start();
-    } else {
-        alert('Speech recognition is not supported in your browser. Please use Chrome, Edge, or Safari.');
+// Enhanced voice input with mic toggle and guest/session case storage
+let micEnabled = true; // user can toggle to disable microphone
+let ongoingRecognition = null; // keep reference to stop mid-listen
+
+// Ensure a guest session exists (stored in localStorage)
+function createGuestSessionIfNeeded() {
+    if (!localStorage.getItem('guestSessionId')) {
+        const id = 'guest_' + Date.now() + '_' + Math.random().toString(36).slice(2,9);
+        localStorage.setItem('guestSessionId', id);
+        localStorage.setItem('currentUser', JSON.stringify({ user_id: id, guest_flag: true, created_at: new Date().toISOString() }));
     }
+}
+createGuestSessionIfNeeded();
+
+function getCurrentUser() {
+    const raw = localStorage.getItem('currentUser');
+    return raw ? JSON.parse(raw) : null;
+}
+
+function setCurrentUser(user) {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+}
+
+// Case storage helpers (localStorage as simple backend for demo)
+function saveCase(caseObj) {
+    // determine owner id (user_id or guestSessionId)
+    const owner = caseObj.user_id || (getCurrentUser() && getCurrentUser().user_id) || localStorage.getItem('guestSessionId');
+    const key = 'cases_' + owner;
+    const arr = JSON.parse(localStorage.getItem(key) || '[]');
+    arr.unshift(caseObj); // add newest first
+    localStorage.setItem(key, JSON.stringify(arr));
+    return caseObj.case_id;
+}
+
+function getCasesForOwner(ownerId) {
+    const key = 'cases_' + ownerId;
+    return JSON.parse(localStorage.getItem(key) || '[]');
+}
+
+function migrateGuestCasesToUser(guestId, newUserId) {
+    const guestKey = 'cases_' + guestId;
+    const userKey = 'cases_' + newUserId;
+    const guestCases = JSON.parse(localStorage.getItem(guestKey) || '[]');
+    const userCases = JSON.parse(localStorage.getItem(userKey) || '[]');
+    // prepend guest cases to user's cases (preserve time order)
+    const merged = guestCases.concat(userCases);
+    localStorage.setItem(userKey, JSON.stringify(merged));
+    // remove guest cases
+    localStorage.removeItem(guestKey);
+}
+
+// Mic toggle handler
+const micToggle = document.getElementById('micToggle');
+const micToggleIcon = document.getElementById('micToggleIcon');
+if (micToggle) {
+    micToggle.addEventListener('click', () => {
+        micEnabled = !micEnabled;
+        micToggleIcon.textContent = micEnabled ? '🔊' : '🔇';
+        micToggle.classList.toggle('off', !micEnabled);
+        // If mic disabled while listening, stop recognition
+        if (!micEnabled && ongoingRecognition) {
+            try { ongoingRecognition.stop(); } catch(e) { console.warn(e); }
+            ongoingRecognition = null;
+        }
+    });
+}
+
+// Voice button: start/stop recognition only if micEnabled
+const voiceBtn = document.getElementById('voiceButton');
+if (voiceBtn) {
+    voiceBtn.addEventListener('click', async () => {
+        if (!micEnabled) { alert('Microphone is turned off. Toggle the mic to enable voice input.'); return; }
+
+        const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const voiceIcon = document.getElementById('voiceIcon');
+        const audioBars = document.querySelectorAll('.audio-bar');
+
+        if (!Recognition) {
+            alert('Speech recognition is not supported in your browser. Please use Chrome, Edge, or Safari.');
+            return;
+        }
+
+        // If already listening, stop
+        if (ongoingRecognition) {
+            try { ongoingRecognition.stop(); } catch(e) { console.warn(e); }
+            ongoingRecognition = null;
+            return;
+        }
+
+        const recognition = new Recognition();
+        recognition.lang = 'en-IN';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        ongoingRecognition = recognition;
+
+        recognition.onstart = () => {
+            if (voiceIcon) voiceIcon.classList.add('speaking');
+            audioBars.forEach(bar => bar.classList.add('animating'));
+        };
+
+        recognition.onresult = (event) => {
+            const transcript = Array.from(event.results).map(r => r[0].transcript).join('');
+            if (userQuestionInput) {
+                userQuestionInput.value = transcript;
+                userQuestionInput.focus();
+            }
+            // Save a draft case automatically (minimal)
+            const c = {
+                case_id: 'case_' + Date.now() + '_' + Math.random().toString(36).slice(2,6),
+                user_id: getCurrentUser() && getCurrentUser().user_id,
+                timestamp: new Date().toISOString(),
+                issue_summary: transcript.slice(0,120),
+                full_conversation_log: [{type:'voice', text: transcript, ts: new Date().toISOString()}],
+                verdict: null,
+                notice_generated: false,
+                region: null
+            };
+            saveCase(c);
+        };
+
+        recognition.onend = () => {
+            if (voiceIcon) voiceIcon.classList.remove('speaking');
+            audioBars.forEach(bar => bar.classList.remove('animating'));
+            ongoingRecognition = null;
+        };
+
+        recognition.onerror = (e) => {
+            console.error('Speech recognition error', e);
+            if (voiceIcon) voiceIcon.classList.remove('speaking');
+            audioBars.forEach(bar => bar.classList.remove('animating'));
+            ongoingRecognition = null;
+            alert('Speech recognition error: ' + (e.error || 'unknown'));
+        };
+
+        try { recognition.start(); } catch (e) { console.error(e); }
+    });
+}
+
+// Simple Auth stubs for login.html functionality (OTP simulation)
+function sendOTP(phone) {
+    // Simulate OTP sending and return a code stored in sessionStorage for demo
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    sessionStorage.setItem('otp_for_' + phone, code);
+    console.log('Simulated OTP for', phone, '=>', code);
+    return true;
+}
+
+function verifyOTP(phone, code) {
+    const expected = sessionStorage.getItem('otp_for_' + phone);
+    return expected === code;
+}
+
+function loginWithPhone(phone, code, preferred_language) {
+    if (!verifyOTP(phone, code)) return null;
+    // Create user object
+    const userId = 'user_' + Date.now();
+    const user = { user_id: userId, phone_number: phone, preferred_language: preferred_language || 'en', created_at: new Date().toISOString(), guest_flag: false };
+    // Migrate guest cases
+    const guestId = localStorage.getItem('guestSessionId');
+    if (guestId) migrateGuestCasesToUser(guestId, userId);
+    // Save current user
+    setCurrentUser(user);
+    return user;
+}
+
+// Cases page rendering helper (if on cases.html)
+function renderCasesOnPage() {
+    const casesContainer = document.getElementById('casesList');
+    if (!casesContainer) return;
+    const user = getCurrentUser();
+    const owner = (user && user.user_id) || localStorage.getItem('guestSessionId');
+    const cases = getCasesForOwner(owner) || [];
+    casesContainer.innerHTML = '';
+    if (!cases.length) { casesContainer.innerHTML = '<p class="muted">No cases found. Your recent voice inputs will appear here.</p>'; return; }
+    cases.forEach(c => {
+        const div = document.createElement('div');
+        div.className = 'case-card';
+        div.innerHTML = `<div class="case-card-header"><strong>${c.issue_summary}</strong><span class="case-ts">${new Date(c.timestamp).toLocaleString()}</span></div>
+                         <div class="case-card-body"><p>${(c.full_conversation_log && c.full_conversation_log[0] && c.full_conversation_log[0].text) || ''}</p></div>
+                         <div class="case-card-footer"><small>Verdict: ${c.verdict || 'Pending'}</small></div>`;
+        div.addEventListener('click', () => {
+            // navigate to case detail view (not implemented fully)
+            alert('Case details not yet implemented in demo.');
+        });
+        casesContainer.appendChild(div);
+    });
+}
+
+// Run on pages where DOM loaded
+document.addEventListener('DOMContentLoaded', () => {
+    renderCasesOnPage();
 });
+
+// Contact form handler
+function handleContactForm(e) {
+    e.preventDefault();
+
+    const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        issue: document.getElementById('issue').value,
+        message: document.getElementById('message').value
+    };
+
+    // Validate form
+    if (!formData.name || !formData.email || !formData.issue || !formData.message) {
+        alert('Please fill in all required fields.');
+        return;
+    }
+
+    // Show success message
+    if (formResponse) {
+        formResponse.textContent = '✓ Thank you! Your message has been received. We will get back to you within 24 hours.';
+        formResponse.classList.remove('hidden');
+        formResponse.style.animation = 'slideIn 0.3s ease';
+    }
+
+    // Reset form
+    contactForm.reset();
+
+    // Hide message after 5 seconds
+    setTimeout(() => {
+        if (formResponse) {
+            formResponse.classList.add('hidden');
+        }
+    }, 5000);
+
+    console.log('Contact form submitted:', formData);
+}
 
 // Add enter key submit
 userQuestionInput.addEventListener('keydown', (e) => {

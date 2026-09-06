@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - RightsMitra</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="content-wrapper">
+        <div class="auth-box">
+            <h2>Sign in to RightsMitra</h2>
+            <p style="color:#94A3B8; font-size:13px; margin-bottom:12px;">Use your phone number (OTP) to sign in. Email is optional. You can also continue as guest.</p>
+
+            <input id="phoneInput" class="auth-input" placeholder="Mobile number (e.g. +919876543210)" />
+            <div style="display:flex; gap:8px;">
+                <input id="otpInput" class="auth-input" placeholder="Enter OTP" style="flex:1;" />
+                <button id="sendOtpBtn" class="auth-guest" style="align-self:center;">Send OTP</button>
+            </div>
+
+            <input id="emailInput" class="auth-input" placeholder="Email (optional)" />
+            <select id="langSelect" class="auth-input">
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="ta">Tamil</option>
+                <option value="bn">Bengali</option>
+                <option value="te">Telugu</option>
+                <option value="mr">Marathi</option>
+            </select>
+
+            <div class="auth-actions">
+                <button id="loginBtn" class="auth-primary">Verify &amp; Sign In</button>
+                <button id="guestBtn" class="auth-guest">Continue as Guest</button>
+            </div>
+
+            <p id="authMessage" style="color:#94A3B8; font-size:13px; margin-top:12px;"></p>
+            <p style="color:#64748B; font-size:12px; margin-top:8px;">Note: This demo simulates OTP locally. For production, integrate Twilio/MSG91/Firebase Auth.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Login page actions (uses script.js stubs)
+        document.getElementById('sendOtpBtn').addEventListener('click', () => {
+            const phone = document.getElementById('phoneInput').value.trim();
+            if (!phone) return alert('Enter phone number');
+            sendOTP(phone);
+            document.getElementById('authMessage').textContent = 'OTP sent (simulated). Check console for code in demo.';
+        });
+
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            const phone = document.getElementById('phoneInput').value.trim();
+            const code = document.getElementById('otpInput').value.trim();
+            const lang = document.getElementById('langSelect').value;
+            if (!phone || !code) return alert('Enter phone and OTP');
+            const user = loginWithPhone(phone, code, lang);
+            if (user) {
+                document.getElementById('authMessage').textContent = 'Signed in as ' + user.user_id;
+                setTimeout(() => { window.location = 'cases.html'; }, 800);
+            } else {
+                document.getElementById('authMessage').textContent = 'Invalid OTP';
+            }
+        });
+
+        document.getElementById('guestBtn').addEventListener('click', () => {
+            // ensure guest session exists and go to home
+            createGuestSessionIfNeeded();
+            window.location = 'index.html';
+        });
+    </script>
+</body>
+</html>
