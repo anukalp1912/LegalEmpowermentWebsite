@@ -31,12 +31,6 @@
             </div>
         </nav>
 
-<<<<<<< HEAD
-        <section id="caseDetail" class="case-detail" aria-live="polite" aria-label="Saved case details"></section>
-
-        <div style="margin-top:24px;">
-            <a href="index.html" class="btn btn-secondary">Back to Home</a>
-=======
         <!-- Content wrapper -->
         <div class="content-wrapper">
             <header style="margin-top:24px; margin-bottom:12px;">
@@ -45,6 +39,8 @@
             </header>
 
             <div id="casesList"></div>
+
+            <section id="caseDetail" class="case-detail" aria-live="polite" aria-label="Saved case details"></section>
 
             <div style="margin-top:24px;">
                 <a href="index.html" class="btn btn-secondary">Back to Home</a>
@@ -69,7 +65,7 @@
                     <div class="footer-section">
                         <h4>Contact Us</h4>
                         <p>Email: <a href="mailto:rightsmitra@gmail.com">rightsmitra@gmail.com</a></p>
-                        <p>Phone: 1800-WORKER-1</p>
+                        <p>Email support for hackathon feedback.</p>
                     </div>
                     <div class="footer-section">
                         <h4>Languages</h4>
@@ -80,24 +76,21 @@
                     <p>&copy; 2024 RightsMitra. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
                 </div>
             </footer>
->>>>>>> 751018d90ca3e4302782219f265c6c1c8ed58cd5
         </div>
 
-    <script src="script.js"></script>
-    <script>
-        // When loaded, script.js's renderCasesOnPage will populate #casesList
-        document.addEventListener('DOMContentLoaded', () => {
-            // Extra UI behavior for the local demo session.
-            const user = getCurrentUser();
-            if (user && user.guest_flag) {
-                const note = document.createElement('p');
-                note.style.color = '#FBBF24';
-                note.textContent = 'You are using a guest session. Cases remain in this browser until its local data is cleared.';
-                document.querySelector('.content-wrapper').insertBefore(note, document.getElementById('casesList'));
-            }
-        });
-    </script>
-        </div>
+        <script src="script.js"></script>
+        <script>
+            // When loaded, script.js's renderCasesOnPage will populate #casesList.
+            document.addEventListener('DOMContentLoaded', () => {
+                const user = getCurrentUser();
+                if (user && user.guest_flag) {
+                    const note = document.createElement('p');
+                    note.style.color = '#FBBF24';
+                    note.textContent = 'You are using a guest session. Cases remain in this browser until its local data is cleared.';
+                    document.querySelector('.content-wrapper').insertBefore(note, document.getElementById('casesList'));
+                }
+            });
+        </script>
     </div>
 </body>
 </html>

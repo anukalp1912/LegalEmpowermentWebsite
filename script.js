@@ -8,6 +8,33 @@ const supportedLanguages = {
     mr: { name: 'Marathi', speechCode: 'mr-IN' }
 };
 
+const interfaceTranslations = {
+    en: {
+        chooseLanguage: 'Choose your preferred language', continue: 'Continue', changeLanguage: 'Change language', home: 'Home', about: 'About', resources: 'Resources', contact: 'Contact', cases: 'My Cases', login: 'Login', language: 'Language', autoDetect: 'Auto Detect', tellUs: 'Tell us what happened', situation: 'Your situation', workerType: 'Worker type', state: 'State or region', optional: 'Optional', understand: 'Understand My Situation', clear: 'Clear', summary: 'Situation summary', draftLetter: 'Draft a letter to your employer', viewLetter: 'View letter', editDraft: 'Please review and edit the draft before use.', letterDisclaimer: 'This is a general draft based on the information you provided. Review it carefully before sending or submitting it.', workerName: 'Worker name', employerName: 'Employer / Company name', jobRole: 'Job role (optional)', workplace: 'Workplace location (optional)', date: 'Date', employeeId: 'Employee ID (optional)', department: 'Department / Manager (optional)', startDate: 'Employment start date (optional)', contactInfo: 'Contact information (optional)', generateLetter: 'Generate draft letter', generateEnglish: 'Generate English copy', downloadPdf: 'Download as PDF', printLetter: 'Print letter', close: 'Close', draftReady: 'Draft letter', noCase: 'No saved case selected.'
+    },
+    hi: {
+        chooseLanguage: 'अपनी पसंदीदा भाषा चुनें', continue: 'जारी रखें', changeLanguage: 'भाषा बदलें', home: 'होम', about: 'हमारे बारे में', resources: 'संसाधन', contact: 'संपर्क', cases: 'मेरे केस', login: 'लॉग इन', language: 'भाषा', autoDetect: 'अपने आप पहचानें', tellUs: 'काम पर क्या हुआ, बताएं', situation: 'आपकी स्थिति', workerType: 'काम का प्रकार', state: 'राज्य या क्षेत्र', optional: 'वैकल्पिक', understand: 'अपनी स्थिति समझें', clear: 'साफ करें', summary: 'स्थिति का सारांश', draftLetter: 'नियोक्ता को पत्र का मसौदा बनाएं', viewLetter: 'पत्र देखें', editDraft: 'कृपया उपयोग से पहले मसौदे को ध्यान से पढ़कर संपादित करें।', letterDisclaimer: 'यह आपके द्वारा दी गई जानकारी पर आधारित सामान्य मसौदा है। भेजने या जमा करने से पहले इसे ध्यान से जांचें।', workerName: 'कामगार का नाम', employerName: 'नियोक्ता / कंपनी का नाम', jobRole: 'काम का प्रकार (वैकल्पिक)', workplace: 'काम की जगह (वैकल्पिक)', date: 'तारीख', employeeId: 'कर्मचारी आईडी (वैकल्पिक)', department: 'विभाग / प्रबंधक (वैकल्पिक)', startDate: 'नौकरी शुरू होने की तारीख (वैकल्पिक)', contactInfo: 'संपर्क जानकारी (वैकल्पिक)', generateLetter: 'पत्र का मसौदा बनाएं', generateEnglish: 'अंग्रेज़ी प्रति बनाएं', downloadPdf: 'PDF के रूप में डाउनलोड करें', printLetter: 'पत्र प्रिंट करें', close: 'बंद करें', draftReady: 'पत्र का मसौदा', noCase: 'कोई सेव किया हुआ केस नहीं चुना गया।'
+    },
+    ta: { chooseLanguage: 'உங்கள் விருப்ப மொழியைத் தேர்ந்தெடுக்கவும்', continue: 'தொடரவும்', changeLanguage: 'மொழியை மாற்றவும்', home: 'முகப்பு', about: 'எங்களைப் பற்றி', resources: 'வளங்கள்', contact: 'தொடர்பு', cases: 'என் வழக்குகள்', login: 'உள்நுழைவு', language: 'மொழி', autoDetect: 'தானாக கண்டறி', tellUs: 'வேலையில் என்ன நடந்தது என்று சொல்லுங்கள்', situation: 'உங்கள் நிலைமை', workerType: 'வேலை வகை', state: 'மாநிலம் அல்லது பகுதி', optional: 'விருப்பம்', understand: 'உங்கள் நிலைமையைப் புரிந்துகொள்ளுங்கள்', clear: 'அழிக்கவும்', summary: 'நிலைமையின் சுருக்கம்', draftLetter: 'உங்கள் முதலாளிக்கு கடித வரைவை உருவாக்கவும்', viewLetter: 'கடிதத்தைப் பார்க்கவும்', editDraft: 'பயன்படுத்துவதற்கு முன் வரைவைப் பார்த்து திருத்தவும்.', letterDisclaimer: 'இது நீங்கள் வழங்கிய தகவலின் அடிப்படையிலான பொதுவான வரைவு. அனுப்புவதற்கு முன் கவனமாகச் சரிபார்க்கவும்.', workerName: 'தொழிலாளரின் பெயர்', employerName: 'முதலாளி / நிறுவனத்தின் பெயர்', jobRole: 'வேலை வகை (விருப்பம்)', workplace: 'பணியிடம் (விருப்பம்)', date: 'தேதி', employeeId: 'பணியாளர் அடையாள எண் (விருப்பம்)', department: 'துறை / மேலாளர் (விருப்பம்)', startDate: 'வேலை தொடங்கிய தேதி (விருப்பம்)', contactInfo: 'தொடர்பு தகவல் (விருப்பம்)', generateLetter: 'கடித வரைவை உருவாக்கவும்', generateEnglish: 'ஆங்கில நகலை உருவாக்கவும்', downloadPdf: 'PDF ஆக பதிவிறக்கவும்', printLetter: 'கடிதத்தை அச்சிடவும்', close: 'மூடவும்', draftReady: 'கடித வரைவு', noCase: 'சேமிக்கப்பட்ட வழக்கு தேர்ந்தெடுக்கப்படவில்லை.' },
+    te: { chooseLanguage: 'మీకు ఇష్టమైన భాషను ఎంచుకోండి', continue: 'కొనసాగించండి', changeLanguage: 'భాష మార్చండి', home: 'హోమ్', about: 'మా గురించి', resources: 'వనరులు', contact: 'సంప్రదించండి', cases: 'నా కేసులు', login: 'లాగిన్', language: 'భాష', autoDetect: 'ఆటో డిటెక్ట్', tellUs: 'పనిలో ఏమి జరిగిందో చెప్పండి', situation: 'మీ పరిస్థితి', workerType: 'పని రకం', state: 'రాష్ట్రం లేదా ప్రాంతం', optional: 'ఐచ్ఛికం', understand: 'మీ పరిస్థితిని అర్థం చేసుకోండి', clear: 'తొలగించండి', summary: 'పరిస్థితి సారాంశం', draftLetter: 'మీ యజమానికి లేఖ ముసాయిదా చేయండి', viewLetter: 'లేఖను చూడండి', editDraft: 'ఉపయోగించే ముందు ముసాయిదాను పరిశీలించి సవరించండి.', letterDisclaimer: 'ఇది మీరు అందించిన సమాచారంపై ఆధారపడిన సాధారణ ముసాయిదా. పంపే ముందు జాగ్రత్తగా పరిశీలించండి.', workerName: 'కార్మికుడి పేరు', employerName: 'యజమాని / కంపెనీ పేరు', jobRole: 'పని రకం (ఐచ్ఛికం)', workplace: 'పని ప్రదేశం (ఐచ్ఛికం)', date: 'తేదీ', employeeId: 'ఉద్యోగి ఐడీ (ఐచ్ఛికం)', department: 'విభాగం / మేనేజర్ (ఐచ్ఛికం)', startDate: 'ఉద్యోగం ప్రారంభమైన తేదీ (ఐచ్ఛికం)', contactInfo: 'సంప్రదింపు సమాచారం (ఐచ్ఛికం)', generateLetter: 'లేఖ ముసాయిదా రూపొందించండి', generateEnglish: 'ఇంగ్లీష్ కాపీ రూపొందించండి', downloadPdf: 'PDFగా డౌన్‌లోడ్ చేయండి', printLetter: 'లేఖను ప్రింట్ చేయండి', close: 'మూసివేయండి', draftReady: 'లేఖ ముసాయిదా', noCase: 'సేవ్ చేసిన కేసు ఎంచుకోలేదు.' },
+    bn: { chooseLanguage: 'আপনার পছন্দের ভাষা বেছে নিন', continue: 'চালিয়ে যান', changeLanguage: 'ভাষা বদলান', home: 'হোম', about: 'আমাদের সম্পর্কে', resources: 'রিসোর্স', contact: 'যোগাযোগ', cases: 'আমার কেস', login: 'লগ ইন', language: 'ভাষা', autoDetect: 'অটো ডিটেক্ট', tellUs: 'কাজে কী ঘটেছে তা বলুন', situation: 'আপনার পরিস্থিতি', workerType: 'কাজের ধরন', state: 'রাজ্য বা অঞ্চল', optional: 'ঐচ্ছিক', understand: 'আপনার পরিস্থিতি বুঝুন', clear: 'মুছে ফেলুন', summary: 'পরিস্থিতির সারাংশ', draftLetter: 'নিয়োগকর্তার কাছে চিঠির খসড়া তৈরি করুন', viewLetter: 'চিঠি দেখুন', editDraft: 'ব্যবহারের আগে খসড়াটি দেখে সম্পাদনা করুন।', letterDisclaimer: 'এটি আপনার দেওয়া তথ্যের ভিত্তিতে তৈরি সাধারণ খসড়া। পাঠানোর আগে ভালোভাবে যাচাই করুন।', workerName: 'শ্রমিকের নাম', employerName: 'নিয়োগকর্তা / কোম্পানির নাম', jobRole: 'কাজের ধরন (ঐচ্ছিক)', workplace: 'কর্মস্থল (ঐচ্ছিক)', date: 'তারিখ', employeeId: 'কর্মী আইডি (ঐচ্ছিক)', department: 'বিভাগ / ম্যানেজার (ঐচ্ছিক)', startDate: 'চাকরি শুরুর তারিখ (ঐচ্ছিক)', contactInfo: 'যোগাযোগের তথ্য (ঐচ্ছিক)', generateLetter: 'চিঠির খসড়া তৈরি করুন', generateEnglish: 'ইংরেজি কপি তৈরি করুন', downloadPdf: 'PDF হিসেবে ডাউনলোড করুন', printLetter: 'চিঠি প্রিন্ট করুন', close: 'বন্ধ করুন', draftReady: 'চিঠির খসড়া', noCase: 'কোনও সংরক্ষিত কেস বেছে নেওয়া হয়নি।' },
+    mr: { chooseLanguage: 'तुमची पसंतीची भाषा निवडा', continue: 'पुढे चला', changeLanguage: 'भाषा बदला', home: 'मुख्यपृष्ठ', about: 'आमच्याबद्दल', resources: 'संसाधने', contact: 'संपर्क', cases: 'माझे केस', login: 'लॉग इन', language: 'भाषा', autoDetect: 'आपोआप ओळखा', tellUs: 'कामावर काय झाले ते सांगा', situation: 'तुमची परिस्थिती', workerType: 'कामाचा प्रकार', state: 'राज्य किंवा प्रदेश', optional: 'ऐच्छिक', understand: 'तुमची परिस्थिती समजून घ्या', clear: 'पुसा', summary: 'परिस्थितीचा सारांश', draftLetter: 'नियोक्त्यासाठी पत्राचा मसुदा तयार करा', viewLetter: 'पत्र पहा', editDraft: 'वापरण्यापूर्वी मसुदा तपासा आणि संपादित करा.', letterDisclaimer: 'तुम्ही दिलेल्या माहितीवर आधारित हा सामान्य मसुदा आहे. पाठवण्यापूर्वी काळजीपूर्वक तपासा.', workerName: 'कामगाराचे नाव', employerName: 'नियोक्ता / कंपनीचे नाव', jobRole: 'कामाचा प्रकार (ऐच्छिक)', workplace: 'कामाचे ठिकाण (ऐच्छिक)', date: 'तारीख', employeeId: 'कर्मचारी आयडी (ऐच्छिक)', department: 'विभाग / व्यवस्थापक (ऐच्छिक)', startDate: 'नोकरी सुरू झाल्याची तारीख (ऐच्छिक)', contactInfo: 'संपर्क माहिती (ऐच्छिक)', generateLetter: 'पत्राचा मसुदा तयार करा', generateEnglish: 'इंग्रजी प्रत तयार करा', downloadPdf: 'PDF म्हणून डाउनलोड करा', printLetter: 'पत्र प्रिंट करा', close: 'बंद करा', draftReady: 'पत्राचा मसुदा', noCase: 'सेव्ह केलेला केस निवडलेला नाही.' }
+};
+
+function getInterfaceLanguage() { return localStorage.getItem('rightsMitraLanguage') || ''; }
+function getUiText(key, language = getInterfaceLanguage() || 'en') { return interfaceTranslations[language]?.[key] || interfaceTranslations.en[key] || key; }
+
+const staticPageTranslations = {
+    en: { aboutTitle: 'About RightsMitra', aboutDesc: 'Free informational guidance and rights awareness for workers across India.', resourcesTitle: 'Worker resources and guides', resourcesDesc: 'Practical information to help you understand your workplace situation and prepare your next step.', contactTitle: 'Contact RightsMitra', contactDesc: 'Share feedback about this hackathon MVP and its informational guidance experience.', casesTitle: 'My previous cases', casesDesc: 'Your saved cases stay in this browser for the demo.', faq: 'Frequently asked questions', getInTouch: 'Get in touch', sendMessage: 'Send us a message', aboutUs: 'About us', quickLinks: 'Quick links', contactUs: 'Contact us', languages: 'Languages', signIn: 'Sign in to RightsMitra', continueGuest: 'Continue as guest', sendOtp: 'Send OTP', verifySignIn: 'Verify and sign in' },
+    hi: { aboutTitle: 'RightsMitra के बारे में', aboutDesc: 'भारत भर के कामगारों के लिए मुफ्त सामान्य जानकारी और अधिकार जागरूकता।', resourcesTitle: 'कामगार संसाधन और मार्गदर्शिकाएं', resourcesDesc: 'अपनी कार्यस्थल स्थिति समझने और अगले कदम की तैयारी में मदद करने वाली जानकारी।', contactTitle: 'RightsMitra से संपर्क करें', contactDesc: 'इस हैकाथॉन MVP और इसकी सामान्य जानकारी के अनुभव पर प्रतिक्रिया दें।', casesTitle: 'मेरे पिछले केस', casesDesc: 'डेमो के लिए आपके सेव किए गए केस इसी ब्राउज़र में रहते हैं।', faq: 'अक्सर पूछे जाने वाले सवाल', getInTouch: 'संपर्क करें', sendMessage: 'हमें संदेश भेजें', aboutUs: 'हमारे बारे में', quickLinks: 'त्वरित लिंक', contactUs: 'संपर्क', languages: 'भाषाएं', signIn: 'RightsMitra में लॉग इन करें', continueGuest: 'अतिथि के रूप में जारी रखें', sendOtp: 'OTP भेजें', verifySignIn: 'सत्यापित करके लॉग इन करें' },
+    ta: { aboutTitle: 'RightsMitra பற்றி', aboutDesc: 'இந்தியா முழுவதும் உள்ள தொழிலாளர்களுக்கான இலவச பொதுத் தகவல் மற்றும் உரிமை விழிப்புணர்வு.', resourcesTitle: 'தொழிலாளர் வளங்கள் மற்றும் வழிகாட்டிகள்', resourcesDesc: 'உங்கள் வேலை நிலையைப் புரிந்து கொண்டு அடுத்த படிக்கு தயாராக உதவும் நடைமுறைத் தகவல்.', contactTitle: 'RightsMitra-ஐ தொடர்புகொள்ளுங்கள்', contactDesc: 'இந்த ஹேக்கத்தான் MVP பற்றிய கருத்துகளைப் பகிருங்கள்.', casesTitle: 'என் முந்தைய வழக்குகள்', casesDesc: 'டெமோவுக்காக சேமிக்கப்பட்ட வழக்குகள் இந்த உலாவியில் இருக்கும்.', faq: 'அடிக்கடி கேட்கப்படும் கேள்விகள்', getInTouch: 'தொடர்பு கொள்ளுங்கள்', sendMessage: 'எங்களுக்கு செய்தி அனுப்புங்கள்', aboutUs: 'எங்களைப் பற்றி', quickLinks: 'விரைவு இணைப்புகள்', contactUs: 'தொடர்பு', languages: 'மொழிகள்', signIn: 'RightsMitra-வில் உள்நுழைக', continueGuest: 'விருந்தினராக தொடரவும்', sendOtp: 'OTP அனுப்பவும்', verifySignIn: 'சரிபார்த்து உள்நுழைக' },
+    te: { aboutTitle: 'RightsMitra గురించి', aboutDesc: 'భారతదేశంలోని కార్మికుల కోసం ఉచిత సాధారణ సమాచారం మరియు హక్కుల అవగాహన.', resourcesTitle: 'కార్మిక వనరులు మరియు మార్గదర్శకాలు', resourcesDesc: 'మీ పని పరిస్థితిని అర్థం చేసుకుని తదుపరి చర్యకు సిద్ధం కావడానికి ఉపయోగకరమైన సమాచారం.', contactTitle: 'RightsMitraను సంప్రదించండి', contactDesc: 'ఈ హ్యాకథాన్ MVP గురించి మీ అభిప్రాయాన్ని పంచుకోండి.', casesTitle: 'నా మునుపటి కేసులు', casesDesc: 'డెమో కోసం సేవ్ చేసిన కేసులు ఈ బ్రౌజర్‌లో ఉంటాయి.', faq: 'తరచుగా అడిగే ప్రశ్నలు', getInTouch: 'సంప్రదించండి', sendMessage: 'మాకు సందేశం పంపండి', aboutUs: 'మా గురించి', quickLinks: 'త్వరిత లింకులు', contactUs: 'సంప్రదించండి', languages: 'భాషలు', signIn: 'RightsMitraలో లాగిన్ చేయండి', continueGuest: 'అతిథిగా కొనసాగండి', sendOtp: 'OTP పంపండి', verifySignIn: 'ధృవీకరించి లాగిన్ చేయండి' },
+    bn: { aboutTitle: 'RightsMitra সম্পর্কে', aboutDesc: 'ভারতের শ্রমিকদের জন্য বিনামূল্যে সাধারণ তথ্য ও অধিকার সচেতনতা।', resourcesTitle: 'শ্রমিকদের রিসোর্স ও গাইড', resourcesDesc: 'কর্মস্থলের পরিস্থিতি বুঝে পরবর্তী পদক্ষেপের জন্য প্রস্তুত হতে ব্যবহারিক তথ্য।', contactTitle: 'RightsMitra-র সঙ্গে যোগাযোগ করুন', contactDesc: 'এই হ্যাকাথন MVP সম্পর্কে আপনার মতামত জানান।', casesTitle: 'আমার আগের কেস', casesDesc: 'ডেমোর জন্য সংরক্ষিত কেস এই ব্রাউজারে থাকে।', faq: 'প্রায়শই জিজ্ঞাসিত প্রশ্ন', getInTouch: 'যোগাযোগ করুন', sendMessage: 'আমাদের বার্তা পাঠান', aboutUs: 'আমাদের সম্পর্কে', quickLinks: 'দ্রুত লিঙ্ক', contactUs: 'যোগাযোগ', languages: 'ভাষা', signIn: 'RightsMitra-তে লগ ইন করুন', continueGuest: 'অতিথি হিসেবে চালিয়ে যান', sendOtp: 'OTP পাঠান', verifySignIn: 'যাচাই করে লগ ইন করুন' },
+    mr: { aboutTitle: 'RightsMitra विषयी', aboutDesc: 'भारतातील कामगारांसाठी मोफत सामान्य माहिती आणि हक्कांविषयी जागरूकता.', resourcesTitle: 'कामगार संसाधने आणि मार्गदर्शिका', resourcesDesc: 'तुमची कामाची परिस्थिती समजून पुढील पावलासाठी तयार होण्यास मदत करणारी माहिती.', contactTitle: 'RightsMitra शी संपर्क करा', contactDesc: 'या हॅकाथॉन MVP बद्दल तुमचा अभिप्राय द्या.', casesTitle: 'माझे मागील केस', casesDesc: 'डेमोसाठी सेव्ह केलेले केस या ब्राउझरमध्ये राहतात.', faq: 'वारंवार विचारले जाणारे प्रश्न', getInTouch: 'संपर्क साधा', sendMessage: 'आम्हाला संदेश पाठवा', aboutUs: 'आमच्याबद्दल', quickLinks: 'जलद दुवे', contactUs: 'संपर्क', languages: 'भाषा', signIn: 'RightsMitra मध्ये लॉग इन करा', continueGuest: 'अतिथी म्हणून पुढे जा', sendOtp: 'OTP पाठवा', verifySignIn: 'पडताळून लॉग इन करा' }
+};
+
+function getStaticText(key, language) { return staticPageTranslations[language]?.[key] || staticPageTranslations.en[key] || key; }
+
 const translations = {
     en: { guidance: 'Your Legal Guidance', issue: 'Issue detected', summary: 'Situation summary', rights: 'Rights and useful information', evidence: 'Evidence checklist', roadmap: 'Action roadmap', next: 'Next steps', disclaimer: 'This platform provides general informational guidance and is not a substitute for professional legal advice. Rights and procedures may vary depending on individual circumstances, employment category, and jurisdiction.', detected: 'Language detected', mixed: 'Mixed language input detected. Choose your response language.', submit: 'Get Legal Guidance', clear: 'Clear', noIssue: 'We could not identify a specific issue. These general steps may help.', general: ['Keep records of messages, payments, and incidents.', 'Learn about your protections under Indian labour law.', 'Collect witnesses, photographs, payslips, and other supporting documents.', 'Make complaints in writing with dates and specific details.', 'Contact a local labour authority or legal-aid organisation.'], evidenceDefault: ['Employment messages or contract', 'Payment records and bank statements', 'Relevant photographs or medical records', 'Names of witnesses'], roadmapDefault: ['Write down the dates and facts.', 'Keep copies of every document and message.', 'Send a written request or complaint.', 'Contact a local labour authority or legal-aid organisation.'] },
     hi: { guidance: 'आपकी कानूनी जानकारी', issue: 'पहचानी गई समस्या', summary: 'स्थिति का सारांश', rights: 'आपके अधिकार और उपयोगी जानकारी', evidence: 'सबूतों की सूची', roadmap: 'आगे की कार्ययोजना', next: 'अगले कदम', disclaimer: 'यह प्लेटफॉर्म सामान्य जानकारी देता है और पेशेवर कानूनी सलाह का विकल्प नहीं है। अधिकार और प्रक्रियाएं आपकी परिस्थिति, काम की श्रेणी और क्षेत्र के अनुसार बदल सकती हैं।', detected: 'भाषा पहचानी गई', mixed: 'मिश्रित भाषा मिली। जवाब की भाषा चुनें।', submit: 'कानूनी जानकारी पाएं', clear: 'साफ करें', noIssue: 'किसी खास समस्या की पहचान नहीं हो सकी। ये सामान्य कदम मदद कर सकते हैं।', general: ['संदेशों, भुगतानों और घटनाओं का रिकॉर्ड रखें।', 'भारतीय श्रम कानून के तहत मिलने वाली सुरक्षा के बारे में जानें।', 'गवाह, फोटो, वेतन पर्ची और दूसरे दस्तावेज इकट्ठा करें।', 'तारीख और पूरी जानकारी के साथ लिखित शिकायत करें।', 'स्थानीय श्रम अधिकारी या कानूनी सहायता संस्था से संपर्क करें।'], evidenceDefault: ['नौकरी से जुड़े संदेश या अनुबंध', 'भुगतान का रिकॉर्ड और बैंक विवरण', 'जरूरी फोटो या चिकित्सा रिकॉर्ड', 'गवाहों के नाम'], roadmapDefault: ['तारीख और घटनाएं लिख लें।', 'सभी दस्तावेजों और संदेशों की प्रतियां रखें।', 'लिखित अनुरोध या शिकायत भेजें।', 'स्थानीय श्रम अधिकारी या कानूनी सहायता संस्था से संपर्क करें।'] },
@@ -313,6 +340,7 @@ function wireSpeechControls() {
 if (languageSelector) {
     languageSelector.addEventListener('change', () => {
         const language = languageSelector.value;
+        if (language !== 'auto') setAppLanguage(language);
         if (language !== 'auto' && languageStatus) languageStatus.textContent = `${translateUI('detected', language)}: ${supportedLanguages[language].name}`;
         if (language === 'auto' && languageStatus) languageStatus.textContent = '';
         if (submitBtn && language !== 'auto') submitBtn.textContent = translateUI('submit', language);
@@ -367,7 +395,8 @@ function handleSubmit() {
     // Generate response
     const response = generateLegalGuidance(userInput, matchingCategory, language);
     displayResponse(response);
-    saveAnalysisCase(userInput, matchingCategory, language, languageResult);
+    const caseId = saveAnalysisCase(userInput, matchingCategory, language, languageResult);
+    if (window.latestCaseSummary) window.latestCaseSummary.caseId = caseId;
 }
 
 function detectIssue(userInput, language) {
@@ -381,7 +410,7 @@ function detectIssue(userInput, language) {
 
 function saveAnalysisCase(userInput, category, language, languageResult) {
     const content = getLocalizedIssueContent(category, language);
-    saveCase({
+    return saveCase({
         case_id: 'case_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
         user_id: getCurrentUser() && getCurrentUser().user_id,
         timestamp: new Date().toISOString(),
@@ -409,9 +438,10 @@ function generateLegalGuidance(userInput, category, language) {
     const t = translations[language] || translations.en;
     const content = getLocalizedIssueContent(category, language);
     const speechLabels = getSpeechLabels(language);
+    const existingCaseId = window.latestCaseSummary?.caseId;
     let response = '<div class="guidance-response">';
     response += `<div class="speech-controls" aria-label="Voice guidance controls"><button id="listenGuidanceBtn" type="button" aria-label="${speechLabels.listen}">${speechLabels.listen}</button><button id="pauseSpeechBtn" type="button" aria-label="${speechLabels.pause}" hidden>${speechLabels.pause}</button><button id="stopSpeechBtn" type="button" aria-label="${speechLabels.stop}" hidden>${speechLabels.stop}</button><span id="speechStatus" class="speech-status" aria-live="polite">${speechLabels.ready}</span></div>`;
-    response += `<div class="guidance-section" data-speech-content="understanding"><div class="guidance-section-heading"><h4>${t.guidance}</h4><button class="section-speech-button" type="button" data-speech-section="understanding" aria-label="Listen to AI understanding">🔊</button></div>`;
+    response += `<div class="guidance-section" data-speech-content="understanding"><div class="guidance-section-heading"><h4>${t.summary}</h4><button class="section-speech-button" type="button" data-speech-section="understanding" aria-label="Listen to case summary">🔊</button></div>`;
     
     if (category && legalGuidanceDatabase[category]) {
         response += `<p><strong>${t.issue}: ${getLocalizedIssueName(category, language)}</strong></p>`;
@@ -421,7 +451,7 @@ function generateLegalGuidance(userInput, category, language) {
     }
     response += '</div>';
 
-    response += `<div class="guidance-section" data-speech-content="rights"><div class="guidance-section-heading"><h4>${t.rights}</h4><button class="section-speech-button" type="button" data-speech-section="rights" aria-label="Listen to possible rights">🔊</button></div><ul style="margin-left: 20px;">`;
+    response += `<div class="guidance-section" data-speech-content="rights"><div class="guidance-section-heading"><h4>${t.rights}</h4><button class="section-speech-button" type="button" data-speech-section="rights" aria-label="Listen to what this may involve">🔊</button></div><ul style="margin-left: 20px;">`;
     content.guidance.forEach(point => { response += `<li style="margin-bottom: 10px;">${point}</li>`; });
     response += '</ul></div>';
 
@@ -438,7 +468,7 @@ function generateLegalGuidance(userInput, category, language) {
     response += '</ul>';
 
     response += `<p style="margin-top: 20px; color: #34D399;"><strong>${t.disclaimer}</strong></p>`;
-    response += `<button class="btn btn-secondary" type="button" onclick="downloadCaseSummary()">${language === 'en' ? 'Download Case Summary' : language === 'hi' ? 'केस सारांश डाउनलोड करें' : language === 'ta' ? 'வழக்கு சுருக்கத்தைப் பதிவிறக்கவும்' : language === 'te' ? 'కేసు సారాంశాన్ని డౌన్‌లోడ్ చేయండి' : language === 'bn' ? 'কেসের সারাংশ ডাউনলোড করুন' : 'केस सारांश डाउनलोड करा'}</button>`;
+    response += `<div class="guidance-actions"><button class="btn btn-secondary" type="button" onclick="downloadCaseSummary()">${language === 'en' ? 'Download Case Summary' : language === 'hi' ? 'केस सारांश डाउनलोड करें' : language === 'ta' ? 'வழக்கு சுருக்கத்தைப் பதிவிறக்கவும்' : language === 'te' ? 'కేసు సారాంశాన్ని డౌన్‌లోడ్ చేయండి' : language === 'bn' ? 'কেসের সারাংশ ডাউনলোড করুন' : 'केस सारांश डाउनलोड करा'}</button><button class="btn btn-primary" type="button" onclick="openLetterForm()">${getUiText('draftLetter', language)}</button></div><div id="letterWorkspace" class="letter-workspace" hidden></div>`;
     response += '</div>';
 
     window.latestCaseSummary = {
@@ -446,6 +476,7 @@ function generateLegalGuidance(userInput, category, language) {
         category,
         language,
         content,
+        caseId: existingCaseId,
         workerType: workerTypeSelector?.value || '',
         state: stateSelector?.value || ''
     };
@@ -468,6 +499,97 @@ function downloadCaseSummary() {
     link.download = 'rightsmitra-case-summary.txt';
     link.click();
     URL.revokeObjectURL(link.href);
+}
+
+const letterCopy = {
+    en: { to: 'To,', dear: 'Dear Sir/Madam,', intro: 'I am writing regarding', facts: 'According to my understanding of the situation:', request: 'I respectfully request that this matter be reviewed and that appropriate clarification or action be provided.', response: 'I would appreciate a written response regarding this matter.', thanks: 'Thank you for your attention.', sincerely: 'Sincerely,', subjects: { 'Salary Withheld': 'Request to review unpaid or delayed wages', 'Fired Without Notice': 'Request for clarification regarding employment decision', 'Excessive Hours': 'Request to review working hours', 'No Contract': 'Request to clarify employment terms', 'Workplace Injury': 'Request to review a workplace safety or injury concern', 'Sexual Harassment': 'Request to review a workplace conduct concern' }, requests: { 'Salary Withheld': 'I respectfully request clarification and review of the outstanding wages.', 'Fired Without Notice': 'I respectfully request written clarification regarding the employment decision.', 'Excessive Hours': 'I respectfully request a review of the reported working hours and rest arrangements.', 'No Contract': 'I respectfully request written clarification of the agreed employment terms.', 'Workplace Injury': 'I respectfully request a review of the reported safety or injury concern.', 'Sexual Harassment': 'I respectfully request that this concern be acknowledged and appropriately reviewed.' } },
+    hi: { to: 'सेवा में,', dear: 'आदरणीय महोदय/महोदया,', intro: 'मैं इस विषय में लिख रहा/रही हूं:', facts: 'मेरी समझ के अनुसार स्थिति यह है:', request: 'मैं विनम्रतापूर्वक अनुरोध करता/करती हूं कि इस मामले की समीक्षा की जाए और उचित स्पष्टीकरण या कार्रवाई दी जाए।', response: 'कृपया इस विषय में लिखित उत्तर देने का कष्ट करें।', thanks: 'आपके ध्यान के लिए धन्यवाद।', sincerely: 'सादर,', subjects: { 'Salary Withheld': 'बकाया या विलंबित वेतन की समीक्षा का अनुरोध', 'Fired Without Notice': 'नौकरी संबंधी निर्णय पर स्पष्टीकरण का अनुरोध', 'Excessive Hours': 'काम के घंटों की समीक्षा का अनुरोध', 'No Contract': 'नौकरी की शर्तों को स्पष्ट करने का अनुरोध', 'Workplace Injury': 'कार्यस्थल की सुरक्षा या चोट संबंधी चिंता की समीक्षा का अनुरोध', 'Sexual Harassment': 'कार्यस्थल व्यवहार संबंधी चिंता की समीक्षा का अनुरोध' }, requests: { 'Salary Withheld': 'मैं बकाया वेतन के संबंध में स्पष्टीकरण और समीक्षा का विनम्र अनुरोध करता/करती हूं।', 'Fired Without Notice': 'मैं नौकरी संबंधी निर्णय पर लिखित स्पष्टीकरण का विनम्र अनुरोध करता/करती हूं।', 'Excessive Hours': 'मैं बताए गए काम के घंटों और आराम की व्यवस्था की समीक्षा का विनम्र अनुरोध करता/करती हूं।', 'No Contract': 'मैं तय की गई नौकरी की शर्तों का लिखित स्पष्टीकरण चाहता/चाहती हूं।', 'Workplace Injury': 'मैं बताई गई सुरक्षा या चोट संबंधी चिंता की समीक्षा का अनुरोध करता/करती हूं।', 'Sexual Harassment': 'मैं अनुरोध करता/करती हूं कि इस चिंता को स्वीकार कर उचित रूप से इसकी समीक्षा की जाए।' } },
+    ta: { to: 'பெறுநர்,', dear: 'மதிப்பிற்குரிய ஐயா/அம்மா,', intro: 'பின்வரும் விஷயம் குறித்து எழுதுகிறேன்:', facts: 'என் புரிதலின்படி நிலைமை:', request: 'இந்த விஷயத்தை மதிப்பாய்வு செய்து உரிய விளக்கம் அல்லது நடவடிக்கை வழங்குமாறு பணிவுடன் கேட்டுக்கொள்கிறேன்.', response: 'இது குறித்து எழுத்துப்பூர்வமான பதிலை வழங்குமாறு கேட்டுக்கொள்கிறேன்.', thanks: 'உங்கள் கவனத்திற்கு நன்றி.', sincerely: 'மரியாதையுடன்,', subjects: { 'Salary Withheld': 'வழங்கப்படாத அல்லது தாமதமான சம்பளத்தை மதிப்பாய்வு செய்ய கோரிக்கை', 'Fired Without Notice': 'வேலை தொடர்பான முடிவுக்கு விளக்கம் கோரிக்கை', 'Excessive Hours': 'வேலை நேரத்தை மதிப்பாய்வு செய்ய கோரிக்கை', 'No Contract': 'வேலை விதிமுறைகளை தெளிவுபடுத்த கோரிக்கை', 'Workplace Injury': 'வேலை இட பாதுகாப்பு அல்லது காயம் தொடர்பான கவலை மதிப்பாய்வு கோரிக்கை', 'Sexual Harassment': 'வேலை இட நடத்தை தொடர்பான கவலை மதிப்பாய்வு கோரிக்கை' }, requests: { 'Salary Withheld': 'நிலுவை சம்பளம் குறித்து விளக்கமும் மதிப்பாய்வும் வழங்குமாறு கேட்டுக்கொள்கிறேன்.', 'Fired Without Notice': 'வேலை முடிவு குறித்து எழுத்துப்பூர்வ விளக்கம் வழங்குமாறு கேட்டுக்கொள்கிறேன்.', 'Excessive Hours': 'தெரிவிக்கப்பட்ட வேலை நேரம் மற்றும் ஓய்வு ஏற்பாடுகளை மதிப்பாய்வு செய்யுமாறு கேட்டுக்கொள்கிறேன்.', 'No Contract': 'ஒப்புக்கொண்ட வேலை விதிமுறைகளை எழுத்துப்பூர்வமாக விளக்குமாறு கேட்டுக்கொள்கிறேன்.', 'Workplace Injury': 'தெரிவிக்கப்பட்ட பாதுகாப்பு அல்லது காயம் தொடர்பான கவலையை மதிப்பாய்வு செய்யுமாறு கேட்டுக்கொள்கிறேன்.', 'Sexual Harassment': 'இந்தக் கவலையை ஏற்று உரிய முறையில் மதிப்பாய்வு செய்யுமாறு கேட்டுக்கொள்கிறேன்.' } },
+    te: { to: 'కు,', dear: 'గౌరవనీయులైన సర్/మేడమ్,', intro: 'ఈ విషయానికి సంబంధించి నేను రాస్తున్నాను:', facts: 'నా అవగాహన ప్రకారం పరిస్థితి:', request: 'ఈ విషయాన్ని సమీక్షించి తగిన వివరణ లేదా చర్య అందించాలని వినయంగా కోరుతున్నాను.', response: 'ఈ విషయంపై వ్రాతపూర్వక సమాధానం ఇవ్వగలరు.', thanks: 'మీ శ్రద్ధకు ధన్యవాదాలు.', sincerely: 'వినయపూర్వకంగా,', subjects: { 'Salary Withheld': 'చెల్లించని లేదా ఆలస్యమైన జీతం సమీక్షకు అభ్యర్థన', 'Fired Without Notice': 'ఉద్యోగ నిర్ణయంపై వివరణకు అభ్యర్థన', 'Excessive Hours': 'పని గంటల సమీక్షకు అభ్యర్థన', 'No Contract': 'ఉద్యోగ నిబంధనల స్పష్టీకరణకు అభ్యర్థన', 'Workplace Injury': 'పని ప్రదేశ భద్రత లేదా గాయం సమస్య సమీక్షకు అభ్యర్థన', 'Sexual Harassment': 'పని ప్రదేశ ప్రవర్తన సమస్య సమీక్షకు అభ్యర్థన' }, requests: { 'Salary Withheld': 'బకాయి జీతంపై వివరణ మరియు సమీక్ష ఇవ్వాలని కోరుతున్నాను.', 'Fired Without Notice': 'ఉద్యోగ నిర్ణయంపై వ్రాతపూర్వక వివరణ ఇవ్వాలని కోరుతున్నాను.', 'Excessive Hours': 'తెలిపిన పని గంటలు మరియు విశ్రాంతి ఏర్పాట్లను సమీక్షించాలని కోరుతున్నాను.', 'No Contract': 'అంగీకరించిన ఉద్యోగ నిబంధనలను వ్రాతపూర్వకంగా వివరించాలని కోరుతున్నాను.', 'Workplace Injury': 'తెలిపిన భద్రత లేదా గాయం సమస్యను సమీక్షించాలని కోరుతున్నాను.', 'Sexual Harassment': 'ఈ సమస్యను స్వీకరించి తగిన విధంగా సమీక్షించాలని కోరుతున్నాను.' } },
+    bn: { to: 'প্রাপক,', dear: 'মাননীয় মহাশয়/মহাশয়া,', intro: 'আমি নিম্নলিখিত বিষয়ে লিখছি:', facts: 'আমার বোঝাপড়া অনুযায়ী পরিস্থিতি:', request: 'এই বিষয়টি পর্যালোচনা করে উপযুক্ত ব্যাখ্যা বা ব্যবস্থা দেওয়ার জন্য বিনীত অনুরোধ করছি।', response: 'এই বিষয়ে লিখিত উত্তর দেওয়ার অনুরোধ করছি।', thanks: 'আপনার মনোযোগের জন্য ধন্যবাদ।', sincerely: 'বিনীত,', subjects: { 'Salary Withheld': 'বকেয়া বা দেরি হওয়া মজুরি পর্যালোচনার অনুরোধ', 'Fired Without Notice': 'চাকরির সিদ্ধান্ত সম্পর্কে ব্যাখ্যার অনুরোধ', 'Excessive Hours': 'কাজের সময় পর্যালোচনার অনুরোধ', 'No Contract': 'চাকরির শর্ত স্পষ্ট করার অনুরোধ', 'Workplace Injury': 'কর্মস্থলের নিরাপত্তা বা আঘাতের বিষয় পর্যালোচনার অনুরোধ', 'Sexual Harassment': 'কর্মস্থলের আচরণ সংক্রান্ত উদ্বেগ পর্যালোচনার অনুরোধ' }, requests: { 'Salary Withheld': 'বকেয়া মজুরি সম্পর্কে ব্যাখ্যা ও পর্যালোচনার অনুরোধ করছি।', 'Fired Without Notice': 'চাকরির সিদ্ধান্ত সম্পর্কে লিখিত ব্যাখ্যার অনুরোধ করছি।', 'Excessive Hours': 'জানানো কাজের সময় ও বিশ্রামের ব্যবস্থা পর্যালোচনার অনুরোধ করছি।', 'No Contract': 'সম্মত চাকরির শর্তগুলি লিখিতভাবে ব্যাখ্যা করার অনুরোধ করছি।', 'Workplace Injury': 'জানানো নিরাপত্তা বা আঘাতের বিষয়টি পর্যালোচনার অনুরোধ করছি।', 'Sexual Harassment': 'এই উদ্বেগটি গ্রহণ করে যথাযথভাবে পর্যালোচনা করার অনুরোধ করছি।' } },
+    mr: { to: 'प्रति,', dear: 'आदरणीय महोदय/महोदया,', intro: 'मी खालील विषयाबाबत लिहित आहे:', facts: 'माझ्या माहितीनुसार परिस्थिती:', request: 'या प्रकरणाची समीक्षा करून योग्य स्पष्टीकरण किंवा कारवाई द्यावी, अशी नम्र विनंती आहे.', response: 'या विषयावर लेखी उत्तर द्यावे, अशी विनंती आहे.', thanks: 'आपल्या लक्षाबद्दल धन्यवाद.', sincerely: 'आपला/आपली विश्वासू,', subjects: { 'Salary Withheld': 'थकीत किंवा विलंबित पगाराच्या समीक्षेची विनंती', 'Fired Without Notice': 'नोकरीच्या निर्णयाबाबत स्पष्टीकरणाची विनंती', 'Excessive Hours': 'कामाच्या तासांच्या समीक्षेची विनंती', 'No Contract': 'नोकरीच्या अटी स्पष्ट करण्याची विनंती', 'Workplace Injury': 'कामाच्या ठिकाणी सुरक्षा किंवा दुखापतीच्या चिंतेच्या समीक्षेची विनंती', 'Sexual Harassment': 'कामाच्या ठिकाणी वर्तनासंबंधी चिंतेच्या समीक्षेची विनंती' }, requests: { 'Salary Withheld': 'थकीत पगाराबाबत स्पष्टीकरण आणि समीक्षा द्यावी, अशी विनंती आहे.', 'Fired Without Notice': 'नोकरीच्या निर्णयाबाबत लेखी स्पष्टीकरण द्यावे, अशी विनंती आहे.', 'Excessive Hours': 'सांगितलेल्या कामाच्या तासांची आणि विश्रांतीच्या व्यवस्थेची समीक्षा करावी, अशी विनंती आहे.', 'No Contract': 'ठरलेल्या नोकरीच्या अटी लेखी स्पष्ट कराव्यात, अशी विनंती आहे.', 'Workplace Injury': 'सांगितलेल्या सुरक्षा किंवा दुखापतीच्या चिंतेची समीक्षा करावी, अशी विनंती आहे.', 'Sexual Harassment': 'ही चिंता नोंदवून योग्य प्रकारे तिची समीक्षा करावी, अशी विनंती आहे.' } }
+};
+
+function getLetterCopy(language) { return letterCopy[language] || letterCopy.en; }
+function getToday() { return new Date().toISOString().slice(0, 10); }
+function getCaseById(caseId) {
+    const user = getCurrentUser();
+    const owner = (user && user.user_id) || localStorage.getItem('guestSessionId');
+    return getCasesForOwner(owner).find(item => item.case_id === caseId) || null;
+}
+function updateSavedCase(caseId, changes) {
+    const user = getCurrentUser();
+    const owner = (user && user.user_id) || localStorage.getItem('guestSessionId');
+    const cases = getCasesForOwner(owner);
+    const index = cases.findIndex(item => item.case_id === caseId);
+    if (index < 0) return null;
+    cases[index] = { ...cases[index], ...changes };
+    localStorage.setItem('cases_' + owner, JSON.stringify(cases));
+    return cases[index];
+}
+
+function openLetterForm() {
+    const workspace = document.getElementById('letterWorkspace');
+    if (workspace && window.latestCaseSummary) renderLetterForm(workspace, window.latestCaseSummary);
+}
+
+function openLetterFormForCase(caseId, container) {
+    const caseData = getCaseById(caseId);
+    if (!caseData || !container) return;
+    const workspace = document.createElement('div');
+    workspace.className = 'letter-workspace';
+    container.appendChild(workspace);
+    renderLetterForm(workspace, { ...caseData, caseId });
+    workspace.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderLetterForm(container, caseData) {
+    const language = caseData.language || caseData.responseLanguage || getInterfaceLanguage() || 'en';
+    const t = interfaceTranslations[language] || interfaceTranslations.en;
+    const saved = caseData.letter?.fields || {};
+    container.hidden = false;
+    container.innerHTML = `<div class="letter-form-header"><h4>${t.draftLetter}</h4><button type="button" class="close-btn letter-close" aria-label="${t.close}">×</button></div><p class="letter-disclaimer">${t.letterDisclaimer}</p><form class="letter-form"><div class="letter-fields"><label>${t.workerName}<input name="workerName" required value="${escapeHtml(saved.workerName || '')}"></label><label>${t.employerName}<input name="employerName" required value="${escapeHtml(saved.employerName || '')}"></label><label>${t.jobRole}<input name="jobRole" value="${escapeHtml(saved.jobRole || caseData.workerType || '')}"></label><label>${t.workplace}<input name="workplace" value="${escapeHtml(saved.workplace || caseData.state || '')}"></label><label>${t.date}<input name="date" type="date" required value="${escapeHtml(saved.date || getToday())}"></label><label>${t.employeeId}<input name="employeeId" value="${escapeHtml(saved.employeeId || '')}"></label><label>${t.department}<input name="department" value="${escapeHtml(saved.department || '')}"></label><label>${t.startDate}<input name="startDate" type="date" value="${escapeHtml(saved.startDate || '')}"></label><label>${t.contactInfo}<input name="contactInfo" value="${escapeHtml(saved.contactInfo || '')}"></label></div><button class="btn btn-primary" type="submit">${t.generateLetter}</button></form>`;
+    container.querySelector('.letter-close').addEventListener('click', () => { container.hidden = true; });
+    container.querySelector('.letter-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const fields = Object.fromEntries(new FormData(event.currentTarget).entries());
+        renderLetterPreview(container, caseData, fields, language);
+    });
+}
+
+function buildLetterText(caseData, fields, language) {
+    const copy = getLetterCopy(language);
+    const issue = caseData.category || caseData.issue || 'No Contract';
+    const facts = caseData.userInput || caseData.userQuestion || '';
+    const lines = [fields.workerName, fields.contactInfo, fields.date, '', copy.to, fields.employerName, fields.department, fields.workplace, '', `Subject: ${copy.subjects[issue] || copy.subjects['No Contract']}`, '', copy.dear, '', `${copy.intro} ${copy.subjects[issue] || copy.subjects['No Contract']}.`, '', copy.facts, facts, '', copy.requests[issue] || copy.requests['No Contract'], '', copy.response, '', copy.thanks, '', copy.sincerely, fields.workerName];
+    return lines.filter((line, index) => line || (index > 0 && lines[index - 1])).join('\n');
+}
+
+function renderLetterPreview(container, caseData, fields, language) {
+    const t = interfaceTranslations[language] || interfaceTranslations.en;
+    const letterText = buildLetterText(caseData, fields, language);
+    const letter = { language, fields, text: letterText, updatedAt: new Date().toISOString() };
+    const saved = updateSavedCase(caseData.caseId || caseData.case_id, { letter });
+    if (saved && window.latestCaseSummary) window.latestCaseSummary.letter = letter;
+    container.innerHTML = `<div class="letter-form-header"><h4>${t.draftReady}</h4><button type="button" class="close-btn letter-close" aria-label="${t.close}">×</button></div><p class="letter-disclaimer">${t.editDraft} ${t.letterDisclaimer}</p><div class="letter-preview-meta"><span>${supportedLanguages[language]?.name || language}</span><span>${escapeHtml(fields.employerName)}</span></div><textarea class="letter-editor" aria-label="${t.draftReady}">${escapeHtml(letterText)}</textarea><div class="letter-actions"><button type="button" class="btn btn-secondary letter-english">${t.generateEnglish}</button><button type="button" class="btn btn-secondary letter-pdf">${t.downloadPdf}</button><button type="button" class="btn btn-primary letter-print">${t.printLetter}</button></div>`;
+    container.querySelector('.letter-close').addEventListener('click', () => { container.hidden = true; });
+    container.querySelector('.letter-english').addEventListener('click', () => renderLetterPreview(container, caseData, fields, 'en'));
+    container.querySelector('.letter-pdf').addEventListener('click', () => printLetter(container, fields, language));
+    container.querySelector('.letter-print').addEventListener('click', () => printLetter(container, fields, language));
+    container.querySelector('.letter-editor').addEventListener('input', event => {
+        const updated = updateSavedCase(caseData.caseId || caseData.case_id, { letter: { ...letter, text: event.target.value } });
+        if (updated && window.latestCaseSummary) window.latestCaseSummary.letter = updated.letter;
+    });
+}
+
+function printLetter(container, fields, language) {
+    const editor = container.querySelector('.letter-editor');
+    if (!editor) return;
+    const printWindow = window.open('', '_blank', 'width=800,height=900');
+    if (!printWindow) return;
+    const disclaimer = interfaceTranslations[language]?.letterDisclaimer || interfaceTranslations.en.letterDisclaimer;
+    printWindow.document.write(`<html lang="${language}"><head><meta charset="utf-8"><title>RightsMitra draft letter</title><style>body{font-family:Arial,sans-serif;max-width:760px;margin:48px auto;line-height:1.65;color:#111}pre{font:inherit;white-space:pre-wrap}footer{margin-top:40px;border-top:1px solid #ccc;padding-top:12px;font-size:11px;color:#555}</style></head><body><pre>${escapeHtml(editor.value)}</pre><footer>Draft generated using RightsMitra based on information provided by the user. ${escapeHtml(disclaimer)}</footer><script>window.onload=function(){window.print();}</script></body></html>`);
+    printWindow.document.close();
 }
 
 // Display response
@@ -811,6 +933,23 @@ function showCaseDetail(caseData, detailContainer) {
     disclaimer.className = 'case-disclaimer';
     disclaimer.textContent = t.disclaimer;
     detailContainer.appendChild(disclaimer);
+    const letterAction = document.createElement('button');
+    letterAction.type = 'button';
+    letterAction.className = 'btn btn-primary case-letter-action';
+    letterAction.textContent = caseData.letter ? getUiText('viewLetter', language) : getUiText('draftLetter', language);
+    letterAction.addEventListener('click', () => {
+        if (caseData.letter) {
+            const workspace = document.createElement('div');
+            workspace.className = 'letter-workspace';
+            detailContainer.appendChild(workspace);
+            renderLetterPreview(workspace, { ...caseData, caseId: caseData.case_id }, caseData.letter.fields, caseData.letter.language || language);
+            const editor = workspace.querySelector('.letter-editor');
+            if (editor) editor.value = caseData.letter.text || editor.value;
+        } else {
+            openLetterFormForCase(caseData.case_id, detailContainer);
+        }
+    });
+    detailContainer.appendChild(letterAction);
     detailContainer.classList.add('visible');
     detailContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -911,6 +1050,135 @@ document.addEventListener('DOMContentLoaded', () => {
         el.style.animation = 'none';
     });
 });
+
+function createLanguageExperience() {
+    const language = getInterfaceLanguage();
+    const nativeNames = { en: 'English', hi: 'हिंदी', ta: 'தமிழ்', te: 'తెలుగు', bn: 'বাংলা', mr: 'मराठी' };
+    const modal = document.createElement('div');
+    modal.id = 'languageGate';
+    modal.className = 'language-gate';
+    modal.hidden = Boolean(language);
+    modal.innerHTML = `<div class="language-gate-panel" role="dialog" aria-modal="true" aria-labelledby="languageGateTitle"><p class="language-gate-kicker">RightsMitra</p><h1 id="languageGateTitle">${getUiText('chooseLanguage', language || 'en')}</h1><p class="language-gate-subtitle">Choose your preferred language</p><div class="language-options" role="radiogroup" aria-label="Available languages">${Object.keys(supportedLanguages).map(code => `<button type="button" class="language-option${code === (language || 'en') ? ' selected' : ''}" data-language="${code}" role="radio" aria-checked="${code === (language || 'en')}"><span>${nativeNames[code]}</span><small>${supportedLanguages[code].name}</small></button>`).join('')}</div><div class="language-gate-actions"><button type="button" class="language-speak" aria-label="Read language choice aloud">🔊</button><button type="button" class="btn btn-primary language-continue">${getUiText('continue', language || 'en')}</button></div></div>`;
+    document.body.appendChild(modal);
+    let selected = language || 'en';
+    const options = modal.querySelectorAll('.language-option');
+    const continueButton = modal.querySelector('.language-continue');
+    const title = modal.querySelector('#languageGateTitle');
+    options.forEach(option => option.addEventListener('click', () => {
+        selected = option.dataset.language;
+        options.forEach(item => { const active = item === option; item.classList.toggle('selected', active); item.setAttribute('aria-checked', String(active)); });
+        title.textContent = getUiText('chooseLanguage', selected);
+        continueButton.textContent = getUiText('continue', selected);
+    }));
+    modal.querySelector('.language-speak').addEventListener('click', () => {
+        if (window.speechSynthesis && typeof SpeechSynthesisUtterance !== 'undefined') {
+            const utterance = new SpeechSynthesisUtterance(getUiText('chooseLanguage', selected));
+            utterance.lang = getLanguageCode(selected);
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(utterance);
+        }
+    });
+    continueButton.addEventListener('click', () => { setAppLanguage(selected); modal.hidden = true; });
+    modal.addEventListener('keydown', event => { if (event.key === 'Escape' && getInterfaceLanguage()) modal.hidden = true; });
+    if (!language) modal.querySelector('.language-option').focus();
+}
+
+function addLanguageSwitcher() {
+    const navbarContent = document.querySelector('.navbar-content');
+    if (!navbarContent || navbarContent.querySelector('.app-language-switcher')) return;
+    const wrapper = document.createElement('label');
+    wrapper.className = 'app-language-switcher';
+    wrapper.innerHTML = `<span class="sr-only">${getUiText('changeLanguage')}</span><select aria-label="${getUiText('changeLanguage')}">${Object.keys(supportedLanguages).map(code => `<option value="${code}">${supportedLanguages[code].name}</option>`).join('')}</select>`;
+    const select = wrapper.querySelector('select');
+    select.value = getInterfaceLanguage() || 'en';
+    select.addEventListener('change', event => setAppLanguage(event.target.value));
+    navbarContent.appendChild(wrapper);
+}
+
+function applyInterfaceLanguage(language) {
+    document.documentElement.lang = language;
+    const page = location.pathname.split('/').pop() || 'index.html';
+    const pageTitle = document.querySelector('.hero-title');
+    const pageDescription = document.querySelector('.hero-description');
+    const pageMap = { 'about.html': ['aboutTitle', 'aboutDesc'], 'resources.html': ['resourcesTitle', 'resourcesDesc'], 'contact.html': ['contactTitle', 'contactDesc'] };
+    if (pageMap[page] && pageTitle && pageDescription) {
+        pageTitle.textContent = getStaticText(pageMap[page][0], language);
+        pageDescription.textContent = getStaticText(pageMap[page][1], language);
+    }
+    const casesTitle = document.querySelector('header h2');
+    if (page === 'cases.html' && casesTitle) {
+        casesTitle.textContent = getStaticText('casesTitle', language);
+        const casesDescription = casesTitle.parentElement.querySelector('p');
+        if (casesDescription) casesDescription.textContent = getStaticText('casesDesc', language);
+    }
+    document.querySelectorAll('.faq h2').forEach(element => { element.textContent = getStaticText('faq', language); });
+    const footerKeys = ['aboutUs', 'quickLinks', 'contactUs', 'languages'];
+    document.querySelectorAll('.footer-section h4').forEach((element, index) => { if (footerKeys[index]) element.textContent = getStaticText(footerKeys[index], language); });
+    if (page === 'contact.html') {
+        const getInTouch = document.querySelector('.contact-methods h2');
+        const sendMessage = document.querySelector('.contact-form-section h2');
+        if (getInTouch) getInTouch.textContent = getStaticText('getInTouch', language);
+        if (sendMessage) sendMessage.textContent = getStaticText('sendMessage', language);
+    }
+    if (page === 'login.html') {
+        const authTitle = document.querySelector('.auth-box h2');
+        if (authTitle) authTitle.textContent = getStaticText('signIn', language);
+        const sendOtp = document.getElementById('sendOtpBtn');
+        const login = document.getElementById('loginBtn');
+        const guest = document.getElementById('guestBtn');
+        if (sendOtp) sendOtp.textContent = getStaticText('sendOtp', language);
+        if (login) login.textContent = getStaticText('verifySignIn', language);
+        if (guest) guest.textContent = getStaticText('continueGuest', language);
+    }
+    const navKeys = ['home', 'about', 'resources', 'contact', 'cases', 'login'];
+    document.querySelectorAll('.nav-link').forEach((link, index) => { if (navKeys[index]) link.textContent = getUiText(navKeys[index], language); });
+    const switcher = document.querySelector('.app-language-switcher select');
+    if (switcher) { switcher.value = language; switcher.setAttribute('aria-label', getUiText('changeLanguage', language)); }
+    if (languageSelector) {
+        languageSelector.value = language;
+        const autoOption = languageSelector.querySelector('option[value="auto"]');
+        if (autoOption) autoOption.textContent = getUiText('autoDetect', language);
+    }
+    const placeholders = { en: 'Describe your work-related problem...', hi: 'अपनी काम से जुड़ी समस्या बताएं...', ta: 'உங்கள் வேலை தொடர்பான பிரச்சினையை விவரிக்கவும்...', te: 'మీ పని సంబంధిత సమస్యను వివరించండి...', bn: 'আপনার কাজের সমস্যাটি বর্ণনা করুন...', mr: 'तुमची कामाशी संबंधित समस्या सांगा...' };
+    if (userQuestionInput) userQuestionInput.placeholder = placeholders[language] || placeholders.en;
+    if (submitBtn) submitBtn.textContent = getUiText('understand', language);
+    if (clearBtn) clearBtn.textContent = getUiText('clear', language);
+    const languageLabel = document.querySelector('label[for="languageSelector"] .workflow-label');
+    if (languageLabel) languageLabel.textContent = getUiText('language', language);
+    const questionLabel = document.querySelector('.question-label');
+    if (questionLabel) questionLabel.textContent = getUiText('situation', language);
+    const workerLabel = document.querySelector('label[for="workerType"]');
+    if (workerLabel) workerLabel.textContent = getUiText('workerType', language);
+    const stateLabel = document.querySelector('label[for="stateSelector"]');
+    if (stateLabel) stateLabel.textContent = getUiText('state', language);
+    const heroKicker = document.querySelector('.hero-kicker');
+    if (heroKicker) heroKicker.textContent = getUiText('tellUs', language);
+    const englishIssueLabels = { 'Salary Withheld': 'Salary not paid', 'Fired Without Notice': 'Lost my job', 'Excessive Hours': 'Too many hours', 'No Contract': 'No written agreement', 'Workplace Injury': 'Unsafe work or injury', 'Sexual Harassment': 'Harassment' };
+    document.querySelectorAll('.issue-tag').forEach(tag => {
+        const issue = tag.dataset.issue;
+        const label = tag.querySelector('.tag-text');
+        if (label && issue) {
+            const description = label.querySelector('small')?.textContent || '';
+            label.textContent = language === 'en' ? englishIssueLabels[issue] : getLocalizedIssueName(issue, language);
+            if (description) { const small = document.createElement('small'); small.textContent = description; label.appendChild(small); }
+        }
+    });
+    document.querySelectorAll('.letter-workspace').forEach(workspace => { if (!workspace.hidden) workspace.setAttribute('lang', language); });
+}
+
+function setAppLanguage(language) {
+    if (!supportedLanguages[language]) return;
+    localStorage.setItem('rightsMitraLanguage', language);
+    applyInterfaceLanguage(language);
+    if (window.latestCaseSummary && responseContent && !responseSection?.classList.contains('hidden')) {
+        const summary = window.latestCaseSummary;
+        displayResponse(generateLegalGuidance(summary.userInput, summary.category, language));
+    }
+}
+
+createLanguageExperience();
+addLanguageSwitcher();
+if (getInterfaceLanguage()) applyInterfaceLanguage(getInterfaceLanguage());
 
 // Prevent form submission on enter in textarea (allow Ctrl+Enter instead)
 if (userQuestionInput) {
