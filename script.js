@@ -1378,7 +1378,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Contact form handler
-function handleContactForm(e) {
+async function handleContactForm(e) {
     e.preventDefault();
 
     const formData = {
@@ -1395,24 +1395,29 @@ function handleContactForm(e) {
         return;
     }
 
-    // Show success message
-    if (formResponse) {
-        formResponse.textContent = '✓ Thank you! Your message has been received. We will get back to you within 24 hours.';
-        formResponse.classList.remove('hidden');
-        formResponse.style.animation = 'slideIn 0.3s ease';
-    }
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/contact`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+        });
+        const payload = await response.json();
+        if (!response.ok) throw new Error(payload.error || 'Could not send your message');
 
-    // Reset form
-    contactForm.reset();
-
-    // Hide message after 5 seconds
-    setTimeout(() => {
         if (formResponse) {
-            formResponse.classList.add('hidden');
+            formResponse.textContent = payload.message || 'Thank you! Your message has been received.';
+            formResponse.classList.remove('hidden');
+            formResponse.style.animation = 'slideIn 0.3s ease';
         }
-    }, 5000);
-
-    console.log('Contact form submitted:', formData);
+        contactForm.reset();
+        setTimeout(() => formResponse?.classList.add('hidden'), 5000);
+    } catch (error) {
+        console.error('Contact form submission failed:', error);
+        if (formResponse) {
+            formResponse.textContent = 'Unable to send your message right now. Please email rightsmitra@gmail.com directly.';
+            formResponse.classList.remove('hidden');
+        }
+    }
 }
 
 // Add enter key submit
