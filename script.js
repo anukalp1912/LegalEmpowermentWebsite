@@ -409,24 +409,6 @@ const autoReadToggle = document.getElementById('autoReadToggle');
 const voiceSupportStatus = document.getElementById('voiceSupportStatus');
 const workerTypeSelector = document.getElementById('workerType');
 const stateSelector = document.getElementById('stateSelector');
-const themeSelector = document.getElementById('themeSelector');
-
-// Keep the user's theme choice between visits; "system" follows the device setting.
-function applyTheme(theme) {
-    if (theme === 'system') document.documentElement.removeAttribute('data-theme');
-    else document.documentElement.setAttribute('data-theme', theme);
-    if (themeSelector) themeSelector.value = theme;
-}
-
-if (themeSelector) {
-    const savedTheme = localStorage.getItem('rightsMitraTheme') || 'system';
-    applyTheme(savedTheme);
-    themeSelector.addEventListener('change', () => {
-        localStorage.setItem('rightsMitraTheme', themeSelector.value);
-        applyTheme(themeSelector.value);
-    });
-}
-
 const speechLanguageCodes = { en: 'en-IN', hi: 'hi-IN', ta: 'ta-IN', te: 'te-IN', bn: 'bn-IN', mr: 'mr-IN' };
 let speechState = { status: 'idle', utterance: null, language: 'en' };
 

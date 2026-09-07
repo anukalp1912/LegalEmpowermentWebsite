@@ -3591,3 +3591,347 @@ body { background: linear-gradient(135deg, #fce9ef 0%, #f8edf3 48%, #f1e9f7 100%
 .case-card-footer small {
     color: #706271;
 }
+
+/* RightsMitra fixed light theme: final cascade for all restored legacy rules. */
+:root {
+    color-scheme: light;
+    --page-bg: #fce9ef;
+    --surface: #fff8fa;
+    --surface-strong: #ffffff;
+    --text-primary: #352238;
+    --text-secondary: #4a4a4a;
+    --reference-plum: #352238;
+    --reference-plum-strong: #4a263d;
+    --reference-coral: #f5a7ae;
+    --reference-shadow: 0 14px 32px rgba(74, 43, 64, 0.09);
+}
+
+body,
+.main-container {
+    background: linear-gradient(135deg, #fce9ef 0%, #f8edf3 48%, #f1e9f7 100%);
+    color: #4a4a4a;
+}
+
+.navbar,
+.interactive-card,
+.response-section,
+.feature-card,
+.mission-card,
+.value-card,
+.stat-card,
+.team-card,
+.resource-card,
+.guide-card,
+.helpline-card,
+.download-card,
+.method-card,
+.faq-item,
+.faq-question,
+.faq-answer,
+.auth-box,
+.case-card,
+.case-detail,
+.speech-controls {
+    background: #fff8fa;
+    border-color: rgba(215, 141, 156, 0.28);
+    color: #352238;
+    box-shadow: var(--reference-shadow);
+}
+
+.voice-input-section {
+    background: #fff0f4;
+    border-color: rgba(215, 141, 156, 0.35);
+}
+
+.brand-emblem {
+    background: #f5a7ae;
+    border-radius: 50%;
+}
+
+.brand-icon {
+    font-size: 0;
+}
+
+.brand-icon::after {
+    content: 'R';
+    color: #352238;
+    font: 800 21px 'Plus Jakarta Sans', sans-serif;
+}
+
+.theme-control {
+    display: none !important;
+}
+
+.hero-title,
+.hero-title-hindi,
+.features h2,
+.faq h2,
+.contact-methods h2,
+.contact-form-section h2,
+.helplines-section h2,
+.resources-section h2,
+.guides-section h2,
+.values-section h2,
+.impact-section h2,
+.team-section h2,
+.downloads-section h2,
+.accessibility-title,
+.issue-title,
+.question-label,
+.feature-card h3,
+.mission-card h3,
+.value-card h4,
+.resource-card h4,
+.guide-card h4,
+.helpline-card h4,
+.download-card h4,
+.method-card h4,
+.faq-question,
+.case-detail h3,
+.case-detail h4,
+.auth-box h2 {
+    color: #352238 !important;
+}
+
+.hero-description,
+.feature-card p,
+.mission-card p,
+.value-card p,
+.resource-card p,
+.guide-card p,
+.helpline-card p,
+.download-card p,
+.method-card p,
+.faq-answer,
+.voice-sublabel,
+.voice-support-status,
+.field-help,
+.footer-section p,
+.footer-bottom,
+.case-card p,
+.case-detail p,
+.case-detail li,
+.auth-box p,
+.form-group label {
+    color: #4a4a4a !important;
+}
+
+.footer,
+.footer-section,
+.footer-bottom,
+.footer-section h4,
+.footer-section li,
+.footer-bottom p {
+    color: #4a4a4a !important;
+}
+
+.footer-section h4 {
+    color: #352238 !important;
+}
+
+.question-input,
+.language-control select,
+.worker-context input,
+.form-group input,
+.form-group select,
+.form-group textarea,
+.auth-input,
+.letter-fields input,
+.letter-editor {
+    background: #ffffff;
+    color: #352238;
+    border-color: rgba(74, 43, 64, 0.18);
+}
+
+.btn-primary,
+.auth-primary {
+    background: #4a263d;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff;
+}
+
+button,
+input,
+select,
+textarea,
+.interactive-card,
+.response-section,
+.voice-input-section,
+.feature-card,
+.mission-card,
+.value-card,
+.stat-card,
+.team-card,
+.resource-card,
+.guide-card,
+.helpline-card,
+.download-card,
+.method-card,
+.faq-item,
+.faq-question,
+.faq-answer,
+.auth-box,
+.case-card,
+.case-detail {
+    border-radius: 16px;
+}
+
+.btn,
+.auth-primary,
+.auth-guest,
+.speech-controls button,
+.section-speech-button,
+.app-language-switcher select,
+#helpStateSelector {
+    border-radius: 999px;
+}
+
+.issue-tag {
+    background: #ffffff !important;
+    border: 1px solid rgba(215, 141, 156, 0.28) !important;
+    color: #352238 !important;
+    box-shadow: 0 8px 18px rgba(74, 43, 64, 0.06);
+}
+
+.issue-tag .tag-text {
+    color: #352238 !important;
+}
+
+.issue-tag small {
+    color: #4a4a4a !important;
+}
+
+.issue-tag:hover,
+.issue-tag:focus-visible,
+.issue-tag.active,
+.issue-tag[aria-pressed="true"],
+.resource-card:hover,
+.resource-card:focus-within,
+.resource-card.active,
+.resource-card.selected,
+.faq-question:hover,
+.faq-question:focus-visible,
+.faq-item:focus-within,
+.feature-card:hover,
+.mission-card:hover,
+.value-card:hover,
+.stat-card:hover,
+.team-card:hover,
+.guide-card:hover,
+.helpline-card:hover,
+.download-card:hover,
+.method-card:hover {
+    background: #fff0f4 !important;
+    border-color: #d78d9c !important;
+    box-shadow: 0 14px 30px rgba(193, 103, 120, 0.16) !important;
+    transform: translateY(-2px);
+}
+
+.resource-card h4,
+.resource-card p,
+.resource-card a {
+    color: #352238 !important;
+}
+
+.accessibility-options,
+.accessibility-options .accessibility-title,
+.accessibility-options .speech-toggle,
+.accessibility-options .voice-support-status,
+.accessibility-options label {
+    background: transparent !important;
+    color: #4a4a4a !important;
+}
+
+.accessibility-options input[type="checkbox"] {
+    accent-color: #d78d9c;
+}
+
+.question-input:focus,
+.language-control select:focus,
+.worker-context input:focus,
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.auth-input:focus,
+.letter-fields input:focus,
+.letter-editor:focus,
+.faq-question:focus-visible,
+.faq-item:focus-within,
+.feature-card:focus-within,
+.mission-card:focus-within,
+.value-card:focus-within,
+.stat-card:focus-within,
+.team-card:focus-within,
+.resource-card:focus-within,
+.guide-card:focus-within,
+.helpline-card:focus-within,
+.download-card:focus-within,
+.method-card:focus-within,
+.issue-tag:focus-visible {
+    background: #fff0f4 !important;
+    border-color: #d78d9c !important;
+    color: #352238 !important;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(215, 141, 156, 0.22) !important;
+}
+
+.question-input:focus,
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.auth-input:focus,
+.letter-fields input:focus,
+.letter-editor:focus {
+    background: #ffffff !important;
+}
+
+.contact-form .form-group input,
+.contact-form .form-group select,
+.contact-form .form-group textarea,
+.contact-form .form-group.checkbox {
+    padding: 14px 18px !important;
+}
+
+button,
+select,
+input,
+textarea,
+.feature-card,
+.mission-card,
+.value-card,
+.stat-card,
+.team-card,
+.resource-card,
+.guide-card,
+.helpline-card,
+.download-card,
+.method-card,
+.faq-question,
+.nav-link {
+    transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+button:hover,
+select:hover,
+input:hover,
+textarea:hover,
+.feature-card:hover,
+.mission-card:hover,
+.value-card:hover,
+.stat-card:hover,
+.team-card:hover,
+.resource-card:hover,
+.guide-card:hover,
+.helpline-card:hover,
+.download-card:hover,
+.method-card:hover,
+.faq-question:hover,
+.nav-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(193, 103, 120, 0.14);
+}
+
+::selection {
+    background: #f5c8d1;
+    color: #352238;
+}
