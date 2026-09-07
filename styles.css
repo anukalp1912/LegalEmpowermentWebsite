@@ -34,7 +34,43 @@
 }
 
 .brand-icon {
-    font-size: 28px;
+    font-size: 25px;
+    line-height: 1;
+}
+
+/* A compact law emblem combines the scales of justice with a chakra mark. */
+.brand-emblem {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(251, 146, 60, 0.65);
+    border-radius: 50%;
+    background: linear-gradient(145deg, rgba(251, 146, 60, 0.2), rgba(52, 211, 153, 0.14));
+    box-shadow: 0 0 18px rgba(251, 146, 60, 0.18);
+    animation: emblemFloat 3.5s ease-in-out infinite;
+}
+
+.brand-chakra {
+    position: absolute;
+    right: -5px;
+    bottom: -3px;
+    display: grid;
+    place-items: center;
+    width: 17px;
+    height: 17px;
+    border: 1px solid #34D399;
+    border-radius: 50%;
+    background: #0B0F17;
+    color: #34D399;
+    font-size: 12px;
+    line-height: 1;
+}
+
+@keyframes emblemFloat {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-3px) rotate(2deg); }
 }
 
 .brand-text {
@@ -79,6 +115,38 @@
     border: 1px solid rgba(52, 211, 153, 0.3);
 }
 
+.theme-control {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-left: 10px;
+    color: #94A3B8;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.theme-control select {
+    max-width: 128px;
+    padding: 7px 25px 7px 10px;
+    border: 1px solid rgba(51, 65, 85, 0.7);
+    border-radius: 999px;
+    background: #1E293B;
+    color: #F8FAFC;
+    font: inherit;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.theme-control select:hover,
+.theme-control select:focus-visible {
+    border-color: #34D399;
+    box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.14);
+    outline: none;
+    transform: scale(1.02);
+}
+
 @media (max-width: 768px) {
     .nav-links {
         gap: 4px;
@@ -96,6 +164,10 @@
     .brand-icon {
         font-size: 22px;
     }
+
+    .theme-control {
+        margin: 8px 0 0 auto;
+    }
 }
 
 
@@ -105,14 +177,53 @@ html, body {
     height: 100%;
 }
 
+/* Theme tokens keep the light and device-default modes readable and coherent. */
+:root {
+    color-scheme: dark;
+    --page-bg: #0B0F17;
+    --surface: rgba(15, 23, 42, 0.90);
+    --surface-strong: #131C2E;
+    --surface-soft: #1E293B;
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
+    --line: rgba(51, 65, 85, 0.60);
+}
+
+[data-theme="light"] {
+    color-scheme: light;
+    --page-bg: #F8FAFC;
+    --surface: rgba(255, 255, 255, 0.94);
+    --surface-strong: #FFFFFF;
+    --surface-soft: #E2E8F0;
+    --text-primary: #172033;
+    --text-secondary: #334155;
+    --text-muted: #64748B;
+    --line: rgba(100, 116, 139, 0.28);
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+        color-scheme: light;
+        --page-bg: #F8FAFC;
+        --surface: rgba(255, 255, 255, 0.94);
+        --surface-strong: #FFFFFF;
+        --surface-soft: #E2E8F0;
+        --text-primary: #172033;
+        --text-secondary: #334155;
+        --text-muted: #64748B;
+        --line: rgba(100, 116, 139, 0.28);
+    }
+}
+
 *, *::before, *::after {
     box-sizing: border-box;
 }
 
 body {
     font-family: 'Atkinson Hyperlegible', sans-serif;
-    background: #0B0F17;
-    color: #CBD5E1;
+    background: var(--page-bg);
+    color: var(--text-secondary);
     line-height: 1.6;
     overflow-x: hidden;
     margin: 0;
@@ -123,7 +234,7 @@ body {
     position: relative;
     width: 100%;
     min-height: 100vh;
-    background: #0B0F17;
+    background: var(--page-bg);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2496,4 +2607,368 @@ body {
     .language-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .letter-fields { grid-template-columns: 1fr; }
     .letter-editor { min-height: 520px; padding: 16px; }
+}
+
+/* The first-load motion gently introduces the key content without delaying use. */
+.hero {
+    animation: pageReveal 0.55s ease-out both;
+}
+
+.interactive-card {
+    animation: pageReveal 0.55s 0.1s ease-out both;
+}
+
+@keyframes pageReveal {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Transform and shadow transitions keep button feedback smooth at 60fps. */
+.btn,
+.issue-tag,
+.voice-button,
+.mic-toggle,
+.close-btn,
+.speech-controls button,
+.section-speech-button {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn:hover,
+.issue-tag:hover,
+.voice-button:hover,
+.mic-toggle:hover {
+    transform: scale(1.03);
+}
+
+.btn:active,
+.issue-tag:active,
+.voice-button:active,
+.mic-toggle:active,
+.speech-controls button:active,
+.section-speech-button:active {
+    transform: scale(0.97);
+}
+
+.issue-tag:hover {
+    box-shadow: 0 0 18px rgba(52, 211, 153, 0.2);
+}
+
+.voice-button:hover .voice-icon-wrapper {
+    box-shadow: 0 0 24px rgba(251, 146, 60, 0.65), 0 8px 16px rgba(249, 115, 22, 0.45);
+}
+
+/* The active listening state reassures users that their voice is being recorded. */
+.voice-icon-wrapper.speaking {
+    animation: listeningPulse 0.9s ease-in-out infinite;
+}
+
+@keyframes listeningPulse {
+    0%, 100% { opacity: 0.86; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.06); }
+}
+
+/* A small spinner communicates that guidance is being prepared. */
+.btn.is-loading {
+    pointer-events: none;
+    opacity: 0.82;
+}
+
+.btn.is-loading::after {
+    content: '';
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    margin-left: 0.6em;
+    vertical-align: -0.1em;
+    border: 2px solid rgba(255, 255, 255, 0.45);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.55s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.response-section {
+    animation: responseReveal 0.5s ease-out both;
+}
+
+@keyframes responseReveal {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* The short shake draws attention to an empty required field without being harsh. */
+.question-input.validation-shake {
+    animation: validationShake 0.35s ease-out;
+    border-color: #FB923C;
+}
+
+@keyframes validationShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* max-height lets the existing FAQ markup expand and collapse instead of popping. */
+.faq-answer {
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 240px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    opacity: 1;
+    animation: none;
+}
+
+/* Scroll reveals start hidden only after JavaScript has opted the element in. */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.55s ease-out, transform 0.55s ease-out;
+}
+
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Respect the user's OS motion preference by removing non-essential movement. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .reveal-on-scroll {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* Light mode overrides the original dark surfaces without changing the layout. */
+[data-theme="light"] .navbar,
+[data-theme="light"] .interactive-card,
+[data-theme="light"] .response-section,
+[data-theme="light"] .faq-answer {
+    background: var(--surface);
+    border-color: var(--line);
+}
+
+[data-theme="light"] .navbar {
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .voice-input-section,
+[data-theme="light"] .question-input,
+[data-theme="light"] .feature-card,
+[data-theme="light"] .faq-question,
+[data-theme="light"] .speech-controls {
+    background: var(--surface-strong);
+    border-color: var(--line);
+}
+
+[data-theme="light"] .hero-title,
+[data-theme="light"] .response-header h3,
+[data-theme="light"] .features h2,
+[data-theme="light"] .faq h2,
+[data-theme="light"] .feature-card h3,
+[data-theme="light"] .faq-question,
+[data-theme="light"] .voice-label,
+[data-theme="light"] .accessibility-title {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .hero-description,
+[data-theme="light"] .voice-sublabel,
+[data-theme="light"] .response-content,
+[data-theme="light"] .feature-card p,
+[data-theme="light"] .faq-answer,
+[data-theme="light"] .nav-link,
+[data-theme="light"] .theme-control {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .theme-control select,
+[data-theme="light"] .language-control select,
+[data-theme="light"] .worker-context input {
+    background: var(--surface-strong);
+    color: var(--text-primary);
+    border-color: var(--line);
+}
+
+[data-theme="light"] .brand-chakra {
+    background: var(--surface-strong);
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) .navbar,
+    :root:not([data-theme]) .interactive-card,
+    :root:not([data-theme]) .response-section,
+    :root:not([data-theme]) .faq-answer {
+        background: var(--surface);
+        border-color: var(--line);
+    }
+
+    :root:not([data-theme]) .voice-input-section,
+    :root:not([data-theme]) .question-input,
+    :root:not([data-theme]) .feature-card,
+    :root:not([data-theme]) .faq-question,
+    :root:not([data-theme]) .speech-controls {
+        background: var(--surface-strong);
+        border-color: var(--line);
+    }
+
+    :root:not([data-theme]) .hero-title,
+    :root:not([data-theme]) .response-header h3,
+    :root:not([data-theme]) .features h2,
+    :root:not([data-theme]) .faq h2,
+    :root:not([data-theme]) .feature-card h3,
+    :root:not([data-theme]) .faq-question,
+    :root:not([data-theme]) .voice-label,
+    :root:not([data-theme]) .accessibility-title {
+        color: var(--text-primary);
+    }
+
+    :root:not([data-theme]) .hero-description,
+    :root:not([data-theme]) .voice-sublabel,
+    :root:not([data-theme]) .response-content,
+    :root:not([data-theme]) .feature-card p,
+    :root:not([data-theme]) .faq-answer,
+    :root:not([data-theme]) .nav-link,
+    :root:not([data-theme]) .theme-control {
+        color: var(--text-secondary);
+    }
+
+    :root:not([data-theme]) .theme-control select,
+    :root:not([data-theme]) .language-control select,
+    :root:not([data-theme]) .worker-context input {
+        background: var(--surface-strong);
+        color: var(--text-primary);
+        border-color: var(--line);
+    }
+}
+
+/* These shared page surfaces keep About, Resources, Cases, Contact, and Login
+   visually aligned with the selected theme as well as the home page. */
+[data-theme="light"] .mission-card,
+[data-theme="light"] .value-card,
+[data-theme="light"] .stat-card,
+[data-theme="light"] .team-card,
+[data-theme="light"] .resource-card,
+[data-theme="light"] .guide-card,
+[data-theme="light"] .helpline-card,
+[data-theme="light"] .download-card,
+[data-theme="light"] .method-card,
+[data-theme="light"] .case-card,
+[data-theme="light"] .case-detail,
+[data-theme="light"] .auth-box,
+[data-theme="light"] .contact-form-section {
+    background: var(--surface);
+    border-color: var(--line);
+}
+
+[data-theme="light"] .mission-card h3,
+[data-theme="light"] .value-card h4,
+[data-theme="light"] .stat-number,
+[data-theme="light"] .team-card h4,
+[data-theme="light"] .resource-card h4,
+[data-theme="light"] .guide-card h4,
+[data-theme="light"] .helpline-card h4,
+[data-theme="light"] .download-card h4,
+[data-theme="light"] .method-card h4,
+[data-theme="light"] .case-card strong,
+[data-theme="light"] .case-detail h3,
+[data-theme="light"] .case-detail h4,
+[data-theme="light"] .auth-box h2,
+[data-theme="light"] .contact-form-section h2 {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .mission-card p,
+[data-theme="light"] .value-card p,
+[data-theme="light"] .team-card p,
+[data-theme="light"] .resource-card p,
+[data-theme="light"] .guide-card p,
+[data-theme="light"] .case-card-body p,
+[data-theme="light"] .case-detail p,
+[data-theme="light"] .case-detail li,
+[data-theme="light"] .auth-box,
+[data-theme="light"] .auth-input,
+[data-theme="light"] .auth-guest {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .auth-input {
+    background: var(--surface-strong);
+    border-color: var(--line);
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) .mission-card,
+    :root:not([data-theme]) .value-card,
+    :root:not([data-theme]) .stat-card,
+    :root:not([data-theme]) .team-card,
+    :root:not([data-theme]) .resource-card,
+    :root:not([data-theme]) .guide-card,
+    :root:not([data-theme]) .helpline-card,
+    :root:not([data-theme]) .download-card,
+    :root:not([data-theme]) .method-card,
+    :root:not([data-theme]) .case-card,
+    :root:not([data-theme]) .case-detail,
+    :root:not([data-theme]) .auth-box,
+    :root:not([data-theme]) .contact-form-section {
+        background: var(--surface);
+        border-color: var(--line);
+    }
+
+    :root:not([data-theme]) .mission-card h3,
+    :root:not([data-theme]) .value-card h4,
+    :root:not([data-theme]) .stat-number,
+    :root:not([data-theme]) .team-card h4,
+    :root:not([data-theme]) .resource-card h4,
+    :root:not([data-theme]) .guide-card h4,
+    :root:not([data-theme]) .helpline-card h4,
+    :root:not([data-theme]) .download-card h4,
+    :root:not([data-theme]) .method-card h4,
+    :root:not([data-theme]) .case-card strong,
+    :root:not([data-theme]) .case-detail h3,
+    :root:not([data-theme]) .case-detail h4,
+    :root:not([data-theme]) .auth-box h2,
+    :root:not([data-theme]) .contact-form-section h2 {
+        color: var(--text-primary);
+    }
+
+    :root:not([data-theme]) .mission-card p,
+    :root:not([data-theme]) .value-card p,
+    :root:not([data-theme]) .team-card p,
+    :root:not([data-theme]) .resource-card p,
+    :root:not([data-theme]) .guide-card p,
+    :root:not([data-theme]) .case-card-body p,
+    :root:not([data-theme]) .case-detail p,
+    :root:not([data-theme]) .case-detail li,
+    :root:not([data-theme]) .auth-box,
+    :root:not([data-theme]) .auth-input,
+    :root:not([data-theme]) .auth-guest {
+        color: var(--text-secondary);
+    }
+
+    :root:not([data-theme]) .auth-input {
+        background: var(--surface-strong);
+        border-color: var(--line);
+    }
 }

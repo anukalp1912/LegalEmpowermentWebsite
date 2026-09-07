@@ -8,6 +8,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 
+from database import init_db
 from routes.auth import auth
 from routes.cases import cases
 from routes.contact import contact
@@ -18,6 +19,7 @@ from routes.guidance import guidance
 load_dotenv()
 if not os.environ.get("ANTHROPIC_API_KEY"):
     print("Warning: ANTHROPIC_API_KEY is not set; guidance will use offline fallback only.")
+init_db()
 
 
 def create_app() -> Flask:
