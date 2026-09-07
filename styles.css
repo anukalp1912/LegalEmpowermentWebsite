@@ -34,7 +34,43 @@
 }
 
 .brand-icon {
-    font-size: 28px;
+    font-size: 25px;
+    line-height: 1;
+}
+
+/* A compact law emblem combines the scales of justice with a chakra mark. */
+.brand-emblem {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(251, 146, 60, 0.65);
+    border-radius: 50%;
+    background: linear-gradient(145deg, rgba(251, 146, 60, 0.2), rgba(52, 211, 153, 0.14));
+    box-shadow: 0 0 18px rgba(251, 146, 60, 0.18);
+    animation: emblemFloat 3.5s ease-in-out infinite;
+}
+
+.brand-chakra {
+    position: absolute;
+    right: -5px;
+    bottom: -3px;
+    display: grid;
+    place-items: center;
+    width: 17px;
+    height: 17px;
+    border: 1px solid #34D399;
+    border-radius: 50%;
+    background: #0B0F17;
+    color: #34D399;
+    font-size: 12px;
+    line-height: 1;
+}
+
+@keyframes emblemFloat {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-3px) rotate(2deg); }
 }
 
 .brand-text {
@@ -79,6 +115,38 @@
     border: 1px solid rgba(52, 211, 153, 0.3);
 }
 
+.theme-control {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-left: 10px;
+    color: #94A3B8;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.theme-control select {
+    max-width: 128px;
+    padding: 7px 25px 7px 10px;
+    border: 1px solid rgba(51, 65, 85, 0.7);
+    border-radius: 999px;
+    background: #1E293B;
+    color: #F8FAFC;
+    font: inherit;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.theme-control select:hover,
+.theme-control select:focus-visible {
+    border-color: #34D399;
+    box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.14);
+    outline: none;
+    transform: scale(1.02);
+}
+
 @media (max-width: 768px) {
     .nav-links {
         gap: 4px;
@@ -96,6 +164,10 @@
     .brand-icon {
         font-size: 22px;
     }
+
+    .theme-control {
+        margin: 8px 0 0 auto;
+    }
 }
 
 
@@ -105,14 +177,53 @@ html, body {
     height: 100%;
 }
 
+/* Theme tokens keep the light and device-default modes readable and coherent. */
+:root {
+    color-scheme: dark;
+    --page-bg: #0B0F17;
+    --surface: rgba(15, 23, 42, 0.90);
+    --surface-strong: #131C2E;
+    --surface-soft: #1E293B;
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
+    --line: rgba(51, 65, 85, 0.60);
+}
+
+[data-theme="light"] {
+    color-scheme: light;
+    --page-bg: #F8FAFC;
+    --surface: rgba(255, 255, 255, 0.94);
+    --surface-strong: #FFFFFF;
+    --surface-soft: #E2E8F0;
+    --text-primary: #172033;
+    --text-secondary: #334155;
+    --text-muted: #64748B;
+    --line: rgba(100, 116, 139, 0.28);
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+        color-scheme: light;
+        --page-bg: #F8FAFC;
+        --surface: rgba(255, 255, 255, 0.94);
+        --surface-strong: #FFFFFF;
+        --surface-soft: #E2E8F0;
+        --text-primary: #172033;
+        --text-secondary: #334155;
+        --text-muted: #64748B;
+        --line: rgba(100, 116, 139, 0.28);
+    }
+}
+
 *, *::before, *::after {
     box-sizing: border-box;
 }
 
 body {
     font-family: 'Atkinson Hyperlegible', sans-serif;
-    background: #0B0F17;
-    color: #CBD5E1;
+    background: var(--page-bg);
+    color: var(--text-secondary);
     line-height: 1.6;
     overflow-x: hidden;
     margin: 0;
@@ -123,7 +234,7 @@ body {
     position: relative;
     width: 100%;
     min-height: 100vh;
-    background: #0B0F17;
+    background: var(--page-bg);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2646,5 +2757,108 @@ body {
     .reveal-on-scroll {
         opacity: 1;
         transform: none;
+    }
+}
+
+/* Light mode overrides the original dark surfaces without changing the layout. */
+[data-theme="light"] .navbar,
+[data-theme="light"] .interactive-card,
+[data-theme="light"] .response-section,
+[data-theme="light"] .faq-answer {
+    background: var(--surface);
+    border-color: var(--line);
+}
+
+[data-theme="light"] .navbar {
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .voice-input-section,
+[data-theme="light"] .question-input,
+[data-theme="light"] .feature-card,
+[data-theme="light"] .faq-question,
+[data-theme="light"] .speech-controls {
+    background: var(--surface-strong);
+    border-color: var(--line);
+}
+
+[data-theme="light"] .hero-title,
+[data-theme="light"] .response-header h3,
+[data-theme="light"] .features h2,
+[data-theme="light"] .faq h2,
+[data-theme="light"] .feature-card h3,
+[data-theme="light"] .faq-question,
+[data-theme="light"] .voice-label,
+[data-theme="light"] .accessibility-title {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .hero-description,
+[data-theme="light"] .voice-sublabel,
+[data-theme="light"] .response-content,
+[data-theme="light"] .feature-card p,
+[data-theme="light"] .faq-answer,
+[data-theme="light"] .nav-link,
+[data-theme="light"] .theme-control {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .theme-control select,
+[data-theme="light"] .language-control select,
+[data-theme="light"] .worker-context input {
+    background: var(--surface-strong);
+    color: var(--text-primary);
+    border-color: var(--line);
+}
+
+[data-theme="light"] .brand-chakra {
+    background: var(--surface-strong);
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) .navbar,
+    :root:not([data-theme]) .interactive-card,
+    :root:not([data-theme]) .response-section,
+    :root:not([data-theme]) .faq-answer {
+        background: var(--surface);
+        border-color: var(--line);
+    }
+
+    :root:not([data-theme]) .voice-input-section,
+    :root:not([data-theme]) .question-input,
+    :root:not([data-theme]) .feature-card,
+    :root:not([data-theme]) .faq-question,
+    :root:not([data-theme]) .speech-controls {
+        background: var(--surface-strong);
+        border-color: var(--line);
+    }
+
+    :root:not([data-theme]) .hero-title,
+    :root:not([data-theme]) .response-header h3,
+    :root:not([data-theme]) .features h2,
+    :root:not([data-theme]) .faq h2,
+    :root:not([data-theme]) .feature-card h3,
+    :root:not([data-theme]) .faq-question,
+    :root:not([data-theme]) .voice-label,
+    :root:not([data-theme]) .accessibility-title {
+        color: var(--text-primary);
+    }
+
+    :root:not([data-theme]) .hero-description,
+    :root:not([data-theme]) .voice-sublabel,
+    :root:not([data-theme]) .response-content,
+    :root:not([data-theme]) .feature-card p,
+    :root:not([data-theme]) .faq-answer,
+    :root:not([data-theme]) .nav-link,
+    :root:not([data-theme]) .theme-control {
+        color: var(--text-secondary);
+    }
+
+    :root:not([data-theme]) .theme-control select,
+    :root:not([data-theme]) .language-control select,
+    :root:not([data-theme]) .worker-context input {
+        background: var(--surface-strong);
+        color: var(--text-primary);
+        border-color: var(--line);
     }
 }
