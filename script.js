@@ -996,12 +996,65 @@ function renderCasesOnPage() {
     });
 }
 
+function readFileAsDataUrl(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result || ''));
+        reader.onerror = () => reject(new Error('Could not read file'));
+        reader.readAsDataURL(file);
+    });
+}
+
+async function loadHelpContactsForState(state) {
+    const container = document.getElementById('resourceHelpContacts');
+    if (!container) return;
+    const selectedState = String(state || '').trim();
+    if (!selectedState) {
+        container.innerHTML = '<p class="helpline-time">Select a state to see local labour and legal aid contacts.</p>';
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/help-contacts?state=${encodeURIComponent(selectedState)}`);
+        const payload = await response.json();
+        const contact = payload.contact || {};
+        const labourName = contact.district_labor_office_name || 'Labour department contact';
+        const labourPhone = contact.district_labor_office_phone || 'Check the local labour department';
+        const legalName = contact.legal_aid_authority_name || 'Legal aid authority';
+        const legalPhone = contact.legal_aid_authority_phone || '15100';
+        const womenLine = contact.women_helpline || '181';
+        const notes = contact.notes || '';
+
+        container.innerHTML = `
+            <div><strong>${contact.state || selectedState}</strong></div>
+            <div><strong>Labour dept:</strong> ${labourName}</div>
+            <div><strong>Phone:</strong> ${labourPhone}</div>
+            <div><strong>Legal aid:</strong> ${legalName}</div>
+            <div><strong>Phone:</strong> ${legalPhone}</div>
+            <div><strong>Women workers helpline:</strong> ${womenLine}</div>
+            ${notes ? `<div class="helpline-note">${notes}</div>` : ''}
+        `;
+    } catch (error) {
+        console.warn('Could not load help contacts', error);
+        container.innerHTML = '<p class="helpline-time">Unable to fetch state helpline details right now. Please try again.</p>';
+    }
+}
+
+function saveUploadedEvidence(caseId, evidenceItem) {
+    const caseObj = getCaseById(caseId);
+    if (!caseObj) return;
+    const nextEvidence = Array.isArray(caseObj.evidence) ? [...caseObj.evidence, evidenceItem] : [evidenceItem];
+    const updated = updateSavedCase(caseId, { evidence: nextEvidence });
+    return updated || caseObj;
+}
+
 function showCaseDetail(caseData, detailContainer) {
     if (!detailContainer) return;
     const language = caseData.responseLanguage || caseData.originalLanguage || 'en';
     const t = translations[language] || translations.en;
     const guidance = caseData.guidance || [];
     const evidence = caseData.evidenceChecklist || [];
+    const uploadedEvidence = Array.isArray(caseData.evidence) ? caseData.evidence : [];
     const roadmap = caseData.roadmap || [];
     const evidenceProgress = caseData.evidenceProgress || evidence.map(() => false);
     const roadmapProgress = caseData.roadmapProgress || roadmap.map(() => false);
@@ -1023,9 +1076,57 @@ function showCaseDetail(caseData, detailContainer) {
     appendCaseList(detailContainer, t.evidence, evidence, 'ul', evidenceProgress, (index, checked) => {
         updateCaseProgress(caseData.case_id, 'evidenceProgress', index, checked);
     });
+    if (uploadedEvidence.length) {
+        const uploadedLabels = uploadedEvidence.map((item) => item.filename || item.checklist_item || item.note || 'Uploaded evidence');
+        appendCaseList(detailContainer, 'Uploaded evidence', uploadedLabels, 'ul');
+    }
     appendCaseList(detailContainer, t.roadmap, roadmap, 'ol', roadmapProgress, (index, checked) => {
         updateCaseProgress(caseData.case_id, 'roadmapProgress', index, checked);
     });
+
+    const uploadBlock = document.createElement('div');
+    uploadBlock.className = 'case-upload-block';
+    uploadBlock.innerHTML = `
+        <h4>Upload supporting evidence</h4>
+        <input type="file" accept="image/*,.pdf" aria-label="Upload supporting evidence" />
+        <button type="button" class="btn btn-secondary evidence-upload-btn">Add photo or PDF</button>
+        <small>Images or PDFs up to 5MB are supported.</small>
+    `;
+    const uploadInput = uploadBlock.querySelector('input');
+    uploadBlock.querySelector('button').addEventListener('click', async () => {
+        const file = uploadInput.files && uploadInput.files[0];
+        if (!file) {
+            alert('Choose a photo or PDF to upload.');
+            return;
+        }
+        try {
+            const data = await readFileAsDataUrl(file);
+            const caseId = caseData.case_id || caseData.caseId;
+            const response = await fetch(`${API_BASE_URL}/api/cases/${encodeURIComponent(caseId)}/evidence`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    type: file.type.includes('pdf') ? 'pdf' : 'image',
+                    filename: file.name,
+                    data,
+                    checklist_item: file.name,
+                    note: `Uploaded from RightsMitra on ${new Date().toISOString()}`
+                })
+            });
+            const payload = await response.json();
+            if (!response.ok) {
+                throw new Error(payload.error || 'Upload failed');
+            }
+            saveUploadedEvidence(caseId, payload.evidence || { filename: file.name, uploaded_at: new Date().toISOString() });
+            const refreshed = getCaseById(caseId);
+            if (refreshed) showCaseDetail(refreshed, detailContainer);
+        } catch (error) {
+            console.error('Evidence upload failed', error);
+            alert(error.message || 'Evidence upload failed.');
+        }
+    });
+    detailContainer.appendChild(uploadBlock);
+
     const disclaimer = document.createElement('p');
     disclaimer.className = 'case-disclaimer';
     disclaimer.textContent = t.disclaimer;
@@ -1088,6 +1189,11 @@ function updateCaseProgress(caseId, field, index, checked) {
 // Run on pages where DOM loaded
 document.addEventListener('DOMContentLoaded', () => {
     renderCasesOnPage();
+    const helpStateSelector = document.getElementById('helpStateSelector');
+    if (helpStateSelector) {
+        helpStateSelector.addEventListener('change', (event) => loadHelpContactsForState(event.target.value));
+        loadHelpContactsForState(helpStateSelector.value);
+    }
 });
 
 // Contact form handler
