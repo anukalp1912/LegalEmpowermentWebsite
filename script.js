@@ -1,3 +1,5 @@
+const API_BASE_URL = 'http://localhost:4000';
+
 // Language data stays centralized so new languages can be added without changing the analysis flow.
 const supportedLanguages = {
     en: { name: 'English', speechCode: 'en-IN' },
@@ -813,7 +815,7 @@ if (voiceBtn) {
 // Auth functions wired to backend endpoints (Twilio + Supabase)
 // Frontend expects two endpoints:
 // POST /api/send-otp  { phone }
-// POST /api/verify-otp { phone, code, preferred_language }
+// POST /api/verify-otp { phone, otp, preferred_language }
 // Both return JSON: { ok: true, ... } or { ok: false, error: '...' }
 
 // sendOTP supports phone or email: pass { phone } or { email }
@@ -857,7 +859,7 @@ async function loginWithPhone(phoneOrEmail, code, preferred_language, guest_sess
     // phoneOrEmail may be a phone number or an email (detect by presence of @)
     const isEmail = typeof phoneOrEmail === 'string' && phoneOrEmail.includes('@');
     try {
-        const payload = isEmail ? { email: phoneOrEmail, code, preferred_language, guest_session_id } : { phone: phoneOrEmail, code, preferred_language, guest_session_id };
+        const payload = isEmail ? { email: phoneOrEmail, otp: code, preferred_language, guest_session_id } : { phone: phoneOrEmail, otp: code, preferred_language, guest_session_id };
         const res = await fetch(`${API_BASE_URL}/api/verify-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
