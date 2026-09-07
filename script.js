@@ -766,11 +766,13 @@ function migrateGuestCasesToUser(guestId, newUserId) {
     const userKey = 'cases_' + newUserId;
     const guestCases = JSON.parse(localStorage.getItem(guestKey) || '[]');
     const userCases = JSON.parse(localStorage.getItem(userKey) || '[]');
-    // prepend guest cases to user's cases (preserve time order)
-    const merged = guestCases.concat(userCases);
-    localStorage.setItem(userKey, JSON.stringify(merged));
-    // remove guest cases
+    const merged = [...guestCases, ...userCases];
+    const deduped = merged.filter((caseItem, index, array) => array.findIndex(item => item.case_id === caseItem.case_id) === index);
+    localStorage.setItem(userKey, JSON.stringify(deduped));
     localStorage.removeItem(guestKey);
+    if (localStorage.getItem('guestSessionId') === guestId) {
+        localStorage.removeItem('guestSessionId');
+    }
 }
 
 // Mic toggle handler
@@ -918,12 +920,14 @@ async function loginWithPhone(phoneOrEmail, code, preferred_language, guest_sess
             const guestId = localStorage.getItem('guestSessionId');
             if (guestId) try { migrateGuestCasesToUser(guestId, j.user.user_id); } catch(e){console.warn(e)}
             setCurrentUser(j.user);
+            localStorage.removeItem('guestSessionId');
             return j.user;
         }
         if (j && j.ok && j.user) {
             const guestId = localStorage.getItem('guestSessionId');
             if (guestId) try { migrateGuestCasesToUser(guestId, j.user.user_id); } catch(e){console.warn(e)}
             setCurrentUser(j.user);
+            localStorage.removeItem('guestSessionId');
             return j.user;
         }
         // fallback local verify for demo mode: check sessionStorage
@@ -935,6 +939,7 @@ async function loginWithPhone(phoneOrEmail, code, preferred_language, guest_sess
             const guestId = localStorage.getItem('guestSessionId');
             if (guestId) migrateGuestCasesToUser(guestId, userId);
             setCurrentUser(user);
+            localStorage.removeItem('guestSessionId');
             return user;
         }
         return null;
@@ -949,6 +954,7 @@ async function loginWithPhone(phoneOrEmail, code, preferred_language, guest_sess
             const guestId = localStorage.getItem('guestSessionId');
             if (guestId) migrateGuestCasesToUser(guestId, userId);
             setCurrentUser(user);
+            localStorage.removeItem('guestSessionId');
             return user;
         }
         return null;
