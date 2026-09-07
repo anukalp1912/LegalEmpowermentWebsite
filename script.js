@@ -726,8 +726,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 let micEnabled = true; // user can toggle to disable microphone
 let ongoingRecognition = null; // keep reference to stop mid-listen
 
+function sanitizeGuestState() {
+    const user = getCurrentUser();
+    const guestId = localStorage.getItem('guestSessionId');
+    if (user && user.guest_flag && !guestId) {
+        localStorage.removeItem('currentUser');
+    }
+}
+
 // Ensure a guest session exists (stored in localStorage)
 function createGuestSessionIfNeeded() {
+    sanitizeGuestState();
     const currentUser = getCurrentUser();
     if (currentUser && !currentUser.guest_flag) {
         return;
@@ -742,7 +751,14 @@ createGuestSessionIfNeeded();
 
 function getCurrentUser() {
     const raw = localStorage.getItem('currentUser');
-    return raw ? JSON.parse(raw) : null;
+    if (!raw) return null;
+    try {
+        return JSON.parse(raw);
+    } catch (error) {
+        console.warn('Invalid currentUser JSON in localStorage; clearing stale data.', error);
+        localStorage.removeItem('currentUser');
+        return null;
+    }
 }
 
 function setCurrentUser(user) {
