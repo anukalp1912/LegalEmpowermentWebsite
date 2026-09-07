@@ -3475,3 +3475,119 @@ body { background: linear-gradient(135deg, #fce9ef 0%, #f8edf3 48%, #f1e9f7 100%
     .hero { padding-top: 14px; }
     .hero-title, .hero-title-hindi { font-size: clamp(2rem, 10vw, 3rem); }
 }
+
+/* Keep shared pages readable against the light reference background. */
+.mission-card,
+.value-card,
+.stat-card,
+.team-card,
+.resource-card,
+.guide-card,
+.helpline-card,
+.download-card,
+.method-card,
+.contact-form-section,
+.form-wrapper,
+.auth-box,
+.case-card,
+.case-detail {
+    background: rgba(255, 255, 255, 0.88);
+    border-color: rgba(74, 43, 64, 0.1);
+    box-shadow: var(--reference-shadow);
+}
+
+.mission-card h3,
+.mission-card h4,
+.value-card h4,
+.stat-card h3,
+.stat-card h4,
+.team-card h4,
+.resource-card h4,
+.guide-card h4,
+.helpline-card h4,
+.download-card h4,
+.method-card h4,
+.contact-methods h2,
+.contact-form-section h2,
+.values-section h2,
+.impact-section h2,
+.team-section h2,
+.resources-section h2,
+.guides-section h2,
+.helplines-section h2,
+.downloads-section h2,
+.case-card h3,
+.case-card h4,
+.case-detail h3,
+.case-detail h4,
+.auth-box h2,
+.auth-box label {
+    color: var(--reference-plum) !important;
+}
+
+.mission-card p,
+.value-card p,
+.stat-label,
+.team-card p,
+.resource-card p,
+.guide-card p,
+.helpline-card p,
+.download-card p,
+.method-card p,
+.case-card p,
+.case-card small,
+.case-detail p,
+.case-detail li,
+.auth-box p,
+.form-group label {
+    color: var(--text-secondary) !important;
+}
+
+.resource-card a,
+.footer-section a,
+.footer-bottom a {
+    color: #7b3f62;
+}
+
+.resource-card a:hover,
+.footer-section a:hover,
+.footer-bottom a:hover {
+    color: var(--reference-plum);
+}
+
+.auth-input,
+.form-group input,
+.form-group select,
+.form-group textarea {
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--reference-plum);
+    border-color: rgba(74, 43, 64, 0.18);
+}
+
+.auth-input::placeholder,
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #8a7c89;
+}
+
+.auth-guest {
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--reference-plum);
+    border-color: rgba(74, 43, 64, 0.18);
+}
+
+.auth-primary {
+    background: var(--reference-plum-strong);
+    color: #fff;
+}
+
+.form-response {
+    background: rgba(157, 216, 203, 0.42);
+    border-color: rgba(42, 113, 96, 0.24);
+    color: #205948;
+}
+
+.case-card .case-ts,
+.case-card-footer small {
+    color: #706271;
+}
