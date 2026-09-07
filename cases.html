@@ -17,7 +17,7 @@
         <nav class="navbar">
             <div class="navbar-content">
                 <div class="nav-brand">
-                    <span class="brand-icon">⚖️</span>
+                    <span class="brand-emblem" aria-hidden="true"><span class="brand-icon">⚖</span><span class="brand-chakra">☸</span></span>
                     <span class="brand-text">RightsMitra</span>
                 </div>
                 <ul class="nav-links">
@@ -28,6 +28,14 @@
                     <li><a href="cases.html" class="nav-link active">My Cases</a></li>
                     <li><a href="login.html" class="nav-link">Login</a></li>
                 </ul>
+                <div class="theme-control">
+                    <label for="themeSelector">Theme</label>
+                    <select id="themeSelector" aria-label="Choose theme">
+                        <option value="system">Device default</option>
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                    </select>
+                </div>
             </div>
         </nav>
 

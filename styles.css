@@ -639,54 +639,6 @@ body {
     font-size: 0.85rem;
 }
 
-/* Feature: Nearest Help Finder / Feature: Evidence Checklist */
-.helpline-card select {
-    width: 100%;
-    margin: 8px 0;
-    background: #111827;
-    border: 1px solid #475569;
-    border-radius: 6px;
-    color: #F8FAFC;
-    padding: 8px 10px;
-    font: inherit;
-}
-
-.case-evidence {
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px solid rgba(148, 163, 184, 0.2);
-}
-
-.evidence-item {
-    display: grid;
-    grid-template-columns: minmax(180px, 1fr) minmax(150px, auto) minmax(160px, 1fr);
-    align-items: center;
-    gap: 8px;
-    margin: 8px 0;
-    color: #CBD5E1;
-}
-
-.evidence-item input[type="text"] {
-    min-width: 0;
-    background: #111827;
-    border: 1px solid #475569;
-    border-radius: 6px;
-    color: #F8FAFC;
-    padding: 7px 9px;
-    font: inherit;
-}
-
-.evidence-item small {
-    grid-column: 1 / -1;
-    color: #34D399;
-}
-
-@media (max-width: 680px) {
-    .evidence-item {
-        grid-template-columns: 1fr;
-    }
-}
-
 .accessibility-options {
     display: flex;
     align-items: center;
@@ -2907,6 +2859,116 @@ body {
     :root:not([data-theme]) .worker-context input {
         background: var(--surface-strong);
         color: var(--text-primary);
+        border-color: var(--line);
+    }
+}
+
+/* These shared page surfaces keep About, Resources, Cases, Contact, and Login
+   visually aligned with the selected theme as well as the home page. */
+[data-theme="light"] .mission-card,
+[data-theme="light"] .value-card,
+[data-theme="light"] .stat-card,
+[data-theme="light"] .team-card,
+[data-theme="light"] .resource-card,
+[data-theme="light"] .guide-card,
+[data-theme="light"] .helpline-card,
+[data-theme="light"] .download-card,
+[data-theme="light"] .method-card,
+[data-theme="light"] .case-card,
+[data-theme="light"] .case-detail,
+[data-theme="light"] .auth-box,
+[data-theme="light"] .contact-form-section {
+    background: var(--surface);
+    border-color: var(--line);
+}
+
+[data-theme="light"] .mission-card h3,
+[data-theme="light"] .value-card h4,
+[data-theme="light"] .stat-number,
+[data-theme="light"] .team-card h4,
+[data-theme="light"] .resource-card h4,
+[data-theme="light"] .guide-card h4,
+[data-theme="light"] .helpline-card h4,
+[data-theme="light"] .download-card h4,
+[data-theme="light"] .method-card h4,
+[data-theme="light"] .case-card strong,
+[data-theme="light"] .case-detail h3,
+[data-theme="light"] .case-detail h4,
+[data-theme="light"] .auth-box h2,
+[data-theme="light"] .contact-form-section h2 {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .mission-card p,
+[data-theme="light"] .value-card p,
+[data-theme="light"] .team-card p,
+[data-theme="light"] .resource-card p,
+[data-theme="light"] .guide-card p,
+[data-theme="light"] .case-card-body p,
+[data-theme="light"] .case-detail p,
+[data-theme="light"] .case-detail li,
+[data-theme="light"] .auth-box,
+[data-theme="light"] .auth-input,
+[data-theme="light"] .auth-guest {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .auth-input {
+    background: var(--surface-strong);
+    border-color: var(--line);
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) .mission-card,
+    :root:not([data-theme]) .value-card,
+    :root:not([data-theme]) .stat-card,
+    :root:not([data-theme]) .team-card,
+    :root:not([data-theme]) .resource-card,
+    :root:not([data-theme]) .guide-card,
+    :root:not([data-theme]) .helpline-card,
+    :root:not([data-theme]) .download-card,
+    :root:not([data-theme]) .method-card,
+    :root:not([data-theme]) .case-card,
+    :root:not([data-theme]) .case-detail,
+    :root:not([data-theme]) .auth-box,
+    :root:not([data-theme]) .contact-form-section {
+        background: var(--surface);
+        border-color: var(--line);
+    }
+
+    :root:not([data-theme]) .mission-card h3,
+    :root:not([data-theme]) .value-card h4,
+    :root:not([data-theme]) .stat-number,
+    :root:not([data-theme]) .team-card h4,
+    :root:not([data-theme]) .resource-card h4,
+    :root:not([data-theme]) .guide-card h4,
+    :root:not([data-theme]) .helpline-card h4,
+    :root:not([data-theme]) .download-card h4,
+    :root:not([data-theme]) .method-card h4,
+    :root:not([data-theme]) .case-card strong,
+    :root:not([data-theme]) .case-detail h3,
+    :root:not([data-theme]) .case-detail h4,
+    :root:not([data-theme]) .auth-box h2,
+    :root:not([data-theme]) .contact-form-section h2 {
+        color: var(--text-primary);
+    }
+
+    :root:not([data-theme]) .mission-card p,
+    :root:not([data-theme]) .value-card p,
+    :root:not([data-theme]) .team-card p,
+    :root:not([data-theme]) .resource-card p,
+    :root:not([data-theme]) .guide-card p,
+    :root:not([data-theme]) .case-card-body p,
+    :root:not([data-theme]) .case-detail p,
+    :root:not([data-theme]) .case-detail li,
+    :root:not([data-theme]) .auth-box,
+    :root:not([data-theme]) .auth-input,
+    :root:not([data-theme]) .auth-guest {
+        color: var(--text-secondary);
+    }
+
+    :root:not([data-theme]) .auth-input {
+        background: var(--surface-strong);
         border-color: var(--line);
     }
 }
