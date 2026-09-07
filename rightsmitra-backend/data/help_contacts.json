@@ -1,0 +1,92 @@
+{
+  "maharashtra": {
+    "state": "Maharashtra",
+    "district_labor_office_name": "State Labour Department directory",
+    "district_labor_office_phone": "State helpline not verified yet. Verify on the official Maharashtra Labour Department website.",
+    "legal_aid_authority_name": "Maharashtra State Legal Services Authority (placeholder)",
+    "legal_aid_authority_phone": "Verify legal aid number",
+    "women_helpline": "181",
+    "notes": "Placeholder contact details. Verify current local contacts before calling.",
+    "verified": false
+  },
+  "delhi": {
+    "state": "Delhi",
+    "district_labor_office_name": "Delhi Labour Commissioner helpline",
+    "district_labor_office_phone": "155214",
+    "legal_aid_authority_name": "National Legal Services Authority helpline",
+    "legal_aid_authority_phone": "15100",
+    "women_helpline": "181",
+    "notes": "State-level official numbers. District office contacts may differ.",
+    "verified": true
+  },
+  "karnataka": {
+    "state": "Karnataka",
+    "district_labor_office_name": "Karnataka Labour Department directory",
+    "district_labor_office_phone": "State helpline not verified yet. Verify on the official Karnataka Labour Department website.",
+    "legal_aid_authority_name": "Karnataka State Legal Services Authority (placeholder)",
+    "legal_aid_authority_phone": "Verify legal aid number",
+    "women_helpline": "181",
+    "notes": "Placeholder contact details. Verify current local contacts before calling.",
+    "verified": false
+  },
+  "tamil nadu": {
+    "state": "Tamil Nadu",
+    "district_labor_office_name": "Tamil Nadu Labour Department directory",
+    "district_labor_office_phone": "State helpline not verified yet. Verify on the official Tamil Nadu Labour Department website.",
+    "legal_aid_authority_name": "Tamil Nadu State Legal Services Authority (placeholder)",
+    "legal_aid_authority_phone": "Verify legal aid number",
+    "women_helpline": "181",
+    "notes": "Placeholder contact details. Verify current local contacts before calling.",
+    "verified": false
+  },
+  "telangana": {
+    "state": "Telangana",
+    "district_labor_office_name": "Telangana Labour Department directory",
+    "district_labor_office_phone": "State helpline not verified yet. Verify on the official Telangana Labour Department website.",
+    "legal_aid_authority_name": "Telangana State Legal Services Authority (placeholder)",
+    "legal_aid_authority_phone": "Verify legal aid number",
+    "women_helpline": "181",
+    "notes": "Placeholder contact details. Verify current local contacts before calling.",
+    "verified": false
+  },
+  "west bengal": {
+    "state": "West Bengal",
+    "district_labor_office_name": "West Bengal Labour Department directory",
+    "district_labor_office_phone": "State helpline not verified yet. Verify on the official West Bengal Labour Department website.",
+    "legal_aid_authority_name": "West Bengal State Legal Services Authority (placeholder)",
+    "legal_aid_authority_phone": "Verify legal aid number",
+    "women_helpline": "181",
+    "notes": "Placeholder contact details. Verify current local contacts before calling.",
+    "verified": false
+  },
+  "uttar pradesh": {
+    "state": "Uttar Pradesh",
+    "district_labor_office_name": "Uttar Pradesh Labour Department worker helpline",
+    "district_labor_office_phone": "1800-180-5160",
+    "legal_aid_authority_name": "National Legal Services Authority helpline",
+    "legal_aid_authority_phone": "15100",
+    "women_helpline": "181",
+    "notes": "State-level official numbers. District office contacts may differ.",
+    "verified": true
+  },
+  "rajasthan": {
+    "state": "Rajasthan",
+    "district_labor_office_name": "Rajasthan Labour Department directory",
+    "district_labor_office_phone": "State helpline not verified yet. Verify on the official Rajasthan Labour Department website.",
+    "legal_aid_authority_name": "Rajasthan State Legal Services Authority (placeholder)",
+    "legal_aid_authority_phone": "Verify legal aid number",
+    "women_helpline": "181",
+    "notes": "Placeholder contact details. Verify current local contacts before calling.",
+    "verified": false
+  },
+  "gujarat": {
+    "state": "Gujarat",
+    "district_labor_office_name": "Gujarat Labour Department helpline",
+    "district_labor_office_phone": "1800-200-5099",
+    "legal_aid_authority_name": "National Legal Services Authority helpline",
+    "legal_aid_authority_phone": "15100",
+    "women_helpline": "181",
+    "notes": "State-level official numbers. District office contacts may differ.",
+    "verified": true
+  }
+}

@@ -8,6 +8,8 @@ const auth = require('./routes/auth');
 const guidance = require('./routes/guidance');
 const cases = require('./routes/cases');
 const contact = require('./routes/contact');
+const helpContacts = require('./routes/helpContacts');
+const evidence = require('./routes/evidence');
 
 // Load .env manually (no dotenv dependency)
 const envPath = path.join(__dirname, '.env');
@@ -32,9 +34,12 @@ const routes = [
   { method: 'POST', pattern: /^\/api\/auth\/guest$/, handler: (req, res) => auth.createGuest(req, res) },
 
   { method: 'POST', pattern: /^\/api\/guidance$/, handler: (req, res, body) => guidance.postGuidance(req, res, body) },
+  { method: 'GET', pattern: /^\/api\/help-contacts$/, handler: (req, res, body, query) => helpContacts.getHelpContacts(req, res, body, query) },
   { method: 'GET', pattern: /^\/api\/cases$/, handler: (req, res, body, query) => cases.listCases(req, res, body, query) },
   { method: 'POST', pattern: /^\/api\/cases$/, handler: (req, res, body) => cases.createCase(req, res, body) },
   { method: 'GET', pattern: /^\/api\/cases\/([^/]+)$/, handler: (req, res, body, query, m) => cases.getCase(req, res, body, query, { case_id: m[1] }) },
+  { method: 'GET', pattern: /^\/api\/cases\/([^/]+)\/evidence$/, handler: (req, res, body, query, m) => evidence.listEvidence(req, res, body, query, { case_id: m[1] }) },
+  { method: 'POST', pattern: /^\/api\/cases\/([^/]+)\/evidence$/, handler: (req, res, body, query, m) => evidence.addEvidence(req, res, body, query, { case_id: m[1] }) },
   { method: 'POST', pattern: /^\/api\/contact$/, handler: (req, res, body) => contact.submitContact(req, res, body) },
 ];
 

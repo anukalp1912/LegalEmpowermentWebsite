@@ -141,8 +141,12 @@
                 <div class="helplines-grid">
                     <div class="helpline-card">
                         <h4>🆘 RightsMitra Helpline</h4>
-                        <p class="helpline-number">Local legal aid</p>
-                        <p class="helpline-time">Verify current local contacts</p>
+                        <label for="helpStateSelector">Find contacts by state</label>
+                        <select id="helpStateSelector" class="helpline-number">
+                            <option value="">National helplines</option>
+                            <option>Maharashtra</option><option>Delhi</option><option>Karnataka</option><option>Tamil Nadu</option><option>Telangana</option><option>West Bengal</option><option>Uttar Pradesh</option><option>Rajasthan</option><option>Gujarat</option>
+                        </select>
+                        <div id="resourceHelpContacts" class="helpline-time" aria-live="polite"></div>
                     </div>
 
                     <div class="helpline-card">
@@ -153,14 +157,14 @@
 
                     <div class="helpline-card">
                         <h4>⚖️ Labor Department</h4>
-                        <p class="helpline-number">Local District Labor Office</p>
-                        <p class="helpline-time">Varies by State</p>
+                        <p class="helpline-number">State Labour Helpline</p>
+                        <p class="helpline-time">Select a state above</p>
                     </div>
 
                     <div class="helpline-card">
                         <h4>📞 Legal Aid Authority</h4>
                         <p class="helpline-number">State Legal Aid Authority</p>
-                        <p class="helpline-time">Free Legal Consultation</p>
+                        <p class="helpline-time">Free legal consultation</p>
                     </div>
                 </div>
             </section>

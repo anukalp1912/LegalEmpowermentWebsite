@@ -132,6 +132,7 @@ async function postGuidance(req, res, body) {
     verdict: null,
     notice_generated: false,
     region: null,
+    evidence: [],
     created_at: new Date().toISOString(),
   });
 
