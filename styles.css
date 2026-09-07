@@ -3935,3 +3935,72 @@ textarea:hover,
     background: #f5c8d1;
     color: #352238;
 }
+
+/* Legal guidance result: keep generated English and Devanagari text high contrast. */
+#responseSection,
+#responseSection .response-content,
+#responseSection .guidance-section,
+#responseSection .guidance-section p,
+#responseSection .guidance-section li,
+#responseSection .guidance-section ul,
+#responseSection .guidance-section ol {
+    color: #333333 !important;
+    font-family: 'Atkinson Hyperlegible', 'Noto Sans Devanagari', 'Nirmala UI', sans-serif;
+    opacity: 1;
+}
+
+#responseSection .response-header h3,
+#responseSection .response-content h4,
+#responseSection .guidance-section-heading h4 {
+    color: #352238 !important;
+    font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', 'Nirmala UI', sans-serif;
+    font-weight: 800;
+    opacity: 1;
+}
+
+#responseSection .response-content .guidance-section:nth-of-type(2) h4 {
+    color: #237b6b !important;
+}
+
+#responseSection .response-content p,
+#responseSection .response-content li {
+    color: #333333 !important;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.75;
+    opacity: 1;
+}
+
+#responseSection .response-content ul,
+#responseSection .response-content ol {
+    color: #333333 !important;
+}
+
+#responseSection .listen-label {
+    display: inline-block;
+    margin-right: 6px;
+    color: #352238 !important;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.2;
+    vertical-align: middle;
+}
+
+#responseSection .speech-controls .listen-label {
+    margin-right: 2px;
+}
+
+#responseSection .guidance-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#responseSection .guidance-section-heading h4 {
+    margin-right: auto;
+}
+
+#responseSection .section-speech-button,
+#responseSection #listenGuidanceBtn {
+    flex: 0 0 auto;
+}

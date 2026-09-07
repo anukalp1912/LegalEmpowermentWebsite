@@ -1485,6 +1485,12 @@ body {
     padding: 20px;
     margin: 0 0 24px;
 }
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.response-section.hidden {
 
 .case-detail.visible { display: block; }
 .case-detail h3, .case-detail h4 { color: white; }
@@ -4635,4 +4641,32 @@ textarea,
 ::selection {
     background: #f5c8d1 !important;
     color: #000000 !important;
+}
+
+/* Circular speaker controls in the Legal Guidance panel. */
+#responseSection .section-speech-button,
+#responseSection #listenGuidanceBtn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0;
+    display: inline-grid;
+    place-items: center;
+    border: 1px solid #d78d9c;
+    border-radius: 50%;
+    background: #f5c8d1;
+    color: #352238;
+    line-height: 1;
+}
+
+#responseSection .section-speech-button:hover,
+#responseSection #listenGuidanceBtn:hover,
+#responseSection .section-speech-button:focus-visible,
+#responseSection #listenGuidanceBtn:focus-visible {
+    background: #f5a7ae;
+    border-color: #b96f80;
+    transform: scale(1.06);
+    outline: 2px solid rgba(215, 141, 156, 0.25);
+    outline-offset: 2px;
 }
