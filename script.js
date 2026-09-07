@@ -1369,6 +1369,7 @@ function updateCaseProgress(caseId, field, index, checked) {
 // Run on pages where DOM loaded
 document.addEventListener('DOMContentLoaded', () => {
     renderCasesOnPage();
+    setupResourceTemplates();
     const helpStateSelector = document.getElementById('helpStateSelector');
     if (helpStateSelector) {
         helpStateSelector.addEventListener('change', (event) => loadHelpContactsForState(event.target.value));
