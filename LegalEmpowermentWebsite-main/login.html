@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - RightsMitra</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Atkinson+Hyperlegible:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Background decorative elements -->
+        <div class="blur-circle blur-orange"></div>
+        <div class="blur-circle blur-green"></div>
+
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="navbar-content">
+                <div class="nav-brand">
+                    <span class="brand-emblem" aria-hidden="true"><span class="brand-icon">⚖</span><span class="brand-chakra">☸</span></span>
+                    <span class="brand-text">RightsMitra</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="resources.html" class="nav-link">Resources</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="cases.html" class="nav-link">My Cases</a></li>
+                    <li><a href="login.html" class="nav-link active">Login</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Content wrapper -->
+        <div class="content-wrapper">
+            <div class="auth-box">
+                <h2>Sign in to RightsMitra</h2>
+                <p style="color:#94A3B8; font-size:13px; margin-bottom:12px;">Use your phone number (OTP) to sign in. Email is optional. You can also continue as guest.</p>
+
+                <input id="phoneInput" class="auth-input" placeholder="Mobile number (e.g. +919876543210)" />
+                <div style="display:flex; gap:8px;">
+                    <input id="otpInput" class="auth-input" placeholder="Enter OTP" style="flex:1;" />
+                    <button id="sendOtpBtn" class="auth-guest" style="align-self:center;">Send OTP</button>
+                </div>
+
+                <input id="emailInput" class="auth-input" placeholder="Email (optional)" />
+                <select id="langSelect" class="auth-input">
+                    <option value="en">English</option>
+                    <option value="hi">Hindi</option>
+                    <option value="ta">Tamil</option>
+                    <option value="bn">Bengali</option>
+                    <option value="te">Telugu</option>
+                    <option value="mr">Marathi</option>
+                </select>
+
+                <div class="auth-actions">
+                    <button id="loginBtn" class="auth-primary">Verify &amp; Sign In</button>
+                    <button id="guestBtn" class="auth-guest">Continue as Guest</button>
+                </div>
+
+                <p id="authMessage" style="color:#94A3B8; font-size:13px; margin-top:12px;"></p>
+                <p style="color:#64748B; font-size:12px; margin-top:8px;">Note: This demo simulates OTP locally. For production, integrate Twilio/MSG91/Firebase Auth.</p>
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h4>About Us</h4>
+                        <p>Empowering workers with free legal guidance and rights awareness across India.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="resources.html">Resources</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Contact Us</h4>
+                        <p>Email: <a href="mailto:rightsmitra@gmail.com">rightsmitra@gmail.com</a></p>
+                        <p>Phone: 1800-WORKER-1</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Languages</h4>
+                        <p>Hindi • English • Tamil • Bengali • Telugu • Marathi</p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 RightsMitra. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Login page actions (uses script.js stubs)
+        document.getElementById('sendOtpBtn').addEventListener('click', async () => {
+            try {
+                const phone = document.getElementById('phoneInput').value.trim();
+                const email = document.getElementById('emailInput').value.trim();
+                const contact = phone || email;
+                if (!contact) return alert('Enter phone number or email');
+                document.getElementById('authMessage').textContent = 'Sending OTP...';
+                const ok = await sendOTP({ phone: phone || undefined, email: email || undefined });
+                document.getElementById('authMessage').textContent = ok
+                    ? `OTP sent to ${contact} (simulated for demo - check server console for code).`
+                    : 'Could not send OTP. Please try again.';
+            } catch (err) {
+                console.error(err);
+                document.getElementById('authMessage').textContent = 'Error sending OTP.';
+            }
+        });
+
+        document.getElementById('loginBtn').addEventListener('click', async () => {
+            try {
+                const phone = document.getElementById('phoneInput').value.trim();
+                const email = document.getElementById('emailInput').value.trim();
+                const contact = phone || email;
+                const code = document.getElementById('otpInput').value.trim();
+                const lang = document.getElementById('langSelect').value;
+                if (!contact || !code) return alert('Enter contact info and OTP');
+                document.getElementById('authMessage').textContent = 'Verifying...';
+                const guestSessionId = localStorage.getItem('guestSessionId');
+                const user = await loginWithPhone(contact, code, lang, guestSessionId);
+                if (user) {
+                    document.getElementById('authMessage').textContent = 'Signed in as ' + user.user_id;
+                    setTimeout(() => { window.location = 'cases.html'; }, 800);
+                } else {
+                    document.getElementById('authMessage').textContent = 'Invalid OTP';
+                }
+            } catch (err) {
+                console.error(err);
+                document.getElementById('authMessage').textContent = 'Verification error. Please try again.';
+            }
+        });
+
+        document.getElementById('guestBtn').addEventListener('click', () => {
+            // ensure guest session exists and go to home
+            createGuestSessionIfNeeded();
+            window.location = 'index.html';
+        });
+    </script>
+</body>
+</html>

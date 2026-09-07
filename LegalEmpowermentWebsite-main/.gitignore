@@ -1,0 +1,14 @@
+# Git ignore patterns
+node_modules/
+.DS_Store
+.vscode/settings.json
+*.log
+.env
+dist/
+build/
+*.swp
+.idea/
+__pycache__/
+*.pyc
+.env
+

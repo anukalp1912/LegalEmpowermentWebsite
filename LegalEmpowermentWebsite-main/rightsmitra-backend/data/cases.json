@@ -1,0 +1,27 @@
+[
+  {
+    "case_id": "case_1788761041102_uujmik",
+    "owner_id": "smoke-owner",
+    "issue_summary": "Missing salary",
+    "category": "Salary Withheld",
+    "language": "en",
+    "full_conversation_log": [],
+    "guidance_response": null,
+    "verdict": null,
+    "notice_generated": false,
+    "region": "Maharashtra",
+    "evidence": [
+      {
+        "evidence_id": "evidence_1788761041110_82ntbm",
+        "case_id": "case_1788761041102_uujmik",
+        "type": "photo",
+        "filename": "proof.png",
+        "data": "data/uploads/case_1788761041102_uujmik/evidence_1788761041110_82ntbm_proof.png",
+        "checklist_item": "Salary slip / payment record",
+        "uploaded_at": "2026-09-07T06:04:01.110Z",
+        "note": "Smoke test"
+      }
+    ],
+    "created_at": "2026-09-07T06:04:01.102Z"
+  }
+]

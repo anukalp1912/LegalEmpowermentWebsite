@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../Downloads/frontend-integrated"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "LegalEmpowermentWebsite"
+	}
+}

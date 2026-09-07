@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worker Legal Empowerment - Know Your Rights</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Atkinson+Hyperlegible:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+        <div class="main-container">
+        <!-- Background decorative elements -->
+        <div class="blur-circle blur-orange"></div>
+        <div class="blur-circle blur-green"></div>
+
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="navbar-content">
+                <div class="nav-brand">
+                    <span class="brand-emblem" aria-hidden="true"><span class="brand-icon">⚖</span><span class="brand-chakra">☸</span></span>
+                    <span class="brand-text">RightsMitra</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link active">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="resources.html" class="nav-link">Resources</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="cases.html" class="nav-link">My Cases</a></li>
+                    <li><a href="login.html" class="nav-link">Login</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Content wrapper -->
+        <div class="content-wrapper">
+            <header class="header">
+                <div class="header-left">
+                    <div class="badge badge-green">
+                        <span class="badge-icon">✓</span>
+                        <span class="badge-text">WORKER LEGAL EMPOWERMENT • 100% FREE & PRIVATE</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span class="status-text">Self-guided informational guidance in 6 languages</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Hero section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <p class="hero-kicker">WORKPLACE RIGHTS, IN PLAIN LANGUAGE</p>
+                    <h1 class="hero-title">Tell us what happened at work.</h1>
+                    <h2 class="hero-title-hindi">काम पर क्या हुआ, हमें बताएं।</h2>
+                    <p class="hero-description">
+                        Describe your situation by text or voice. We will help you understand what it may involve and what to do next.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Main interactive card -->
+            <div class="interactive-card">
+                <!-- Voice input section -->
+                <div class="voice-input-section">
+                    <div class="voice-text">
+                        <span class="workflow-label">Tell us what happened</span>
+                        <span class="voice-label">🎤 बोलकर बताएं / Tap to Speak</span>
+                        <span class="voice-sublabel">Hindi, English, Tamil, Bengali, Telugu, and Marathi</span>
+                    </div>
+                    <div class="voice-container">
+                        <div class="audio-visualizer" id="audioVisualizer">
+                            <div class="audio-bar bar-1"></div>
+                            <div class="audio-bar bar-2"></div>
+                            <div class="audio-bar bar-3"></div>
+                            <div class="audio-bar bar-4"></div>
+                            <div class="audio-bar bar-5"></div>
+                        </div>
+
+                        <!-- Microphone toggle: allows user to disable mic entirely -->
+                        <button class="mic-toggle" id="micToggle" type="button" title="Toggle microphone (on/off)" aria-label="Turn microphone off">
+                            <span id="micToggleIcon">🔊</span>
+                        </button>
+
+                        <button class="voice-button" id="voiceButton" type="button" aria-label="Start voice input">
+                            <div class="voice-icon-wrapper" id="voiceIcon">
+                                <svg class="voice-icon-svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                    <path d="M12 1c-3.866 0-7 3.134-7 7v5c0 3.866 3.134 7 7 7s7-3.134 7-7V8c0-3.866-3.134-7-7-7z"></path>
+                                    <path d="M12 16v4"></path>
+                                    <path d="M8 20h8"></path>
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Issue selection -->
+                <div class="issue-selection">
+                    <div class="issue-header">
+                        <span class="issue-title">I need help with...</span>
+                        <span class="issue-hint">Choose one to start</span>
+                    </div>
+                    <div class="issue-tags">
+                        <button class="issue-tag" data-issue="Salary Withheld">
+                            <span class="tag-text">Salary not paid<small>Wages delayed or withheld</small></span>
+                        </button>
+                        <button class="issue-tag" data-issue="Fired Without Notice">
+                            <span class="tag-text">Lost my job<small>Fired or removed unfairly</small></span>
+                        </button>
+                        <button class="issue-tag" data-issue="Excessive Hours">
+                            <span class="tag-text">Too many hours<small>Long shifts or unpaid overtime</small></span>
+                        </button>
+                        <button class="issue-tag" data-issue="No Contract">
+                            <span class="tag-text">No written agreement<small>Work terms were never written down</small></span>
+                        </button>
+                        <button class="issue-tag" data-issue="Workplace Injury">
+                            <span class="tag-text">Unsafe work or injury<small>Workplace conditions affecting safety</small></span>
+                        </button>
+                        <button class="issue-tag" data-issue="Sexual Harassment">
+                            <span class="tag-text">Harassment<small>Unwanted or inappropriate behaviour</small></span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Text input section -->
+                <div class="text-input-section">
+                    <div class="language-control">
+                        <label for="languageSelector"><span class="workflow-label">Case language</span><span class="field-help">Detected from your text or voice input. You can change it.</span></label>
+                        <select id="languageSelector" aria-describedby="languageStatus">
+                            <option value="auto">Auto Detect</option>
+                            <option value="en">English</option>
+                            <option value="hi">हिन्दी</option>
+                            <option value="ta">தமிழ்</option>
+                            <option value="te">తెలుగు</option>
+                            <option value="bn">বাংলা</option>
+                            <option value="mr">मराठी</option>
+                        </select>
+                        <span id="languageStatus" class="language-status" aria-live="polite"></span>
+                    </div>
+                    <div class="accessibility-options" aria-label="Accessibility Options">
+                        <span class="accessibility-title">♿ Accessibility Options</span>
+                        <label class="speech-toggle"><input type="checkbox" id="autoReadToggle"> Automatically read summary</label>
+                        <span id="voiceSupportStatus" class="voice-support-status" aria-live="polite">🔊 Voice guidance available</span>
+                    </div>
+                    <div class="worker-context">
+                        <div class="language-control">
+                            <label for="workerType">Worker type</label>
+                            <select id="workerType">
+                                <option value="">Select worker type</option>
+                                <option value="Domestic worker">Domestic worker</option>
+                                <option value="Driver">Driver</option>
+                                <option value="Delivery partner">Delivery partner</option>
+                                <option value="Daily wage worker">Daily wage worker</option>
+                                <option value="Other worker">Other worker</option>
+                            </select>
+                        </div>
+                    </div>
+                    <label class="question-label" for="userQuestion">Your situation</label>
+                    <textarea id="userQuestion" class="question-input" placeholder="Describe your work-related problem... / अपनी काम से जुड़ी समस्या बताएं..." rows="6"></textarea>
+                </div>
+
+                <!-- Action buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="submitBtn">Get Legal Guidance</button>
+                    <button class="btn btn-secondary" id="clearBtn">Clear</button>
+                </div>
+            </div>
+
+            <!-- Response section -->
+            <div id="responseSection" class="response-section hidden">
+                <div class="response-header">
+                    <h3>Legal Guidance</h3>
+                    <button class="close-btn" id="closeResponseBtn" type="button" aria-label="Close legal guidance">×</button>
+                </div>
+                <div id="responseContent" class="response-content"></div>
+            </div>
+
+            <!-- Features section -->
+            <section class="features">
+                <h2>Built for the next step</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Privacy-aware demo</h3>
+                        <p>Cases are stored locally in this browser for the demo.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🆓</div>
+                        <h3>Free to try</h3>
+                        <p>Use the MVP without a subscription or payment.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h3>Six languages</h3>
+                        <p>Guidance is available in English, Hindi, Tamil, Telugu, Bengali, and Marathi.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Practical structure</h3>
+                        <p>Move from your situation to evidence and next steps.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ section -->
+            <section class="faq">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-1">
+                            <span>What is minimum wage in India?</span>
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer" id="faq-answer-1">
+                            Minimum wage information varies by state, sector, worker category, and date. Check your local labour department or a qualified adviser for current information.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-2">
+                            <span>Can my employer fire me without notice?</span>
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer" id="faq-answer-2">
+                            The answer can depend on your employment category, contract, state, and the reason for dismissal. Keep written records and seek qualified local advice before relying on a general answer.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-3">
+                            <span>What should I do if my salary is withheld?</span>
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer" id="faq-answer-3">
+                            Document the withheld amount and dates. Send a formal written demand to your employer. If unresolved, file a complaint with the District Labor Officer or approach the labor court. You can also contact us for legal guidance.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-4">
+                            <span>Am I entitled to leave and holidays?</span>
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer" id="faq-answer-4">
+                            Leave and holiday rules can vary by state, sector, contract, and worker category. Check current local rules with a qualified adviser.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h4>About Us</h4>
+                        <p>Empowering workers with free legal guidance and rights awareness across India.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="resources.html">Resources</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Contact Us</h4>
+                        <p>Email: <a href="mailto:rightsmitra@gmail.com">rightsmitra@gmail.com</a></p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Languages</h4>
+                        <p>Hindi • English • Tamil • Bengali • Telugu • Marathi</p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Worker Legal Empowerment. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
