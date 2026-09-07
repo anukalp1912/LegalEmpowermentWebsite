@@ -2497,3 +2497,154 @@ body {
     .letter-fields { grid-template-columns: 1fr; }
     .letter-editor { min-height: 520px; padding: 16px; }
 }
+
+/* The first-load motion gently introduces the key content without delaying use. */
+.hero {
+    animation: pageReveal 0.55s ease-out both;
+}
+
+.interactive-card {
+    animation: pageReveal 0.55s 0.1s ease-out both;
+}
+
+@keyframes pageReveal {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Transform and shadow transitions keep button feedback smooth at 60fps. */
+.btn,
+.issue-tag,
+.voice-button,
+.mic-toggle,
+.close-btn,
+.speech-controls button,
+.section-speech-button {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn:hover,
+.issue-tag:hover,
+.voice-button:hover,
+.mic-toggle:hover {
+    transform: scale(1.03);
+}
+
+.btn:active,
+.issue-tag:active,
+.voice-button:active,
+.mic-toggle:active,
+.speech-controls button:active,
+.section-speech-button:active {
+    transform: scale(0.97);
+}
+
+.issue-tag:hover {
+    box-shadow: 0 0 18px rgba(52, 211, 153, 0.2);
+}
+
+.voice-button:hover .voice-icon-wrapper {
+    box-shadow: 0 0 24px rgba(251, 146, 60, 0.65), 0 8px 16px rgba(249, 115, 22, 0.45);
+}
+
+/* The active listening state reassures users that their voice is being recorded. */
+.voice-icon-wrapper.speaking {
+    animation: listeningPulse 0.9s ease-in-out infinite;
+}
+
+@keyframes listeningPulse {
+    0%, 100% { opacity: 0.86; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.06); }
+}
+
+/* A small spinner communicates that guidance is being prepared. */
+.btn.is-loading {
+    pointer-events: none;
+    opacity: 0.82;
+}
+
+.btn.is-loading::after {
+    content: '';
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    margin-left: 0.6em;
+    vertical-align: -0.1em;
+    border: 2px solid rgba(255, 255, 255, 0.45);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.55s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.response-section {
+    animation: responseReveal 0.5s ease-out both;
+}
+
+@keyframes responseReveal {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* The short shake draws attention to an empty required field without being harsh. */
+.question-input.validation-shake {
+    animation: validationShake 0.35s ease-out;
+    border-color: #FB923C;
+}
+
+@keyframes validationShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* max-height lets the existing FAQ markup expand and collapse instead of popping. */
+.faq-answer {
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 240px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    opacity: 1;
+    animation: none;
+}
+
+/* Scroll reveals start hidden only after JavaScript has opted the element in. */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.55s ease-out, transform 0.55s ease-out;
+}
+
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Respect the user's OS motion preference by removing non-essential movement. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .reveal-on-scroll {
+        opacity: 1;
+        transform: none;
+    }
+}

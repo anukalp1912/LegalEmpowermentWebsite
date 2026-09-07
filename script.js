@@ -416,26 +416,37 @@ function handleSubmit() {
     const userInput = userQuestionInput.value.trim();
 
     if (!userInput) {
+        userQuestionInput.classList.remove('validation-shake');
+        void userQuestionInput.offsetWidth;
+        userQuestionInput.classList.add('validation-shake');
+        userQuestionInput.focus();
+        setTimeout(() => userQuestionInput.classList.remove('validation-shake'), 400);
         alert('Please describe your issue or ask a question.');
         return;
     }
 
-    const languageResult = getSelectedLanguage(userInput);
-    const language = languageResult.language;
-    const languageStatus = document.getElementById('languageStatus');
-    const selectedCaseLanguage = languageSelector?.value || 'auto';
-    if (languageStatus) {
-        languageStatus.textContent = selectedCaseLanguage === 'auto'
-            ? getCaseLanguageStatusText(language, true)
-            : getCaseLanguageStatusText(language, false);
-    }
-    const matchingCategory = detectIssue(userInput, language);
+    submitBtn.classList.add('is-loading');
+    submitBtn.disabled = true;
+    setTimeout(() => {
+        const languageResult = getSelectedLanguage(userInput);
+        const language = languageResult.language;
+        const languageStatus = document.getElementById('languageStatus');
+        const selectedCaseLanguage = languageSelector?.value || 'auto';
+        if (languageStatus) {
+            languageStatus.textContent = selectedCaseLanguage === 'auto'
+                ? getCaseLanguageStatusText(language, true)
+                : getCaseLanguageStatusText(language, false);
+        }
+        const matchingCategory = detectIssue(userInput, language);
 
-    // Generate response
-    const response = generateLegalGuidance(userInput, matchingCategory, language);
-    displayResponse(response);
-    const caseId = saveAnalysisCase(userInput, matchingCategory, language, languageResult);
-    if (window.latestCaseSummary) window.latestCaseSummary.caseId = caseId;
+        // Generate response
+        const response = generateLegalGuidance(userInput, matchingCategory, language);
+        displayResponse(response);
+        const caseId = saveAnalysisCase(userInput, matchingCategory, language, languageResult);
+        if (window.latestCaseSummary) window.latestCaseSummary.caseId = caseId;
+        submitBtn.classList.remove('is-loading');
+        submitBtn.disabled = false;
+    }, 140);
 }
 
 function detectIssue(userInput, language) {
@@ -672,6 +683,26 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             }
         }
     });
+
+    // Reveal lower sections only as they enter the viewport, avoiding a wall of content.
+    const revealTargets = document.querySelectorAll('.features, .faq, .feature-card');
+    if ('IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        revealTargets.forEach((element, index) => {
+            element.classList.add('reveal-on-scroll');
+            element.style.transitionDelay = `${Math.min(index * 50, 200)}ms`;
+            revealObserver.observe(element);
+        });
+    } else {
+        revealTargets.forEach(element => element.classList.add('is-visible'));
+    }
 });
 
 // Enhanced voice input with mic toggle and guest/session case storage
