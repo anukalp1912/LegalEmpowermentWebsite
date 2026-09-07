@@ -409,6 +409,23 @@ const autoReadToggle = document.getElementById('autoReadToggle');
 const voiceSupportStatus = document.getElementById('voiceSupportStatus');
 const workerTypeSelector = document.getElementById('workerType');
 const stateSelector = document.getElementById('stateSelector');
+const themeSelector = document.getElementById('themeSelector');
+
+// Keep the user's theme choice between visits; "system" follows the device setting.
+function applyTheme(theme) {
+    if (theme === 'system') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', theme);
+    if (themeSelector) themeSelector.value = theme;
+}
+
+if (themeSelector) {
+    const savedTheme = localStorage.getItem('rightsMitraTheme') || 'system';
+    applyTheme(savedTheme);
+    themeSelector.addEventListener('change', () => {
+        localStorage.setItem('rightsMitraTheme', themeSelector.value);
+        applyTheme(themeSelector.value);
+    });
+}
 
 const speechLanguageCodes = { en: 'en-IN', hi: 'hi-IN', ta: 'ta-IN', te: 'te-IN', bn: 'bn-IN', mr: 'mr-IN' };
 let speechState = { status: 'idle', utterance: null, language: 'en' };
@@ -1177,25 +1194,15 @@ async function loadHelpContactsForState(state) {
         return;
     }
 
-    const fallbackContacts = {
-        Delhi: { labour: '155214', legal: '15100', women: '181' },
-        'Uttar Pradesh': { labour: '1800-180-5160', legal: '15100', women: '181' },
-        Gujarat: { labour: '1800-200-5099', legal: '15100', women: '181' }
-    };
-    const fallback = fallbackContacts[selectedState] || { labour: 'Verify locally', legal: '15100', women: '181' };
-
     try {
         const response = await fetch(`${API_BASE_URL}/api/help-contacts?state=${encodeURIComponent(selectedState)}`);
         const payload = await response.json();
         const contact = payload.contact || {};
         const labourName = contact.district_labor_office_name || 'Labour department contact';
-        const returnedLabourPhone = String(contact.district_labor_office_phone || '');
-        const labourPhone = returnedLabourPhone && !returnedLabourPhone.toLowerCase().includes('not verified')
-            ? returnedLabourPhone
-            : fallback.labour;
+        const labourPhone = contact.district_labor_office_phone || 'Check the local labour department';
         const legalName = contact.legal_aid_authority_name || 'Legal aid authority';
-        const legalPhone = contact.legal_aid_authority_phone || fallback.legal;
-        const womenLine = contact.women_helpline || fallback.women;
+        const legalPhone = contact.legal_aid_authority_phone || '15100';
+        const womenLine = contact.women_helpline || '181';
         const notes = contact.notes || '';
 
         container.innerHTML = `
@@ -1209,13 +1216,7 @@ async function loadHelpContactsForState(state) {
         `;
     } catch (error) {
         console.warn('Could not load help contacts', error);
-        container.innerHTML = `
-            <div><strong>${selectedState}</strong></div>
-            <div><strong>Labour dept phone:</strong> ${fallback.labour}</div>
-            <div><strong>Legal aid phone:</strong> ${fallback.legal}</div>
-            <div><strong>Women workers helpline:</strong> ${fallback.women}</div>
-            <div class="helpline-note">Verify local department details before calling.</div>
-        `;
+        container.innerHTML = '<p class="helpline-time">Unable to fetch state helpline details right now. Please try again.</p>';
     }
 }
 
