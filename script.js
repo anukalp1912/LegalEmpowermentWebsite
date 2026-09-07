@@ -728,6 +728,10 @@ let ongoingRecognition = null; // keep reference to stop mid-listen
 
 // Ensure a guest session exists (stored in localStorage)
 function createGuestSessionIfNeeded() {
+    const currentUser = getCurrentUser();
+    if (currentUser && !currentUser.guest_flag) {
+        return;
+    }
     if (!localStorage.getItem('guestSessionId')) {
         const id = 'guest_' + Date.now() + '_' + Math.random().toString(36).slice(2,9);
         localStorage.setItem('guestSessionId', id);
@@ -743,6 +747,9 @@ function getCurrentUser() {
 
 function setCurrentUser(user) {
     localStorage.setItem('currentUser', JSON.stringify(user));
+    if (user && !user.guest_flag) {
+        localStorage.removeItem('guestSessionId');
+    }
 }
 
 // Case storage helpers (localStorage as simple backend for demo)
