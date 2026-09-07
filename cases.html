@@ -38,8 +38,6 @@
                 <p style="color:#94A3B8;">Your saved cases (guest session preserved until you sign up).</p>
             </header>
 
-            <section id="caseDetail" class="case-detail" aria-live="polite" aria-label="Saved case details"></section>
-
             <div id="casesList"></div>
 
             <section id="caseDetail" class="case-detail" aria-live="polite" aria-label="Saved case details"></section>
@@ -81,12 +79,10 @@
         </div>
     </div>
 
-<<<<<<< HEAD
     <script src="script.js"></script>
     <script>
-        // When loaded, script.js's renderCasesOnPage will populate #casesList
+        // When loaded, script.js's renderCasesOnPage will populate #casesList.
         document.addEventListener('DOMContentLoaded', () => {
-            // Extra UI behavior for the local demo session.
             const user = getCurrentUser();
             if (user && user.guest_flag) {
                 const note = document.createElement('p');
@@ -96,21 +92,5 @@
             }
         });
     </script>
-=======
-        <script src="script.js"></script>
-        <script>
-            // When loaded, script.js's renderCasesOnPage will populate #casesList.
-            document.addEventListener('DOMContentLoaded', () => {
-                const user = getCurrentUser();
-                if (user && user.guest_flag) {
-                    const note = document.createElement('p');
-                    note.style.color = '#FBBF24';
-                    note.textContent = 'You are using a guest session. Cases remain in this browser until its local data is cleared.';
-                    document.querySelector('.content-wrapper').insertBefore(note, document.getElementById('casesList'));
-                }
-            });
-        </script>
-    </div>
->>>>>>> 32fc67b14c7d80b32f18122fd41e377dc2916a97
 </body>
 </html>

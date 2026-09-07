@@ -23,6 +23,14 @@ const interfaceTranslations = {
     mr: { chooseLanguage: 'तुमची पसंतीची भाषा निवडा', continue: 'पुढे चला', changeLanguage: 'भाषा बदला', home: 'मुख्यपृष्ठ', about: 'आमच्याबद्दल', resources: 'संसाधने', contact: 'संपर्क', cases: 'माझे केस', login: 'लॉग इन', language: 'भाषा', autoDetect: 'आपोआप ओळखा', tellUs: 'कामावर काय झाले ते सांगा', situation: 'तुमची परिस्थिती', workerType: 'कामाचा प्रकार', state: 'राज्य किंवा प्रदेश', optional: 'ऐच्छिक', understand: 'तुमची परिस्थिती समजून घ्या', clear: 'पुसा', summary: 'परिस्थितीचा सारांश', draftLetter: 'नियोक्त्यासाठी पत्राचा मसुदा तयार करा', viewLetter: 'पत्र पहा', editDraft: 'वापरण्यापूर्वी मसुदा तपासा आणि संपादित करा.', letterDisclaimer: 'तुम्ही दिलेल्या माहितीवर आधारित हा सामान्य मसुदा आहे. पाठवण्यापूर्वी काळजीपूर्वक तपासा.', workerName: 'कामगाराचे नाव', employerName: 'नियोक्ता / कंपनीचे नाव', jobRole: 'कामाचा प्रकार (ऐच्छिक)', workplace: 'कामाचे ठिकाण (ऐच्छिक)', date: 'तारीख', employeeId: 'कर्मचारी आयडी (ऐच्छिक)', department: 'विभाग / व्यवस्थापक (ऐच्छिक)', startDate: 'नोकरी सुरू झाल्याची तारीख (ऐच्छिक)', contactInfo: 'संपर्क माहिती (ऐच्छिक)', generateLetter: 'पत्राचा मसुदा तयार करा', generateEnglish: 'इंग्रजी प्रत तयार करा', downloadPdf: 'PDF म्हणून डाउनलोड करा', printLetter: 'पत्र प्रिंट करा', close: 'बंद करा', draftReady: 'पत्राचा मसुदा', noCase: 'सेव्ह केलेला केस निवडलेला नाही.' }
 };
 
+// Feature: Nearest Help Finder / Feature: Evidence Checklist
+Object.assign(interfaceTranslations.en, { contactsNearYou: 'Contacts near you', callNow: 'Call now', unverifiedNotice: 'Placeholder contact details. Verify before calling.', nationalHelplines: 'National helplines', evidence: 'Evidence', attachFile: 'Attach file', addNote: 'Add a short note', upload: 'Upload', uploaded: 'Uploaded' });
+Object.assign(interfaceTranslations.hi, { contactsNearYou: 'आपके पास संपर्क', callNow: 'अभी कॉल करें', unverifiedNotice: 'ये संपर्क विवरण केवल उदाहरण हैं। कॉल करने से पहले सत्यापित करें।', nationalHelplines: 'राष्ट्रीय हेल्पलाइन', evidence: 'सबूत', attachFile: 'फाइल जोड़ें', addNote: 'छोटा नोट जोड़ें', upload: 'अपलोड करें', uploaded: 'अपलोड हो गया' });
+Object.assign(interfaceTranslations.ta, { contactsNearYou: 'உங்களுக்கு அருகிலுள்ள தொடர்புகள்', callNow: 'இப்போது அழைக்கவும்', unverifiedNotice: 'இவை மாதிரி தொடர்பு விவரங்கள். அழைப்பதற்கு முன் சரிபார்க்கவும்.', nationalHelplines: 'தேசிய உதவி எண்கள்', evidence: 'ஆதாரம்', attachFile: 'கோப்பை இணைக்கவும்', addNote: 'சிறு குறிப்பைச் சேர்க்கவும்', upload: 'பதிவேற்றவும்', uploaded: 'பதிவேற்றப்பட்டது' });
+Object.assign(interfaceTranslations.te, { contactsNearYou: 'మీకు సమీపంలోని సంప్రదింపులు', callNow: 'ఇప్పుడే కాల్ చేయండి', unverifiedNotice: 'ఇవి నమూనా సంప్రదింపు వివరాలు. కాల్ చేయడానికి ముందు ధృవీకరించండి.', nationalHelplines: 'జాతీయ హెల్ప్‌లైన్లు', evidence: 'ఆధారం', attachFile: 'ఫైల్ జోడించండి', addNote: 'చిన్న గమనిక జోడించండి', upload: 'అప్‌లోడ్ చేయండి', uploaded: 'అప్‌లోడ్ అయింది' });
+Object.assign(interfaceTranslations.bn, { contactsNearYou: 'আপনার কাছের যোগাযোগ', callNow: 'এখন কল করুন', unverifiedNotice: 'এগুলি নমুনা যোগাযোগের তথ্য। কল করার আগে যাচাই করুন।', nationalHelplines: 'জাতীয় হেল্পলাইন', evidence: 'প্রমাণ', attachFile: 'ফাইল যুক্ত করুন', addNote: 'ছোট নোট যোগ করুন', upload: 'আপলোড করুন', uploaded: 'আপলোড হয়েছে' });
+Object.assign(interfaceTranslations.mr, { contactsNearYou: 'तुमच्या जवळील संपर्क', callNow: 'आता कॉल करा', unverifiedNotice: 'हे नमुना संपर्क तपशील आहेत. कॉल करण्यापूर्वी पडताळा.', nationalHelplines: 'राष्ट्रीय हेल्पलाइन', evidence: 'पुरावा', attachFile: 'फाइल जोडा', addNote: 'छोटी नोंद जोडा', upload: 'अपलोड करा', uploaded: 'अपलोड झाले' });
+
 function getInterfaceLanguage() { return localStorage.getItem('rightsMitraLanguage') || ''; }
 function getUiText(key, language = getInterfaceLanguage() || 'en') { return interfaceTranslations[language]?.[key] || interfaceTranslations.en[key] || key; }
 
@@ -63,6 +71,20 @@ const issueNames = {
     'Workplace Injury': { en: 'Workplace injury', hi: 'काम की जगह पर चोट', ta: 'வேலை இடத்தில் ஏற்பட்ட காயம்', te: 'పనిచోటు గాయం', bn: 'কর্মক্ষেত্রে আঘাত', mr: 'कामाच्या ठिकाणी झालेली दुखापत' },
     'Sexual Harassment': { en: 'Sexual harassment', hi: 'यौन उत्पीड़न', ta: 'பாலியல் தொல்லை', te: 'లైంగిక వేధింపు', bn: 'যৌন হয়রানি', mr: 'लैंगिक छळ' }
 };
+
+// Feature: Evidence Checklist
+const evidenceChecklists = {
+    'Salary Withheld': { en: ['Salary slip / payment record', 'Bank statement showing missed payment', 'Written communication about wages'], hi: ['वेतन पर्ची / भुगतान रिकॉर्ड', 'बैंक स्टेटमेंट जिसमें भुगतान न दिखे', 'वेतन के बारे में लिखित संदेश'], ta: ['சம்பளச் சீட்டு / பணம் செலுத்திய பதிவு', 'தவறிய பணத்தைக் காட்டும் வங்கி அறிக்கை', 'சம்பளம் குறித்த எழுத்துப்பூர்வ செய்தி'], te: ['జీతం స్లిప్ / చెల్లింపు రికార్డు', 'చెల్లింపు మిస్ అయినట్లు చూపే బ్యాంక్ స్టేట్‌మెంట్', 'జీతం గురించి వ్రాతపూర్వక సందేశం'], bn: ['বেতন স্লিপ / পেমেন্ট রেকর্ড', 'পেমেন্ট না হওয়ার ব্যাংক বিবরণ', 'মজুরি সম্পর্কে লিখিত বার্তা'], mr: ['पगाराची पावती / देयक नोंद', 'पगार न मिळाल्याचे बँक स्टेटमेंट', 'पगाराबाबतचा लेखी संदेश'] },
+    'Fired Without Notice': { en: ['Termination message or notice', 'Employment contract or offer letter', 'Records of the dismissal date and reason'], hi: ['नौकरी खत्म होने का संदेश या नोटिस', 'नौकरी का अनुबंध या ऑफर लेटर', 'निकाले जाने की तारीख और कारण का रिकॉर्ड'], ta: ['பணி நீக்க செய்தி அல்லது அறிவிப்பு', 'வேலை ஒப்பந்தம் அல்லது நியமனக் கடிதம்', 'நீக்கப்பட்ட தேதி மற்றும் காரணப் பதிவு'], te: ['ఉద్యోగం ముగింపు సందేశం లేదా నోటీసు', 'ఉద్యోగ ఒప్పందం లేదా ఆఫర్ లెటర్', 'తొలగించిన తేదీ మరియు కారణం రికార్డు'], bn: ['বরখাস্তের বার্তা বা নোটিশ', 'চাকরির চুক্তি বা অফার লেটার', 'বরখাস্তের তারিখ ও কারণের রেকর্ড'], mr: ['नोकरी संपल्याचा संदेश किंवा नोटीस', 'नोकरीचा करार किंवा ऑफर लेटर', 'काढल्याची तारीख व कारणाची नोंद'] },
+    'Excessive Hours': { en: ['Daily working-hour record', 'Overtime messages or instructions', 'Pay record for overtime'], hi: ['रोज़ के काम के घंटों का रिकॉर्ड', 'ओवरटाइम के संदेश या निर्देश', 'ओवरटाइम भुगतान का रिकॉर्ड'], ta: ['தினசரி வேலை நேரப் பதிவு', 'கூடுதல் நேர செய்தி அல்லது அறிவுறுத்தல்', 'கூடுதல் நேர சம்பளப் பதிவு'], te: ['రోజువారీ పని గంటల రికార్డు', 'ఓవర్‌టైమ్ సందేశాలు లేదా సూచనలు', 'ఓవర్‌టైమ్ చెల్లింపు రికార్డు'], bn: ['প্রতিদিনের কাজের সময়ের রেকর্ড', 'ওভারটাইমের বার্তা বা নির্দেশ', 'ওভারটাইম পেমেন্টের রেকর্ড'], mr: ['दररोजच्या कामाच्या तासांची नोंद', 'ओव्हरटाईमचे संदेश किंवा सूचना', 'ओव्हरटाईम देयकाची नोंद'] },
+    'No Contract': { en: ['Offer or hiring messages', 'Payment records', 'Messages showing the work relationship'], hi: ['नौकरी देने या रखने के संदेश', 'भुगतान रिकॉर्ड', 'काम के संबंध को दिखाने वाले संदेश'], ta: ['வேலை வழங்கிய அல்லது நியமித்த செய்திகள்', 'பணம் செலுத்திய பதிவுகள்', 'வேலை உறவைக் காட்டும் செய்திகள்'], te: ['ఉద్యోగ ఆఫర్ లేదా నియామక సందేశాలు', 'చెల్లింపు రికార్డులు', 'ఉద్యోగ సంబంధాన్ని చూపే సందేశాలు'], bn: ['চাকরির অফার বা নিয়োগের বার্তা', 'পেমেন্টের রেকর্ড', 'কাজের সম্পর্কের প্রমাণ দেওয়া বার্তা'], mr: ['नोकरीची ऑफर किंवा नियुक्तीचे संदेश', 'देयकाच्या नोंदी', 'कामाचे संबंध दाखवणारे संदेश'] },
+    'Workplace Injury': { en: ['Injury photo', 'Medical record or certificate', 'Incident report or witness message'], hi: ['चोट की फोटो', 'मेडिकल रिकॉर्ड या प्रमाणपत्र', 'घटना रिपोर्ट या गवाह का संदेश'], ta: ['காயத்தின் புகைப்படம்', 'மருத்துவப் பதிவு அல்லது சான்றிதழ்', 'சம்பவ அறிக்கை அல்லது சாட்சி செய்தி'], te: ['గాయం ఫోటో', 'వైద్య రికార్డు లేదా ధృవపత్రం', 'సంఘటన నివేదిక లేదా సాక్షి సందేశం'], bn: ['আঘাতের ছবি', 'চিকিৎসার নথি বা সার্টিফিকেট', 'ঘটনার রিপোর্ট বা সাক্ষীর বার্তা'], mr: ['दुखापतीचा फोटो', 'वैद्यकीय नोंद किंवा प्रमाणपत्र', 'घटनेचा अहवाल किंवा साक्षीदाराचा संदेश'] },
+    'Sexual Harassment': { en: ['Incident messages or screenshots', 'Written incident timeline', 'Complaint or support-service record'], hi: ['घटना के संदेश या स्क्रीनशॉट', 'घटनाओं की लिखित समयरेखा', 'शिकायत या सहायता सेवा का रिकॉर्ड'], ta: ['சம்பவச் செய்திகள் அல்லது திரைப்பிடிப்புகள்', 'சம்பவங்களின் எழுத்துப்பூர்வ காலவரிசை', 'புகார் அல்லது ஆதரவு சேவைப் பதிவு'], te: ['సంఘటన సందేశాలు లేదా స్క్రీన్‌షాట్‌లు', 'సంఘటనల వ్రాతపూర్వక కాలక్రమం', 'ఫిర్యాదు లేదా సహాయ సేవ రికార్డు'], bn: ['ঘটনার বার্তা বা স্ক্রিনশট', 'ঘটনার লিখিত সময়রেখা', 'অভিযোগ বা সহায়তা পরিষেবার রেকর্ড'], mr: ['घटनेचे संदेश किंवा स्क्रीनशॉट', 'घटनांची लेखी कालरेषा', 'तक्रार किंवा मदत सेवेची नोंद'] }
+};
+
+function getEvidenceChecklist(category, language) {
+    return evidenceChecklists[category]?.[language] || evidenceChecklists[category]?.en || ['Employment messages or documents', 'Payment or attendance records', 'Other supporting evidence'];
+}
 
 function detectLanguage(text) {
     const value = String(text || '');
@@ -436,6 +458,7 @@ function handleSubmit() {
     displayResponse(response);
     const caseId = saveAnalysisCase(userInput, matchingCategory, language, languageResult);
     if (window.latestCaseSummary) window.latestCaseSummary.caseId = caseId;
+    loadHelpContacts(stateSelector?.value || '', language, document.getElementById('helpContacts'));
 }
 
 function detectIssue(userInput, language) {
@@ -508,8 +531,8 @@ function generateLegalGuidance(userInput, category, language) {
 
     response += `<p style="margin-top: 20px; color: #34D399;"><strong>${t.disclaimer}</strong></p>`;
     response += `<div class="guidance-actions"><button class="btn btn-secondary" type="button" onclick="downloadCaseSummary()">${language === 'en' ? 'Download Case Summary' : language === 'hi' ? 'केस सारांश डाउनलोड करें' : language === 'ta' ? 'வழக்கு சுருக்கத்தைப் பதிவிறக்கவும்' : language === 'te' ? 'కేసు సారాంశాన్ని డౌన్‌లోడ్ చేయండి' : language === 'bn' ? 'কেসের সারাংশ ডাউনলোড করুন' : 'केस सारांश डाउनलोड करा'}</button><button class="btn btn-primary" type="button" onclick="openLetterForm()">${getUiText('draftLetter', language)}</button></div><div id="letterWorkspace" class="letter-workspace" hidden></div>`;
+    response += '<div id="helpContacts" class="case-detail" aria-live="polite"></div>';
     response += '</div>';
-
     window.latestCaseSummary = {
         userInput,
         category,
@@ -629,6 +652,84 @@ function printLetter(container, fields, language) {
     const disclaimer = interfaceTranslations[language]?.letterDisclaimer || interfaceTranslations.en.letterDisclaimer;
     printWindow.document.write(`<html lang="${language}"><head><meta charset="utf-8"><title>RightsMitra draft letter</title><style>body{font-family:Arial,sans-serif;max-width:760px;margin:48px auto;line-height:1.65;color:#111}pre{font:inherit;white-space:pre-wrap}footer{margin-top:40px;border-top:1px solid #ccc;padding-top:12px;font-size:11px;color:#555}</style></head><body><pre>${escapeHtml(editor.value)}</pre><footer>Draft generated using RightsMitra based on information provided by the user. ${escapeHtml(disclaimer)}</footer><script>window.onload=function(){window.print();}</script></body></html>`);
     printWindow.document.close();
+}
+
+// Feature: Nearest Help Finder
+async function loadHelpContacts(state, language = getInterfaceLanguage() || 'en', container = document.getElementById('resourceHelpContacts')) {
+    if (!container) return;
+    container.textContent = 'Loading contacts...';
+    try {
+        const query = state ? `?state=${encodeURIComponent(state)}` : '';
+        const response = await fetch(`${API_BASE_URL}/api/help-contacts${query}`);
+        const result = await response.json();
+        const contact = result.contact || result;
+        const t = interfaceTranslations[language] || interfaceTranslations.en;
+        const phoneLink = value => /^\+?[0-9]/.test(String(value)) ? `<a href="tel:${escapeHtml(value)}">${escapeHtml(value)}</a>` : escapeHtml(value || 'Verify current contact');
+        const labourLine = contact.verified
+            ? `<p>${escapeHtml(contact.district_labor_office_name)}: ${phoneLink(contact.district_labor_office_phone)}</p>`
+            : `<p>State Labour helpline: ${phoneLink(contact.district_labor_office_phone)}</p>`;
+        container.innerHTML = `<h4>${t.contactsNearYou}</h4><p><strong>${escapeHtml(contact.state)}</strong></p>${labourLine}<p>${escapeHtml(contact.legal_aid_authority_name)}: ${phoneLink(contact.legal_aid_authority_phone)}</p><p>Women Helpline: ${phoneLink(contact.women_helpline)}</p><small>${escapeHtml(contact.notes || t.unverifiedNotice)}</small>`;
+    } catch (error) {
+        console.warn('Help contacts unavailable', error);
+        container.textContent = 'Contacts are temporarily unavailable. Please call Women Helpline 181.';
+    }
+}
+
+function wireResourceHelpFinder() {
+    const selector = document.getElementById('helpStateSelector');
+    const container = document.getElementById('resourceHelpContacts');
+    if (!selector || !container) return;
+    selector.addEventListener('change', () => loadHelpContacts(selector.value, getInterfaceLanguage() || 'en', container));
+    loadHelpContacts('', getInterfaceLanguage() || 'en', container);
+}
+
+// Feature: Evidence Checklist
+async function uploadCaseEvidence(caseData, checklistItem, file, note, resultContainer) {
+    const reader = new FileReader();
+    reader.onload = async () => {
+        try {
+            const owner = (getCurrentUser() && getCurrentUser().user_id) || localStorage.getItem('guestSessionId');
+            const backendCase = caseData.backend_case_id || (await fetch(`${API_BASE_URL}/api/cases`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ owner_id: owner, issue_summary: caseData.userQuestion || caseData.issue_summary || 'Saved case', category: caseData.issue || caseData.category, language: caseData.responseLanguage || caseData.language || 'en', full_conversation_log: caseData.full_conversation_log || [], region: caseData.state || caseData.region || null }) }).then(response => response.json())).case_id;
+            const response = await fetch(`${API_BASE_URL}/api/cases/${encodeURIComponent(backendCase)}/evidence`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: file.type === 'application/pdf' ? 'document' : file.type.startsWith('image/') ? 'photo' : 'other', filename: file.name, data: reader.result, checklist_item: checklistItem, note }) });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.error || 'Upload failed');
+            caseData.backend_case_id = backendCase;
+            updateSavedCase(caseData.case_id, { backend_case_id: backendCase });
+            resultContainer.textContent = `${interfaceTranslations[getInterfaceLanguage() || 'en'].uploaded}: ${file.name}`;
+        } catch (error) {
+            resultContainer.textContent = error.message;
+        }
+    };
+    reader.readAsDataURL(file);
+}
+
+function renderEvidenceSection(container, caseData, language) {
+    const t = interfaceTranslations[language] || interfaceTranslations.en;
+    const section = document.createElement('section');
+    section.className = 'case-evidence';
+    const heading = document.createElement('h4');
+    heading.textContent = t.evidence;
+    section.appendChild(heading);
+    getEvidenceChecklist(caseData.issue || caseData.category, language).forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'evidence-item';
+        const label = document.createElement('label');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        label.append(checkbox, document.createTextNode(` ${item}`));
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*,application/pdf';
+        fileInput.setAttribute('aria-label', t.attachFile);
+        const note = document.createElement('input');
+        note.type = 'text';
+        note.placeholder = t.addNote;
+        const result = document.createElement('small');
+        fileInput.addEventListener('change', () => { if (fileInput.files[0]) uploadCaseEvidence(caseData, item, fileInput.files[0], note.value, result); });
+        row.append(label, fileInput, note, result);
+        section.appendChild(row);
+    });
+    container.appendChild(section);
 }
 
 // Display response
@@ -975,6 +1076,7 @@ function showCaseDetail(caseData, detailContainer) {
     appendCaseList(detailContainer, t.evidence, evidence, 'ul', evidenceProgress, (index, checked) => {
         updateCaseProgress(caseData.case_id, 'evidenceProgress', index, checked);
     });
+    renderEvidenceSection(detailContainer, caseData, language);
     appendCaseList(detailContainer, t.roadmap, roadmap, 'ol', roadmapProgress, (index, checked) => {
         updateCaseProgress(caseData.case_id, 'roadmapProgress', index, checked);
     });
@@ -1040,6 +1142,7 @@ function updateCaseProgress(caseId, field, index, checked) {
 // Run on pages where DOM loaded
 document.addEventListener('DOMContentLoaded', () => {
     renderCasesOnPage();
+    wireResourceHelpFinder();
 });
 
 // Contact form handler

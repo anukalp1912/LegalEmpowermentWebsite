@@ -528,6 +528,54 @@ body {
     font-size: 0.85rem;
 }
 
+/* Feature: Nearest Help Finder / Feature: Evidence Checklist */
+.helpline-card select {
+    width: 100%;
+    margin: 8px 0;
+    background: #111827;
+    border: 1px solid #475569;
+    border-radius: 6px;
+    color: #F8FAFC;
+    padding: 8px 10px;
+    font: inherit;
+}
+
+.case-evidence {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.evidence-item {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) minmax(150px, auto) minmax(160px, 1fr);
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+    color: #CBD5E1;
+}
+
+.evidence-item input[type="text"] {
+    min-width: 0;
+    background: #111827;
+    border: 1px solid #475569;
+    border-radius: 6px;
+    color: #F8FAFC;
+    padding: 7px 9px;
+    font: inherit;
+}
+
+.evidence-item small {
+    grid-column: 1 / -1;
+    color: #34D399;
+}
+
+@media (max-width: 680px) {
+    .evidence-item {
+        grid-template-columns: 1fr;
+    }
+}
+
 .accessibility-options {
     display: flex;
     align-items: center;

@@ -39,6 +39,7 @@ function createCase(req, res, body) {
     verdict: null,
     notice_generated: false,
     region: region || null,
+    evidence: [],
     created_at,
   });
 
