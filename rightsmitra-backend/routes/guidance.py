@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+import os
 from datetime import datetime, timezone
 
 from flask import Blueprint, jsonify
@@ -64,6 +66,62 @@ def match_category(text: str) -> str | None:
     return None
 
 
+def get_ai_guidance(query: str, category: str | None, language: str) -> dict | None:
+    try:
+        # An environment variable is a value configured outside the code, so
+        # secrets such as an API key do not need to be stored in this file.
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if not api_key:
+            return None
+
+        # An API key is a secret credential that authorizes this app to call
+        # Anthropic's service.
+        import anthropic
+
+        language_names = {
+            "en": "English",
+            "hi": "Hindi",
+            "ta": "Tamil",
+            "bn": "Bengali",
+            "te": "Telugu",
+            "mr": "Marathi",
+        }
+        language_name = language_names.get(language, "English")
+        system_prompt = f"""
+You are a legal-guidance assistant for RightsMitra helping Indian workers
+understand their workplace rights. Respond in {language_name}. Be simple,
+encouraging, and practical. Reference relevant Indian labor laws where useful.
+Always remind the user that this is general guidance and not a substitute for
+a lawyer. Respond ONLY with valid JSON matching exactly this shape:
+{{"category": string, "guidance_points": string[], "next_steps": string[], "disclaimer": string}}
+"""
+        client = anthropic.Anthropic(api_key=api_key)
+        response = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=1000,
+            system=system_prompt,
+            messages=[
+                {
+                    "role": "user",
+                    "content": (
+                        f"Worker's question: {query}\n"
+                        f"Detected category: {category or 'General'}"
+                    ),
+                }
+            ],
+        )
+        response_text = response.content[0].text.strip()
+        if response_text.startswith("```"):
+            response_text = response_text.removeprefix("```json").removeprefix("```")
+            response_text = response_text.removesuffix("```").strip()
+        result = json.loads(response_text)
+        result["source"] = "ai"
+        return result
+    except Exception as error:
+        print(f"AI guidance failed: {error}")
+        return None
+
+
 def guidance_result(category: str | None) -> dict:
     return {
         "category": category or "General",
@@ -94,7 +152,7 @@ def post_guidance():
 
     language = body.get("language") or "en"
     category = match_category(query)
-    result = guidance_result(category)
+    result = get_ai_guidance(query, category, language) or guidance_result(category)
     user = current_user()
     owner_id = body.get("owner_id") or (user or {}).get("user_id") or "anonymous"
     case_id = generate_id("case")

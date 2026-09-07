@@ -6,11 +6,18 @@ import os
 
 from flask import Flask, jsonify
 from flask_cors import CORS
+from dotenv import load_dotenv
 
 from routes.auth import auth
 from routes.cases import cases
 from routes.contact import contact
 from routes.guidance import guidance
+
+
+# Load local development settings from .env before creating the Flask app.
+load_dotenv()
+if not os.environ.get("ANTHROPIC_API_KEY"):
+    print("Warning: ANTHROPIC_API_KEY is not set; guidance will use offline fallback only.")
 
 
 def create_app() -> Flask:
