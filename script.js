@@ -35,6 +35,157 @@ const staticPageTranslations = {
     mr: { aboutTitle: 'RightsMitra विषयी', aboutDesc: 'भारतातील कामगारांसाठी मोफत सामान्य माहिती आणि हक्कांविषयी जागरूकता.', resourcesTitle: 'कामगार संसाधने आणि मार्गदर्शिका', resourcesDesc: 'तुमची कामाची परिस्थिती समजून पुढील पावलासाठी तयार होण्यास मदत करणारी माहिती.', contactTitle: 'RightsMitra शी संपर्क करा', contactDesc: 'या हॅकाथॉन MVP बद्दल तुमचा अभिप्राय द्या.', casesTitle: 'माझे मागील केस', casesDesc: 'डेमोसाठी सेव्ह केलेले केस या ब्राउझरमध्ये राहतात.', faq: 'वारंवार विचारले जाणारे प्रश्न', getInTouch: 'संपर्क साधा', sendMessage: 'आम्हाला संदेश पाठवा', aboutUs: 'आमच्याबद्दल', quickLinks: 'जलद दुवे', contactUs: 'संपर्क', languages: 'भाषा', signIn: 'RightsMitra मध्ये लॉग इन करा', continueGuest: 'अतिथी म्हणून पुढे जा', sendOtp: 'OTP पाठवा', verifySignIn: 'पडताळून लॉग इन करा' }
 };
 
+const resourceTemplates = {
+    complaintLetter: {
+        title: 'Complaint Letter Template',
+        content: `To,
+The Labour Inspector / HR Manager
+[Company Name / Employer Name]
+[Workplace Address]
+
+Subject: Complaint regarding unpaid wages / workplace issue
+
+Dear Sir/Madam,
+
+I am writing to formally raise a complaint regarding the issues I have faced at my workplace. I request that the matter be reviewed and appropriate action be taken in accordance with the applicable labour laws.
+
+The details are as follows:
+- Work location: [Location]
+- Job role: [Role]
+- Employment period: [Dates]
+- Nature of issue: [Brief description]
+- Supporting documents: [Payslips / messages / photos / witness details]
+
+I respectfully request that this complaint be acknowledged and addressed promptly. I would appreciate a written response and the steps being taken to resolve the matter.
+
+Thank you for your time and attention.
+
+Sincerely,
+[Worker Name]
+[Contact Details]`
+    },
+    rightsChecklist: {
+        title: 'Workers’ Rights Checklist',
+        content: `Workplace rights checklist
+
+1. Timely payment of wages and overtime as due.
+2. Written contract or clear terms of employment where applicable.
+3. Safe working conditions and access to basic welfare facilities.
+4. Rest breaks, paid leave, and compliance with working-hour rules.
+5. Protection from unfair dismissal or retaliation.
+6. Right to raise complaints without fear of discrimination.
+7. Access to supporting documents such as payslips, work records, and messages.
+8. Right to seek help from the labour department, legal aid authority, or worker support organisations.`
+    },
+    wageGuide: {
+        title: 'Wage Calculation Guide',
+        content: `Basic wage calculation guide
+
+- Daily wage = total monthly wage ÷ working days in the month
+- Overtime = regular rate × overtime multiplier as per state rules
+- Deductions should be lawful and recorded in writing
+- Check for unpaid leave, bonus, festival allowance, or withheld wages
+- Ask for payslips and payment records for each month
+
+Example:
+Monthly wage = ₹18,000
+Working days = 26
+Daily wage = ₹692.30 approximately
+If OT is due at 1.5x, then OT pay should be calculated on the applicable regular wage rate.`
+    },
+    documentChecklist: {
+        title: 'Document Checklist for Complaints',
+        content: `Keep these documents ready before filing a complaint:
+
+- Identity proof
+- Appointment letter / work contract
+- Payslips and bank statement
+- Attendance records or timesheets
+- WhatsApp / email communication
+- Photos or videos of the workplace or incident
+- Witness names and contact numbers
+- Complaint letter draft and date log
+
+For workplace injury: add medical records and doctor notes.
+For wage disputes: add wage slips and payment records.
+For harassment: add evidence of messages, dates, and witness statements.`
+    }
+};
+
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+function buildResourceTemplateModal(templateKey) {
+    const template = resourceTemplates[templateKey];
+    if (!template) return null;
+
+    const modal = document.createElement('div');
+    modal.className = 'template-preview-modal';
+    modal.id = 'resourceTemplateModal';
+    modal.setAttribute('hidden', 'hidden');
+    modal.innerHTML = `
+        <div class="template-preview-panel" role="dialog" aria-modal="true" aria-labelledby="resourceTemplateTitle">
+            <div class="template-preview-header">
+                <h3 id="resourceTemplateTitle">${template.title}</h3>
+                <button type="button" class="close-btn" aria-label="Close preview">×</button>
+            </div>
+            <div class="template-preview-body">
+                <p class="letter-disclaimer">This preview is for reference and can be edited before use.</p>
+                <div class="template-preview-content">${escapeHtml(template.content)}</div>
+            </div>
+            <div class="template-preview-actions">
+                <button type="button" class="btn btn-secondary copy-template-btn">Copy text</button>
+                <button type="button" class="btn btn-primary download-template-btn">Download .txt</button>
+            </div>
+        </div>
+    `;
+
+    const closeBtn = modal.querySelector('.close-btn');
+    closeBtn.addEventListener('click', () => modal.remove());
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) modal.remove();
+    });
+
+    modal.querySelector('.copy-template-btn').addEventListener('click', async () => {
+        const text = template.content;
+        try {
+            await navigator.clipboard.writeText(text);
+            alert('Template copied to clipboard.');
+        } catch (error) {
+            console.warn('Clipboard copy failed', error);
+            alert('Clipboard access was blocked. You can still copy the text from the preview area.');
+        }
+    });
+
+    modal.querySelector('.download-template-btn').addEventListener('click', () => {
+        const blob = new Blob([template.content], { type: 'text/plain;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `${template.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.txt`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+    });
+
+    document.body.appendChild(modal);
+    modal.hidden = false;
+    return modal;
+}
+
+function setupResourceTemplates() {
+    document.querySelectorAll('.template-preview-btn').forEach((button) => {
+        button.addEventListener('click', () => {
+            const templateKey = button.dataset.template;
+            buildResourceTemplateModal(templateKey);
+        });
+    });
+}
+
 function getStaticText(key, language) { return staticPageTranslations[language]?.[key] || staticPageTranslations.en[key] || key; }
 
 const translations = {
